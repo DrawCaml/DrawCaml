@@ -1,0 +1,12 @@
+(library
+ (name DrawCaml)
+ (public_name DrawCaml)
+ (foreign_stubs
+  (language cxx)
+  (names testc window)
+  (flags (:include cflags) -xc++ -fPIC))
+ (c_library_flags (:include libs) -lstdc++))
+
+(rule
+ (targets cflags libs)
+ (action (run discover/discover.exe)))

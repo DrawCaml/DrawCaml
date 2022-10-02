@@ -1,0 +1,4 @@
+(executable
+ (public_name DrawCaml)
+ (name main)
+ (libraries DrawCaml))
