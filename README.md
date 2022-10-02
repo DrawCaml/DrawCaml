@@ -5,6 +5,7 @@
 
 # Project organisation
 
+```
 ├── bin
 │   ├── dune
 │   └── main.ml           // where we call the DrawCaml library from OCaml
@@ -24,7 +25,7 @@
 └── test
     ├── dune
     └── ProjetIntegre.ml  // these OCaml files test the library
-
+```
 
 # Dependencies
 
