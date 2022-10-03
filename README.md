@@ -30,7 +30,8 @@
 # Dependencies
 
 - x11 library
-- dune to build the project
+- dune to build the project (opam)
+- dune-configurator (opam)
 
 # Running the project
 
