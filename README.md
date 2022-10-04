@@ -30,21 +30,9 @@
 # Dependencies
 
 - x11 library
-- dune to build the project (opam)
-- dune-configurator (opam)
-
-installation: see further
+- [opam]{https://opam.ocaml.org/doc/Install.html}
+- dune and dune-configurator (`opam install dune dune-configurator`)
 
 # Running the project
 
-Once dune is installed, you can build the library with `dune build`. To compile the *main.ml* file to access the lib, do `dune build bin/main.exe` and do `dune exec ./bin/main.exe` to execute it.
-
-# Installation of the dependencies
-
-First, install and init opam: (https://opam.ocaml.org/doc/Install.html)
-
-then, install dune and dune-configurator:
-
-```opam install dune```
-
-```opam install dune-configurator```
+Once all dependencies are installed, you can build the library with `dune build`. To compile the *main.ml* file to access the lib, do `dune build bin/main.exe` and do `dune exec ./bin/main.exe` to execute it.
