@@ -33,6 +33,17 @@
 - dune to build the project (opam)
 - dune-configurator (opam)
 
+installation: see further
+
 # Running the project
 
 Once dune is installed, you can build the library with `dune build`. To compile the *main.ml* file to access the lib, do `dune build bin/main.exe` and do `dune exec ./bin/main.exe` to execute it.
+
+# Installation of the dependencies
+
+First, install and init opam:
+```sudo apt install opam```
+```opam init```
+
+then, install dune:
+```opam install dune```
