@@ -30,7 +30,7 @@
 # Dependencies
 
 - x11 library
-- [opam]{https://opam.ocaml.org/doc/Install.html}
+- [opam](https://opam.ocaml.org/doc/Install.html)
 - dune and dune-configurator (`opam install dune dune-configurator`)
 
 # Running the project
