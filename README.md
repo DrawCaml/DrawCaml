@@ -41,9 +41,10 @@ Once dune is installed, you can build the library with `dune build`. To compile 
 
 # Installation of the dependencies
 
-First, install and init opam:
-```sudo apt install opam```
-```opam init```
+First, install and init opam: (https://opam.ocaml.org/doc/Install.html)
 
-then, install dune:
+then, install dune and dune-configurator:
+
 ```opam install dune```
+
+```opam install dune-configurator```
