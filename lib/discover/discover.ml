@@ -1,11 +1,11 @@
 module C = Configurator.V1
 
 let from_pkg_config c =
-  let fallback = ([], [ "-lX11" ]) in
+  let fallback = ([], [ "-lX11 -lpthread" ]) in
   match C.Pkg_config.get c with
   | None -> fallback
   | Some pc -> (
-      match C.Pkg_config.query pc ~package:"x11" with
+      match C.Pkg_config.query pc ~package:"x11 pthread" with
       | None -> fallback
       | Some { cflags; libs } -> (cflags, libs))
 

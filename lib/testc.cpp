@@ -17,10 +17,24 @@
 #include <unistd.h>
 #include "window.h"
 #include <iostream>
+#include <pthread.h>
+
+void *thread_1(void *arg) {
+	printf("Nous sommes dans le thread.\n");
+	// Arrêt propre du thread
+	pthread_exit(EXIT_SUCCESS);
+}
 
 extern "C" value test_cpp(value n1) {
+	pthread_t thread1;
+	printf("Avant la création du thread.\n");
+	// Création du thread
+	pthread_create(&thread1, NULL, thread_1, NULL);
+	pthread_join(thread1, NULL);
+	printf("Après la création du thread.\n");
+
 	SWindow win;
-  
+  	
 	win.create("test DrawCaml", 10, 10, 500, 500, 1);
   	win.draw();
 	std::cout << "Test succesfull!" << std::endl;
