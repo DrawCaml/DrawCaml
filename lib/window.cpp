@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <unistd.h>
+#include <pthread.h>
+// #include <thread>
 
 #include <X11/Xlib.h>
-#include <unistd.h>
 #include "window.h"
-#include <iostream>
 
 SWindow::SWindow(){
   // constructor
   std::cout << "Window created !" << std::endl;
+
+  XInitThreads();
 }
 
 /*
@@ -63,23 +67,39 @@ void SWindow::close(){
 	// std::cout << (display == NULL) << std::endl;
 	/* close connection to server */
 	XCloseDisplay(display);
+
+	closed = true;
 }
 
 /*
-DRAW WINDOW (BLOCKING)
+DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
-void SWindow::draw(){
+void* iDraw(void *arg){
+	SWindow* win = (SWindow*) arg;
+
   int redraw=1;
   /* draw the window */
   while (redraw) {
-	XNextEvent(display, &(event));
-	switch (event.type) {
-	  case ClientMessage:
-		// Exit event
-		if (event.xclient.data.l[0] == (long int)wmDeleteWindow)
-		  redraw=0;
-		break;
-	}
+  	// XLockDisplay(display);
+		XNextEvent(win->display, &(win->event));
+		switch (win->event.type) {
+	  	case ClientMessage:
+			// Exit event
+			if (win->event.xclient.data.l[0] == (long int)win->wmDeleteWindow)
+		  	redraw=0;
+			break;
+		}
+		// XUnlockDisplay(display);
   }
-  close();
+  win->close();
+  pthread_exit(EXIT_SUCCESS);
+}
+
+// create the drawing thread
+void SWindow::draw(){
+	if(&_thread != NULL){
+		pthread_create(&_thread, NULL, iDraw, (void*)this);
+	} else {
+		std::cout << "thread already created" << std::endl;
+	}
 }

@@ -6,20 +6,25 @@
 
 class SWindow {
 
-// XLib parameters
-private:
-	Display *display;
-	Window window;
-	XEvent event;
-	int screen;
-
-	Atom wmDeleteWindow; // used for clean exit
-
 // configuration variables and functions
 public:
 	std::string name;
 	int pos_x, pos_y;
 	int width, height, border;
+
+	pthread_t _thread;
+	bool closed = false;
+
+	/*
+	 	XLib parameters
+	*/
+	Window window;
+	Display *display;
+	int screen;
+	
+	XEvent event;
+	Atom wmDeleteWindow; // used for clean exit
+
 
 	SWindow();
 
