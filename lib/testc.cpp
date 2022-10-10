@@ -6,7 +6,6 @@
 #include "caml/callback.h"
 #include "caml/custom.h"
 #include "caml/intext.h"
-#include "caml/intext.h"
 #include "caml/threads.h"
 
 
@@ -26,7 +25,7 @@
 // }
 SWindow win;
 
-extern "C" value createWindow_cpp(value n1) {
+extern "C" value createWindow_cpp(value unit) {
 	// pthread_t thread1;
 	// printf("Avant la création du thread.\n");
 	// Création du thread
@@ -40,12 +39,13 @@ extern "C" value createWindow_cpp(value n1) {
 
 	std::cout << "Test succesfull!" << std::endl;
 
-	return (Val_int(0));
+	return Val_unit;
 }
 
-extern "C" value wait_cpp(value n1){
-	if(&win != NULL)
-	while(!win.closed){}
+extern "C" value wait_cpp(value unit){
+	if(&win != NULL) {
+		while(!win.closed){}
+	}
 	std::cout << "Window Closed" << std::endl;
-	return (Val_int(0));
+	return Val_unit;
 }

@@ -84,10 +84,12 @@ void* iDraw(void *arg){
 		XNextEvent(win->display, &(win->event));
 		switch (win->event.type) {
 	  	case ClientMessage:
-			// Exit event
-			if (win->event.xclient.data.l[0] == (long int)win->wmDeleteWindow)
-		  	redraw=0;
-			break;
+				// Exit event
+				if (win->event.xclient.data.l[0] == (long int)win->wmDeleteWindow)
+			  	redraw=0;
+				break;
+			default:
+				break;
 		}
 		// XUnlockDisplay(display);
   }
