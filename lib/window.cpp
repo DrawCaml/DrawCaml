@@ -2,106 +2,98 @@
 #include <stdlib.h>
 #include <iostream>
 #include <unistd.h>
-#include <pthread.h>
-// #include <thread>
+#include <thread>
+#include <mutex>
 
 #include <X11/Xlib.h>
 #include "window.h"
+#include "utils.h"
 
-SWindow::SWindow(){
-  // constructor
-  std::cout << "Window created !" << std::endl;
+using namespace std;
 
-  XInitThreads();
-}
 
-/*
-CREATE WINDOW
-*/
-void SWindow::create(std::string Uname, int Ux, int Uy, int Uwidth, int Uheight, int Uborder){
+SWindow::SWindow(string name, int posX, int posY, int width, int height, int borderSize){
+ 	XInitThreads();
+	mName = name;
+	mPosX = posX;
+	mPosY = posY;
+	mWidth = width;
+	mHeight = height;
+	mBorderSize = borderSize;
+	mClosed = false;
+	mThread = NULL;
 
-  name = Uname;
-  pos_x = Ux;
-  pos_y = Uy;
-  width = Uwidth;
-  height = Uheight;
-  border = Uborder;
 
-  // Open the connection with the X server
-  display = XOpenDisplay(NULL);
-  if(display == NULL){
-	// fprintf(stderr, "Cannot open display !\n");
-	std::cout << "Cannot open display !" << std::endl;
-	exit(1);
-  }
+	mDisplay = XOpenDisplay(NULL);
+	if (!mDisplay){
+		ERROR("Cannot open display!\n");
+		exit(1);
+ 	}
 
-  // choose the screen
-  screen = DefaultScreen(display);
+ 	mScreen = DefaultScreen(mDisplay);
 
-  // create window
-  window = XCreateSimpleWindow(display, RootWindow(display, screen), 
-	  // window parameters
-	  pos_x, pos_y, width, height, border,
-	  BlackPixel(display, screen), WhitePixel(display, screen));
+ 	mWindow = XCreateSimpleWindow(mDisplay, RootWindow(mDisplay, mScreen), 
+								 mPosX, mPosY, mWidth, mHeight, mBorderSize,
+	                             BlackPixel(mDisplay, mScreen), WhitePixel(mDisplay, mScreen));
   
-  /* process window close event through event handler so XNextEvent does not fail */
-	wmDeleteWindow = XInternAtom(display, "WM_DELETE_WINDOW", True);
-	XSetWMProtocols(display, window, &wmDeleteWindow, 1);
+	/* process window close event through event handler so XNextEvent does not fail */
+	mDeleteWindow = XInternAtom(mDisplay, "WM_DELETE_WINDOW", True);
+	XSetWMProtocols(mDisplay, mWindow, &mDeleteWindow, 1);
 
-	// map the window
-  XMapWindow(display, window);
+  	XMapWindow(mDisplay, mWindow);
 
-  // Set the name of the window
-  XStoreName(display, window, name.c_str());
+  	XStoreName(mDisplay, mWindow, mName.c_str());
+	LOG("Window created!\n");
 }
 
-/*
-CLOSE WINDOW
-*/
 void SWindow::close(){
+	XDestroyWindow(mDisplay, mEvent.xclient.window);
 
-  /* destroy window */
-	XDestroyWindow(display, event.xclient.window);
+	XCloseDisplay(mDisplay);
 
-
-	// std::cout << (display == NULL) << std::endl;
-	/* close connection to server */
-	XCloseDisplay(display);
-
-	closed = true;
+	mClosed = true;
+	LOG("Window closed\n");
 }
 
 /*
 DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
-void* iDraw(void *arg){
-	SWindow* win = (SWindow*) arg;
-
-  int redraw=1;
-  /* draw the window */
-  while (redraw) {
-  	// XLockDisplay(display);
-		XNextEvent(win->display, &(win->event));
-		switch (win->event.type) {
-	  	case ClientMessage:
+void SWindow::listener(){
+	int redraw=1;
+	while (redraw) {
+		if (!mDisplay) {
+			WARNING("No display\n");
+			continue;
+		}
+		XNextEvent(mDisplay, &mEvent);
+		switch (mEvent.type) {
+			case ClientMessage:
+				LOG("Client message received\n");
 				// Exit event
-				if (win->event.xclient.data.l[0] == (long int)win->wmDeleteWindow)
-			  	redraw=0;
+				if (mEvent.xclient.data.l[0] == (long int)mDeleteWindow) {
+					redraw=0;
+					LOG("Caught window delete event\n");
+				}
 				break;
 			default:
+				WARNING("Caught unknown event\n");
 				break;
+			}
+
+		mActionMutex.lock();
+		if (!mSharedQueue.empty()) {
+			int i = mSharedQueue.front();
+			mSharedQueue.pop();
+			LOG("Received message from CAML: " + to_string(i) + "\n");
 		}
-		// XUnlockDisplay(display);
-  }
-  win->close();
-  pthread_exit(EXIT_SUCCESS);
+		mActionMutex.unlock();
+	}
+	LOG("Closing the thread\n");
+  	this->close();
 }
 
-// create the drawing thread
 void SWindow::draw(){
-	if(&_thread != NULL){
-		pthread_create(&_thread, NULL, iDraw, (void*)this);
-	} else {
-		std::cout << "thread already created" << std::endl;
+	if (!mThread) {
+  		mThread  = new thread(&SWindow::listener, this); 
 	}
 }

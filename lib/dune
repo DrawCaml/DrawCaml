@@ -3,7 +3,7 @@
  (public_name DrawCaml)
  (foreign_stubs
   (language cxx)
-  (names testc window)
+  (names drawcaml window)
   (flags (:include cflags) -xc++ -fPIC))
  (c_library_flags (:include libs) -lstdc++))
 

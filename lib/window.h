@@ -1,39 +1,39 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#pragma once
 
 #include <string>
 #include <X11/Xlib.h>
+#include <thread>
+#include <mutex>
+#include <queue>
+
+using namespace std;
 
 class SWindow {
+	public:
+		string mName;
+		int mPosX, mPosY;
+		int mWidth, mHeight, mBorderSize;
 
-// configuration variables and functions
-public:
-	std::string name;
-	int pos_x, pos_y;
-	int width, height, border;
+		thread* mThread;
+		mutex mActionMutex;
+		queue<int> mSharedQueue;
+		bool mClosed;
 
-	pthread_t _thread;
-	bool closed = false;
-
-	/*
+		/*
 	 	XLib parameters
-	*/
-	Window window;
-	Display *display;
-	int screen;
+		*/
+		Window mWindow;
+		Display *mDisplay;
+		int mScreen;
 	
-	XEvent event;
-	Atom wmDeleteWindow; // used for clean exit
+		XEvent mEvent;
+		Atom mDeleteWindow; // used for clean exit
 
 
-	SWindow();
+		SWindow(string name, int posX, int posY, int width, int height, int borderSize);
 
-	void create(std::string name, int win_x, int win_y, int win_width, int win_height, int win_border);
-	
-	void close();
-	
-	void draw();
+		void close();
+		void draw();
+		void listener();
 
 };
-
-#endif
