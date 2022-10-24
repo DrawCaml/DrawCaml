@@ -20,17 +20,21 @@
 #include <iostream>
 
 
-SWindow* win;
-
-extern "C" value createWindow_cpp(value unit) {
-	win = new SWindow("test DrawCaml", 10, 10, 500, 500, 1);
+extern "C" value createWindow_cpp(value name) {
+	const char* windowName = String_val(name);
+	SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
   	win->draw();
-
-	return Val_unit;
+	return caml_copy_nativeint((long)win); 
 }
 
-extern "C" value sendMessage_cpp(value message) {
+extern "C" value sendMessage_cpp(value window, value message) {
+	SWindow* win = (SWindow *) Nativeint_val(window);
 	int val = Int_val(message);
+
+	if (!win or win->mClosed) {
+		WARNING("Can't send message to a closed windows!\n");
+		return Val_unit;
+	}
 
 	win->mActionMutex.lock();
 
@@ -49,7 +53,9 @@ extern "C" value sendMessage_cpp(value message) {
 	return Val_unit;
 }
 
-extern "C" value waitForClose_cpp(value unit){
+extern "C" value waitForClose_cpp(value window){
+	SWindow* win = (SWindow *) Nativeint_val(window);
+	LOG("Waiting for window '" + win->mName + "' to close\n");
 	while(!win->mClosed) {
 		continue;
 	}

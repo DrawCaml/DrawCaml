@@ -1,3 +1,3 @@
-external createWindow : unit -> unit = "createWindow_cpp"
-external sendMessage : int -> unit = "sendMessage_cpp"
-external waitForClose : unit -> unit = "waitForClose_cpp"
+external createWindow : string -> nativeint = "createWindow_cpp"
+external sendMessage : nativeint -> int -> unit = "sendMessage_cpp"
+external waitForClose : nativeint -> unit = "waitForClose_cpp"
