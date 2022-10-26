@@ -82,9 +82,14 @@ void SWindow::listener(){
 
 		mActionMutex.lock();
 		if (!mSharedQueue.empty()) {
-			int i = mSharedQueue.front();
+			Action a = mSharedQueue.front();
 			mSharedQueue.pop();
-			LOG("Received message from CAML: " + to_string(i) + "\n");
+
+			// Handle action	
+			LOG("Received message from CAML: \n");
+			a.Call();
+
+			a.mResultLock->unlock();
 		}
 		mActionMutex.unlock();
 	}

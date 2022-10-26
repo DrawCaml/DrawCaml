@@ -5,6 +5,9 @@
 #include <thread>
 #include <mutex>
 #include <queue>
+#include <vector>
+
+#include "action.h"
 
 using namespace std;
 
@@ -16,7 +19,7 @@ class SWindow {
 
 		thread* mThread;
 		mutex mActionMutex;
-		queue<int> mSharedQueue;
+		queue<Action> mSharedQueue;
 		bool mClosed;
 
 		/*

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "selement.h"
-#include "slayout.h"
+#include "element.h"
 
 using namespace std;
 
