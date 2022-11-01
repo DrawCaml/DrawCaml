@@ -7,6 +7,7 @@
 
 #include <X11/Xlib.h>
 #include "window.h"
+#include "container.h"
 #include "utils.h"
 
 using namespace std;
@@ -23,7 +24,6 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	mClosed = false;
 	mThread = NULL;
 
-
 	mDisplay = XOpenDisplay(NULL);
 	if (!mDisplay){
 		ERROR("Cannot open display!\n");
@@ -34,15 +34,27 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 
  	mWindow = XCreateSimpleWindow(mDisplay, RootWindow(mDisplay, mScreen), 
 								 mPosX, mPosY, mWidth, mHeight, mBorderSize,
-	                             BlackPixel(mDisplay, mScreen), WhitePixel(mDisplay, mScreen));
-  
+								 BlackPixel(mDisplay, mScreen), WhitePixel(mDisplay, mScreen));
+	
 	/* process window close event through event handler so XNextEvent does not fail */
 	mDeleteWindow = XInternAtom(mDisplay, "WM_DELETE_WINDOW", True);
 	XSetWMProtocols(mDisplay, mWindow, &mDeleteWindow, 1);
 
-  	XMapWindow(mDisplay, mWindow);
+	XMapWindow(mDisplay, mWindow);
 
-  	XStoreName(mDisplay, mWindow, mName.c_str());
+	XStoreName(mDisplay, mWindow, mName.c_str());
+
+	// create main container for the frame
+	mContainer = SContainer(FloatLayout);
+	mContainer.mWin = this;
+	mContainer.setSize(mWidth, mHeight);
+
+	// save relevant info for drawing
+	mGC = create_gc(mDisplay, mWindow, 0);
+	XSync(mDisplay, False);
+
+	mColormap = DefaultColormap(mDisplay, mScreen);
+
 	LOG("Window created!\n");
 }
 
@@ -67,6 +79,8 @@ void SWindow::listener(){
 		}
 		XNextEvent(mDisplay, &mEvent);
 		switch (mEvent.type) {
+			
+			// Catch events from user
 			case ClientMessage:
 				LOG("Client message received\n");
 				// Exit event
@@ -75,6 +89,13 @@ void SWindow::listener(){
 					LOG("Caught window delete event\n");
 				}
 				break;
+			
+			// Draw recursively the elements in the frame
+			case Expose:
+				mContainer.draw(0, 0);
+				XFlush(mDisplay);
+				break;
+
 			default:
 				WARNING("Caught unknown event\n");
 				break;
@@ -94,11 +115,11 @@ void SWindow::listener(){
 		mActionMutex.unlock();
 	}
 	LOG("Closing the thread\n");
-  	this->close();
+		this->close();
 }
 
 void SWindow::draw(){
 	if (!mThread) {
-  		mThread  = new thread(&SWindow::listener, this); 
+			mThread	= new thread(&SWindow::listener, this); 
 	}
 }

@@ -60,9 +60,22 @@ SContainer::addElem(SElement elt, int posX=-1, int posY=-1){
 	}
 }
 
+void setBgColor(string bgColor){
+	Status rc = XAllocNamedColor(display, screen_colormap, bgColor, mBgColor, mBgColor);
+	if (rc == 0) {
+		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", bgColor);
+		exit(1);
+	}
+}
+
 // add a parameter to access XLib stuff for drawing
 SContainer::draw(int drawX, int drawY){
 	for(SElement e : mElements){
-		e.draw(drawX+this->posX, drawY+this->posY);
+		// draw the background
+		if(mBgColor != NULL){
+			XSetForeground(mWin->mDisplay, mWin->mGC, mBgColor->pixel);
+			XFillRectangle(mWin->mDisplay, mWin->mWindow, mWin->mGC, mPosX, mPosY, mSizeX, mSizeY);
+		}
+		e.draw(drawX+mPosX, drawY+mPosY);
 	}
 }
