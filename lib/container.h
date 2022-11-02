@@ -22,13 +22,14 @@ public:
 	SLayout mLayout;
 	vector<SElement> mElements;
 
-	XColor* mBgColor;
+	XColor mBgColor;
 
 	SContainer(SLayout lay, int width=1, int height=1);
 
 	void draw(int drawX, int drawY);
 	void addElem(SElement elt, int posX=-1, int posY=-1);
 	void setSize(int sizeX, int sizeY);
+	void setPos(int posX, int posY);
 
 	void setBgColor(string bgColor);
 };

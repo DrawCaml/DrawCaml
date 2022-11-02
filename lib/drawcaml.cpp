@@ -25,6 +25,7 @@ extern "C" value createWindow_cpp(value name) {
 	const char* windowName = String_val(name);
 	SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
   	win->draw();
+	win->mContainer->setBgColor("green");
 	return caml_copy_nativeint((long)win); 
 }
 

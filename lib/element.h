@@ -10,6 +10,6 @@ public:
 
 	SWindow* mWin; // to keep access to XLib stuff
 
-	virtual void setSize(int sizeX, int sizeY);
-	virtual void draw(int drawX, int drawY);
+	virtual void setSize(int sizeX, int sizeY){}
+	virtual void draw(int drawX, int drawY){}
 };

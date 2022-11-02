@@ -18,6 +18,11 @@ SContainer::SContainer(SLayout lay, int width, int height){
 	}
 }
 
+void SContainer::setPos(int posX, int posY){
+	mPosX = posX;
+	mPosY = posY;
+}
+
 void SContainer::setSize(int sizeX, int sizeY){
 	mSizeX = sizeX;
 	mSizeY = sizeY;
@@ -66,7 +71,8 @@ void SContainer::addElem(SElement elt, int posX, int posY){
 }
 
 void SContainer::setBgColor(string bgColor){
-	Status rc = XAllocNamedColor(mWin->mDisplay, mWin->mColormap, bgColor.c_str(), mBgColor, mBgColor);
+	// if(mWin == NULL) return;
+	Status rc = XAllocNamedColor(mWin->mDisplay, mWin->mColormap, bgColor.c_str(), &mBgColor, &mBgColor);
 	if (rc == 0) {
 		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", bgColor.c_str());
 		exit(1);
@@ -75,12 +81,14 @@ void SContainer::setBgColor(string bgColor){
 
 // add a parameter to access XLib stuff for drawing
 void SContainer::draw(int drawX, int drawY){
+	// if(mBgColor != NULL){
+	XSetForeground(mWin->mDisplay, mWin->mGC, mBgColor.pixel);
+	XFillRectangle(mWin->mDisplay, mWin->mWindow, mWin->mGC, mPosX, mPosY, mSizeX, mSizeY);
+	XFlush(mWin->mDisplay);
+	LOG("container draw\n");
+	// }
 	for(SElement e : mElements){
 		// draw the background
-		if(mBgColor != NULL){
-			XSetForeground(mWin->mDisplay, mWin->mGC, mBgColor->pixel);
-			XFillRectangle(mWin->mDisplay, mWin->mWindow, mWin->mGC, mPosX, mPosY, mSizeX, mSizeY);
-		}
 		e.draw(drawX+mPosX, drawY+mPosY);
 	}
 }

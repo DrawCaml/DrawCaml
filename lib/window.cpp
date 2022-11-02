@@ -40,6 +40,8 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	mDeleteWindow = XInternAtom(mDisplay, "WM_DELETE_WINDOW", True);
 	XSetWMProtocols(mDisplay, mWindow, &mDeleteWindow, 1);
 
+	XSelectInput(mDisplay, mWindow, ExposureMask);
+
 	XMapWindow(mDisplay, mWindow);
 
 	XStoreName(mDisplay, mWindow, mName.c_str());
@@ -47,6 +49,7 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	// create main container for the frame
 	mContainer = new SContainer(SLayout::FloatLayout);
 	mContainer->mWin = this;
+	mContainer->setPos(0, 0);
 	mContainer->setSize(mWidth, mHeight);
 
 	// save relevant info for drawing
@@ -115,7 +118,7 @@ void SWindow::listener(){
 		mActionMutex.unlock();
 	}
 	LOG("Closing the thread\n");
-		this->close();
+	this->close();
 }
 
 void SWindow::draw(){
