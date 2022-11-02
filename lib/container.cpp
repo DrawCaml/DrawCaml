@@ -1,34 +1,37 @@
 #include <X11/Xlib.h>
+#include <string>
 #include "utils.h"
+#include "element.h"
+#include "window.h"
 #include "container.h"
 
 // using namespace std;
 
-SContainer::SContainer(SLayout lay, int width=1, int height=1){
+SContainer::SContainer(SLayout lay, int width, int height){
 	mLayout = lay;
 	// int width=1, height=1;
-	if(lay == GridLayout){
+	if(lay == SLayout::GridLayout){
 		if (width > 1) _gridX = width;
-		else ERROR("Invalid width for GridLayout: " + (string)width); 
+		else ERROR("Invalid width for GridLayout: " + to_string(width)); 
 		if(height > 1) _gridY = height;
-		else ERROR("Invalid height for GridLayout: " + (string)height);
+		else ERROR("Invalid height for GridLayout: " + to_string(height));
 	}
 }
 
-SContainer::setSize(int sizeX, int sizeY){
+void SContainer::setSize(int sizeX, int sizeY){
 	mSizeX = sizeX;
 	mSizeY = sizeY;
-	if(mLayout == GridLayout){
+	if(mLayout == SLayout::GridLayout){
 		_wSpace = sizeX/_gridX;
 		_hSpace = sizeY/_gridY;
 	}
 }
 
-SContainer::addElem(SElement elt, int posX=-1, int posY=-1){
+void SContainer::addElem(SElement elt, int posX, int posY){
 	mElements.push_back(elt);
 
 	switch(mLayout){
-		case FloatLayout:
+		case SLayout::FloatLayout:
 			if(posX == -1 || posY == -1)
 				ERROR("Cannot add element to FloatLayout without specifying coords.");
 			elt.mPosX = posX;
@@ -36,7 +39,7 @@ SContainer::addElem(SElement elt, int posX=-1, int posY=-1){
 			elt.setSize(mSizeX, mSizeY);
 			break;
 		
-		case GridLayout:
+		case SLayout::GridLayout:
 			if(posX == -1 && posY == -1){
 				if(_curGridPos < _gridX*_gridY){
 					int curX = _curGridPos % _gridX;
@@ -62,16 +65,16 @@ SContainer::addElem(SElement elt, int posX=-1, int posY=-1){
 	}
 }
 
-void setBgColor(string bgColor){
-	Status rc = XAllocNamedColor(display, screen_colormap, bgColor, mBgColor, mBgColor);
+void SContainer::setBgColor(string bgColor){
+	Status rc = XAllocNamedColor(mWin->mDisplay, mWin->mColormap, bgColor.c_str(), mBgColor, mBgColor);
 	if (rc == 0) {
-		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", bgColor);
+		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", bgColor.c_str());
 		exit(1);
 	}
 }
 
 // add a parameter to access XLib stuff for drawing
-SContainer::draw(int drawX, int drawY){
+void SContainer::draw(int drawX, int drawY){
 	for(SElement e : mElements){
 		// draw the background
 		if(mBgColor != NULL){

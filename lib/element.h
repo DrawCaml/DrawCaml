@@ -8,7 +8,7 @@ public:
 	int mPosX, mPosY;
 	int mSizeX, mSizeY;
 
-	SWindow* mWindow; // to keep access to XLib stuff
+	SWindow* mWin; // to keep access to XLib stuff
 
 	virtual void setSize(int sizeX, int sizeY);
 	virtual void draw(int drawX, int drawY);

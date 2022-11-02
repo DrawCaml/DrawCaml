@@ -27,7 +27,8 @@ public:
 	SContainer(SLayout lay, int width=1, int height=1);
 
 	void draw(int drawX, int drawY);
-	void addElem(SElement elt);
+	void addElem(SElement elt, int posX=-1, int posY=-1);
+	void setSize(int sizeX, int sizeY);
 
 	void setBgColor(string bgColor);
 };

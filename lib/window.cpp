@@ -46,7 +46,7 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 
 	// create main container for the frame
 	mContainer = new SContainer(SLayout::FloatLayout);
-	mContainer->mWindow = this;
+	mContainer->mWin = this;
 	mContainer->setSize(mWidth, mHeight);
 
 	// save relevant info for drawing
