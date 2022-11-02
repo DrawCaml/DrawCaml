@@ -1,10 +1,12 @@
 #include <X11/Xlib.h>
 #include "utils.h"
+#include "container.h"
 
-using namespace std;
+// using namespace std;
 
 SContainer::SContainer(SLayout lay, int width=1, int height=1){
 	mLayout = lay;
+	// int width=1, height=1;
 	if(lay == GridLayout){
 		if (width > 1) _gridX = width;
 		else ERROR("Invalid width for GridLayout: " + (string)width); 

@@ -1,10 +1,11 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #include <X11/Xlib.h>
 
 #include "element.h"
-#include "window.h"
+// #include "window.h"
 
 using namespace std;
 
@@ -21,7 +22,6 @@ public:
 	SLayout mLayout;
 	vector<SElement> mElements;
 
-	SWindow* mWin;
 	XColor* mBgColor;
 
 	SContainer(SLayout lay, int width=1, int height=1);
@@ -30,4 +30,4 @@ public:
 	void addElem(SElement elt);
 
 	void setBgColor(string bgColor);
-}
+};

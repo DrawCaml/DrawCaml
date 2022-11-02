@@ -45,12 +45,12 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	XStoreName(mDisplay, mWindow, mName.c_str());
 
 	// create main container for the frame
-	mContainer = SContainer(FloatLayout);
-	mContainer.mWin = this;
-	mContainer.setSize(mWidth, mHeight);
+	mContainer = new SContainer(SLayout::FloatLayout);
+	mContainer->mWindow = this;
+	mContainer->setSize(mWidth, mHeight);
 
 	// save relevant info for drawing
-	mGC = create_gc(mDisplay, mWindow, 0);
+	mGC = XCreateGC(mDisplay, mWindow, mValuemask, &mValues);
 	XSync(mDisplay, False);
 
 	mColormap = DefaultColormap(mDisplay, mScreen);
@@ -92,7 +92,7 @@ void SWindow::listener(){
 			
 			// Draw recursively the elements in the frame
 			case Expose:
-				mContainer.draw(0, 0);
+				mContainer->draw(0, 0);
 				XFlush(mDisplay);
 				break;
 

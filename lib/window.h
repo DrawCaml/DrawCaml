@@ -7,8 +7,9 @@
 #include <queue>
 #include <vector>
 
-#include "action.h"
+#include "element.h"
 #include "container.h"
+#include "action.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ class SWindow {
 		queue<Action> mSharedQueue;
 		bool mClosed;
 
-		SContainer mContainer;
+		SContainer* mContainer;
 
 		/*
 	 	XLib parameters
@@ -34,6 +35,9 @@ class SWindow {
 	
 		XEvent mEvent;
 		Atom mDeleteWindow; // used for clean exit
+
+		unsigned long mValuemask = 0;
+		XGCValues mValues;	
 
 		GC mGC;
 		Colormap mColormap;
