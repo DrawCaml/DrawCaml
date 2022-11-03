@@ -27,7 +27,7 @@ int main(){
 
 	cont2->addElem(cont3);
 	cont2->addElem(cont4);
-	cont2->addElem(cont5);
+	cont2->addElem(cont5, 1, 1);
 	
   	win->draw();
 
