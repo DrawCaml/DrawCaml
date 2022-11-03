@@ -24,8 +24,27 @@
 extern "C" value createWindow_cpp(value name) {
 	const char* windowName = String_val(name);
 	SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
+
+  	// tests (uncomment)
+	// win->mContainer->setBgColor("yellow");
+	// SContainer* cont2 = new SContainer(SLayout::GridLayout, win, 2, 2);
+	// cont2->setBgColor("green");
+	// win->mContainer->addElem(cont2, 50, 50);
+	
+	// SContainer* cont3 = new SContainer(SLayout::FloatLayout, win);
+	// cont3->setBgColor("red");
+	// SContainer* cont4 = new SContainer(SLayout::FloatLayout, win);
+	// cont4->setBgColor("blue");
+	// SContainer* cont5 = new SContainer(SLayout::FloatLayout, win);
+	// cont5->setBgColor("orange");
+	// // SContainer* cont6 = new SContainer(SLayout::FloatLayout, win);
+
+	// cont2->addElem(cont3);
+	// cont2->addElem(cont4);
+	// cont2->addElem(cont5);
+
   	win->draw();
-	win->mContainer->setBgColor("green");
+
 	return caml_copy_nativeint((long)win); 
 }
 

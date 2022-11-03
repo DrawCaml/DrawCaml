@@ -7,8 +7,9 @@
 
 // using namespace std;
 
-SContainer::SContainer(SLayout lay, int width, int height){
+SContainer::SContainer(SLayout lay, SWindow* win, int width, int height){
 	mLayout = lay;
+	mWin = win;
 	// int width=1, height=1;
 	if(lay == SLayout::GridLayout){
 		if (width > 1) _gridX = width;
@@ -32,40 +33,41 @@ void SContainer::setSize(int sizeX, int sizeY){
 	}
 }
 
-void SContainer::addElem(SElement elt, int posX, int posY){
+void SContainer::addElem(SElement* elt, int posX, int posY){
 	mElements.push_back(elt);
 
 	switch(mLayout){
 		case SLayout::FloatLayout:
 			if(posX == -1 || posY == -1)
 				ERROR("Cannot add element to FloatLayout without specifying coords.");
-			elt.mPosX = posX;
-			elt.mPosY = posY;
-			elt.setSize(mSizeX, mSizeY);
+			elt->mPosX = posX;
+			elt->mPosY = posY;
+			elt->setSize(mSizeX-posX, mSizeY-posY);
 			break;
 		
 		case SLayout::GridLayout:
 			if(posX == -1 && posY == -1){
 				if(_curGridPos < _gridX*_gridY){
 					int curX = _curGridPos % _gridX;
-					int curY = (_curGridPos / _gridX);
-					elt.mPosX = curX*_wSpace;
-					elt.mPosY = curY*_hSpace;
-					elt.setSize(_wSpace, _hSpace);
+					int curY = _curGridPos / _gridX;
+					elt->mPosX = curX*_wSpace;
+					elt->mPosY = curY*_hSpace;
+					elt->setSize(_wSpace, _hSpace);
 					_curGridPos++;
 				}
 			} else if (posX == -1 || posY == -1){
 				ERROR("Cannot add element to GridLayout without specifying both coords.");
 			} else {
-				elt.mPosX = posX*_wSpace;
-				elt.mPosY = posY*_hSpace;
-				elt.setSize(_wSpace, _hSpace);
+				elt->mPosX = posX*_wSpace;
+				elt->mPosY = posY*_hSpace;
+				elt->setSize(_wSpace, _hSpace);
 			}
+			break;
 
 		default:
-			elt.mPosX = posX;
-			elt.mPosY = posY;
-			elt.setSize(mSizeX, mSizeY);
+			elt->mPosX = posX;
+			elt->mPosY = posY;
+			elt->setSize(mSizeX, mSizeY);
 			break;
 	}
 }
@@ -81,14 +83,12 @@ void SContainer::setBgColor(string bgColor){
 
 // add a parameter to access XLib stuff for drawing
 void SContainer::draw(int drawX, int drawY){
-	// if(mBgColor != NULL){
+	// draw the background
 	XSetForeground(mWin->mDisplay, mWin->mGC, mBgColor.pixel);
-	XFillRectangle(mWin->mDisplay, mWin->mWindow, mWin->mGC, mPosX, mPosY, mSizeX, mSizeY);
-	XFlush(mWin->mDisplay);
-	LOG("container draw\n");
-	// }
-	for(SElement e : mElements){
-		// draw the background
-		e.draw(drawX+mPosX, drawY+mPosY);
+	XFillRectangle(mWin->mDisplay, mWin->mWindow, mWin->mGC, drawX+mPosX, drawY+mPosY, mSizeX, mSizeY);
+	// printf("cont draw en: %d %d de taille %d %d\n", mPosX, mPosY, mSizeX, mSizeY);
+	// LOG("container draw\n");
+	for (SElement* elt : mElements){
+		elt->draw(drawX+mPosX, drawY+mPosY);
 	}
 }

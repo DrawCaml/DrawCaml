@@ -20,15 +20,15 @@ private:
 
 public:
 	SLayout mLayout;
-	vector<SElement> mElements;
+	vector<SElement*> mElements;
 
 	XColor mBgColor;
 
-	SContainer(SLayout lay, int width=1, int height=1);
+	SContainer(SLayout lay, SWindow* win, int width=1, int height=1);
 
-	void draw(int drawX, int drawY);
-	void addElem(SElement elt, int posX=-1, int posY=-1);
-	void setSize(int sizeX, int sizeY);
+	virtual void draw(int drawX, int drawY);
+	virtual void setSize(int sizeX, int sizeY);
+	void addElem(SElement* elt, int posX=-1, int posY=-1);
 	void setPos(int posX, int posY);
 
 	void setBgColor(string bgColor);

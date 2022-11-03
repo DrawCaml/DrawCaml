@@ -47,8 +47,7 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	XStoreName(mDisplay, mWindow, mName.c_str());
 
 	// create main container for the frame
-	mContainer = new SContainer(SLayout::FloatLayout);
-	mContainer->mWin = this;
+	mContainer = new SContainer(SLayout::FloatLayout, this);
 	mContainer->setPos(0, 0);
 	mContainer->setSize(mWidth, mHeight);
 
@@ -123,6 +122,6 @@ void SWindow::listener(){
 
 void SWindow::draw(){
 	if (!mThread) {
-			mThread	= new thread(&SWindow::listener, this); 
+		mThread	= new thread(&SWindow::listener, this); 
 	}
 }
