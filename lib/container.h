@@ -18,15 +18,18 @@ private:
 	int _curGridPos = 0;
 	int _wSpace, _hSpace;
 
+	void _updateBgColor();
+
 public:
 	SLayout mLayout;
 	vector<SElement*> mElements;
 
+	string mBgColorStr;
 	XColor mBgColor;
 
-	SContainer(SLayout lay, SWindow* win, int width=1, int height=1);
+	SContainer(SLayout lay, int width=1, int height=1);
 
-	virtual void draw(int drawX, int drawY);
+	virtual void draw(SWindow* win, int drawX, int drawY);
 	virtual void setSize(int sizeX, int sizeY);
 	void addElem(SElement* elt, int posX=-1, int posY=-1);
 	void setPos(int posX, int posY);

@@ -47,7 +47,7 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	XStoreName(mDisplay, mWindow, mName.c_str());
 
 	// create main container for the frame
-	mContainer = new SContainer(SLayout::FloatLayout, this);
+	mContainer = new SContainer(SLayout::FloatLayout);
 	mContainer->setPos(0, 0);
 	mContainer->setSize(mWidth, mHeight);
 
@@ -94,7 +94,7 @@ void SWindow::listener(){
 			
 			// Draw recursively the elements in the frame
 			case Expose:
-				mContainer->draw(0, 0);
+				mContainer->draw(this, 0, 0);
 				XFlush(mDisplay);
 				break;
 

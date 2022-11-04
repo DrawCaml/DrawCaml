@@ -5,12 +5,8 @@
 #include "window.h"
 #include "container.h"
 
-// using namespace std;
-
-SContainer::SContainer(SLayout lay, SWindow* win, int width, int height){
+SContainer::SContainer(SLayout lay, int width, int height){
 	mLayout = lay;
-	mWin = win;
-	// int width=1, height=1;
 	if(lay == SLayout::GridLayout){
 		if (width > 1) _gridX = width;
 		else ERROR("Invalid width for GridLayout: " + to_string(width)); 
@@ -72,23 +68,30 @@ void SContainer::addElem(SElement* elt, int posX, int posY){
 	}
 }
 
-void SContainer::setBgColor(string bgColor){
-	// if(mWin == NULL) return;
-	Status rc = XAllocNamedColor(mWin->mDisplay, mWin->mColormap, bgColor.c_str(), &mBgColor, &mBgColor);
+void SContainer::_updateBgColor(){
+	Status rc = XAllocNamedColor(mWin->mDisplay, mWin->mColormap, mBgColorStr.c_str(), &mBgColor, &mBgColor);
 	if (rc == 0) {
-		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", bgColor.c_str());
+		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", mBgColorStr.c_str());
 		exit(1);
 	}
 }
 
+void SContainer::setBgColor(string bgColor){
+	mBgColorStr = bgColor;
+}
+
 // add a parameter to access XLib stuff for drawing
-void SContainer::draw(int drawX, int drawY){
+void SContainer::draw(SWindow* win, int drawX, int drawY){
+	if(mWin != win){
+		mWin = win;
+		_updateBgColor();
+	}
+
 	// draw the background
 	XSetForeground(mWin->mDisplay, mWin->mGC, mBgColor.pixel);
 	XFillRectangle(mWin->mDisplay, mWin->mWindow, mWin->mGC, drawX+mPosX, drawY+mPosY, mSizeX, mSizeY);
 	// printf("cont draw en: %d %d de taille %d %d\n", mPosX, mPosY, mSizeX, mSizeY);
-	// LOG("container draw\n");
 	for (SElement* elt : mElements){
-		elt->draw(drawX+mPosX, drawY+mPosY);
+		elt->draw(mWin, drawX+mPosX, drawY+mPosY);
 	}
 }

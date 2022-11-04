@@ -13,21 +13,23 @@ int main(){
 
   	// tests
 	win->mContainer->setBgColor("yellow");
-	SContainer* cont2 = new SContainer(SLayout::GridLayout, win, 2, 2);
+	SContainer* cont2 = new SContainer(SLayout::GridLayout, 5, 5);
 	cont2->setBgColor("green");
 	win->mContainer->addElem(cont2, 50, 50);
 	
-	SContainer* cont3 = new SContainer(SLayout::FloatLayout, win);
+	SContainer* cont3 = new SContainer(SLayout::FloatLayout);
 	cont3->setBgColor("red");
-	SContainer* cont4 = new SContainer(SLayout::FloatLayout, win);
+	SContainer* cont4 = new SContainer(SLayout::FloatLayout);
 	cont4->setBgColor("blue");
-	SContainer* cont5 = new SContainer(SLayout::FloatLayout, win);
+	SContainer* cont5 = new SContainer(SLayout::FloatLayout);
 	cont5->setBgColor("orange");
-	// SContainer* cont6 = new SContainer(SLayout::FloatLayout, win);
+	SContainer* cont6 = new SContainer(SLayout::FloatLayout);
+	cont6->setBgColor("purple");
 
 	cont2->addElem(cont3);
 	cont2->addElem(cont4);
-	cont2->addElem(cont5, 1, 1);
+	cont2->addElem(cont5, 3, 3);
+	cont2->addElem(cont6, 1, 2);
 	
   	win->draw();
 

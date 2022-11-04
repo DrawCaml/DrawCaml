@@ -13,7 +13,7 @@ public:
 	SWindow* mWin; // to keep access to XLib stuff
 
 	virtual void setSize(int sizeX, int sizeY){}
-	virtual void draw(int drawX, int drawY){
+	virtual void draw(SWindow* win, int drawX, int drawY){
 		LOG("parent draw\n");
 	}
 };
