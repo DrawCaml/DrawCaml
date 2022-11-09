@@ -19,14 +19,28 @@
 #include "utils.h"
 #include "action.h"
 #include <iostream>
+#include "container.cpp"
 
+void sendDummyEvent(SWindow* win) {
+	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
+	XClientMessageEvent dummyEvent;
+	memset(&dummyEvent, 0, sizeof(XClientMessageEvent));
+	dummyEvent.type = ClientMessage;
+	dummyEvent.window = win->mWindow;
+	dummyEvent.format = 32;
+	XSendEvent(win->mDisplay, win->mWindow, 0, 0, (XEvent*)&dummyEvent);
+	XFlush(win->mDisplay);
+	return;
+}
+
+//WINDOW.CPP
 
 extern "C" value createWindow_cpp(value name) {
 	const char* windowName = String_val(name);
 	SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
 
   	// tests (uncomment)
-	win->mContainer->setBgColor("yellow");
+	/*win->mContainer->setBgColor("yellow");
 	SContainer* cont2 = new SContainer(SLayout::GridLayout, 5, 5);
 	cont2->setBgColor("green");
 	win->mContainer->addElem(cont2, 50, 50);
@@ -45,9 +59,20 @@ extern "C" value createWindow_cpp(value name) {
 	cont2->addElem(cont5, 3, 3);
 	cont2->addElem(cont6, 1, 2);
 
-  	win->draw();
+  	win->draw();*/
 
 	return caml_copy_nativeint((long)win); 
+}
+
+extern "C" value draw_cpp(value window) {//toujours pour la window !!!, l'utilisateur ne fait jamais de call draw pour un container
+	SWindow* win = (SWindow *) Nativeint_val(window);
+
+	if (!win) {
+		WARNING("Window doesn't exist\n");
+		return Val_unit;
+	}
+	win->draw()
+	return Val_unit;
 }
 
 void test(vector<Argument> args) {
@@ -100,5 +125,148 @@ extern "C" value waitForClose_cpp(value window){
 		continue;
 	}
 	LOG("Window Closed\n");
+	return Val_unit;
+}
+
+//CONTAINER.CPP
+
+extern "C" value createContainer_cpp(value layout,value width, value height) {
+	SLayout l = (SLayout) Nativeint_val(layout);
+	int w = Int_val(width);
+	int h = Int_val(height);
+	//SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
+	SContainer* c = new SContainer(l,w,h);
+	return caml_copy_nativeint((long)c);
+}
+
+extern "C" value setPos_cpp(value object,value posX,value posY) {
+	SElement* e = (SElement *) Nativeint_val(object);
+	int posx = Int_val(posX);
+	int posy = Int_val(posY);
+
+	if (!e) {
+		WARNING("Element doesn't exist\n");
+		return Val_unit;
+	}
+	SWindow* win = e->mWin
+	
+	mutex* m=new mutex;
+	m->lock();
+	Action action;	
+	action.mResultLock = m;
+	action.mArgs={poxs,posy};
+	action.mFun.f2 = &(e->setPos); 
+
+	win->mActionMutex.lock();
+
+	win->mSharedQueue.push(action);		
+
+	sendDummyEvent(win);	
+
+	win->mActionMutex.unlock();
+
+	LOG("Sent message!\n");
+	//on attend pas le message
+	LOG("Message was processed\n");
+	
+	return Val_unit;
+}
+
+extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
+	SElement* e = (SElement *) Nativeint_val(object);
+	int sizex = Int_val(posX);
+	int sizey = Int_val(posY);
+
+	if (!e) {
+		WARNING("Element doesn't exist\n");
+		return Val_unit;
+	}
+	SWindow* win = e->mWin
+	
+	mutex* m=new mutex;
+	m->lock();
+	Action action;	
+	action.mResultLock = m;
+	action.mArgs={sizex,sizey};
+	action.mFun.f2 = &(e->setSize); 
+
+	win->mActionMutex.lock();
+
+	win->mSharedQueue.push(action);		
+
+	sendDummyEvent(win);	
+
+	win->mActionMutex.unlock();
+
+	LOG("Sent message!\n");
+	//on attend pas le message
+	LOG("Message was processed\n");
+	
+	return Val_unit;
+}
+
+extern "C" value addElem_cpp(value object,value object_added,value posX,value posY) {
+	SElement* e = (SElement *) Nativeint_val(object);
+	int posx = Int_val(posX);
+	int posy = Int_val(posY);
+	SElement* e_add = (SElement *) Nativeint_val(object_added);
+
+	if ((!e)||(!e_add)) {
+		WARNING("Element doesn't exist\n");
+		return Val_unit;
+	}
+	SWindow* win = e->mWin
+	
+	mutex* m=new mutex;
+	m->lock();
+	Action action;	
+	action.mResultLock = m;
+	action.mArgs={e_add,poxs,posy};
+	action.mFun.f3 = &(e->addElem); 
+
+	win->mActionMutex.lock();
+
+	win->mSharedQueue.push(action);		
+
+	sendDummyEvent(win);	
+
+	win->mActionMutex.unlock();
+
+	LOG("Sent message!\n");
+	//on attend pas le message
+	LOG("Message was processed\n");
+	
+	return Val_unit;
+}
+
+extern "C" value setBgColor_cpp(value object,value name) {
+	SElement* e = (SElement *) Nativeint_val(object);
+	const char* blase = String_val(name);
+
+	if (!e) {
+		WARNING("Element doesn't exist\n");
+		return Val_unit;
+	}
+	SWindow* win = e->mWin
+	
+	mutex* m=new mutex;
+	m->lock();
+	Action action;	
+	action.mResultLock = m;
+	action.mArgs={blase};
+	action.mFun.f2 = &(e->setBgColor); 
+
+	win->mActionMutex.lock();
+
+	win->mSharedQueue.push(action);		
+
+	sendDummyEvent(win);	
+
+	win->mActionMutex.unlock();
+
+	LOG("Sent message!\n");
+	//on attend pas le message
+	LOG("Message was processed\n");
+	
 	return Val_unit;
 }
