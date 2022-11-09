@@ -24,7 +24,7 @@ public:
 	SLayout mLayout;
 	vector<SElement*> mElements;
 
-	string mBgColorStr;
+	string mBgColorStr = "white";
 	XColor mBgColor;
 
 	SContainer(SLayout lay, int width=1, int height=1);

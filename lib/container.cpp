@@ -69,6 +69,7 @@ void SContainer::addElem(SElement* elt, int posX, int posY){
 }
 
 void SContainer::_updateBgColor(){
+	if(mBgColorStr == "") return;
 	Status rc = XAllocNamedColor(mWin->mDisplay, mWin->mColormap, mBgColorStr.c_str(), &mBgColor, &mBgColor);
 	if (rc == 0) {
 		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", mBgColorStr.c_str());
