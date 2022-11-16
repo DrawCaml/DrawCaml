@@ -45,7 +45,7 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 
 	end
 
-(*exemple de classe héritant d'élément : un bouton *)
+
 
 class dbutton () = 
 	object
