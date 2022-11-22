@@ -1,3 +1,5 @@
+(* open DrawCaml *)
+
 type dlayout = FloatLayout | GridLayout | Other
 
 let layout_enum = function
@@ -5,6 +7,7 @@ let layout_enum = function
 	| GridLayout -> 1
 	| Other -> 2
 
+(* abstract type for elements of the window *)
 class virtual delement () =
 	object
 		val mutable size = (-1,-1)
@@ -20,6 +23,7 @@ class virtual delement () =
 			pos <- t
 	end
 
+(* graphical element that can manage others *)
 class dcontainer ?(layout = FloatLayout) =
 	object
 		inherit delement ()
@@ -33,6 +37,7 @@ class dcontainer ?(layout = FloatLayout) =
 			setBgColorEx(ptr,valr,valg,valb)
 	end
 
+(* class for the window *)
 class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) () =
 	object
 		val mutable main_container = new dcontainer ()

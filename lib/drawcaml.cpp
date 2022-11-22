@@ -71,7 +71,7 @@ extern "C" value draw_cpp(value window) {//toujours pour la window !!!, l'utilis
 		WARNING("Window doesn't exist\n");
 		return Val_unit;
 	}
-	win->draw()
+	win->draw();
 	return Val_unit;
 }
 
@@ -130,12 +130,11 @@ extern "C" value waitForClose_cpp(value window){
 
 //CONTAINER.CPP
 
-extern "C" value createContainer_cpp(value layout,value width, value height) {
+extern "C" value createContainer_cpp(value layout/*,value width, value height*/) {
 	SLayout l = (SLayout) Nativeint_val(layout);
-	int w = Int_val(width);
-	int h = Int_val(height);
-	//SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
-	SContainer* c = new SContainer(l,w,h);
+	// int w = Int_val(width);
+	// int h = Int_val(height);
+	SContainer* c = new SContainer(l/*,w,h*/);
 	return caml_copy_nativeint((long)c);
 }
 
@@ -148,14 +147,16 @@ extern "C" value setPos_cpp(value object,value posX,value posY) {
 		WARNING("Element doesn't exist\n");
 		return Val_unit;
 	}
-	SWindow* win = e->mWin
+	SWindow* win = e->mWin;
 	
+	// TO BE GENERALIZED IN ACTION.cpp	
 	mutex* m=new mutex;
 	m->lock();
 	Action action;	
 	action.mResultLock = m;
-	action.mArgs={poxs,posy};
-	action.mFun.f2 = &(e->setPos); 
+	action.mArgs={posx,posy};
+	action.mFun.f2 = &(e->setPos); // DOESN'T WORK BECAUSE OF BOUNDED METHOD
+	// sol: modify call and function storage in action to support class methods
 
 	win->mActionMutex.lock();
 
@@ -181,7 +182,7 @@ extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
 		WARNING("Element doesn't exist\n");
 		return Val_unit;
 	}
-	SWindow* win = e->mWin
+	SWindow* win = e->mWin;
 	
 	mutex* m=new mutex;
 	m->lock();
@@ -205,8 +206,9 @@ extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
 	return Val_unit;
 }
 
+// Containers are the only objects where to which we can add elements
 extern "C" value addElem_cpp(value object,value object_added,value posX,value posY) {
-	SElement* e = (SElement *) Nativeint_val(object);
+	SContainer* e = (SContainer *) Nativeint_val(object);
 	int posx = Int_val(posX);
 	int posy = Int_val(posY);
 	SElement* e_add = (SElement *) Nativeint_val(object_added);
@@ -215,13 +217,13 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 		WARNING("Element doesn't exist\n");
 		return Val_unit;
 	}
-	SWindow* win = e->mWin
+	SWindow* win = e->mWin;
 	
 	mutex* m=new mutex;
 	m->lock();
 	Action action;	
 	action.mResultLock = m;
-	action.mArgs={e_add,poxs,posy};
+	action.mArgs=vector<Argument>({e_add,posx,posy});
 	action.mFun.f3 = &(e->addElem); 
 
 	win->mActionMutex.lock();
@@ -240,14 +242,16 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 }
 
 extern "C" value setBgColor_cpp(value object,value name) {
-	SElement* e = (SElement *) Nativeint_val(object);
+	// for now only containers can change their background
+	// later -> More General Type
+	SContainer* e = (SContainer *) Nativeint_val(object);
 	const char* blase = String_val(name);
 
 	if (!e) {
 		WARNING("Element doesn't exist\n");
 		return Val_unit;
 	}
-	SWindow* win = e->mWin
+	SWindow* win = e->mWin;
 	
 	mutex* m=new mutex;
 	m->lock();

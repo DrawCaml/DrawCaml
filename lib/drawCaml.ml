@@ -1,6 +1,10 @@
 external createWindowEx : string -> int -> int -> int -> int -> nativeint = "createWindow_cpp"
+external drawWindowEx : nativeint -> unit = "draw_cpp"
 external sendMessage : nativeint -> int -> unit = "sendMessage_cpp"
 external waitForClose : nativeint -> unit = "waitForClose_cpp"
 
-external setBgColorEx : nativeint -> int -> int -> int -> unit = "setBgColor_cpp"
 external createContainerEx : int -> nativeint = "createContainer_cpp"
+external setPosEx : nativeint -> int -> int -> unit = "setPos_cpp"
+external setSizeEx : nativeint -> int -> int -> unit = "setSize_cpp"
+external addElemEx : nativeint -> nativeint -> int -> int -> unit = "addElem_cpp"
+external setBgColorEx : nativeint -> string -> unit = "setBgColor_cpp"

@@ -2,11 +2,18 @@
 
 #include <vector>
 #include <mutex>
+#include <string>
+
+#include "element.h"
+#include "container.h"
 
 using namespace std;
 
 union Argument {
-	int i;
+	int _int;
+	SElement* _SEltPtr;
+	SContainer* _SContPtr;
+	// string _str;
 };
 
 union Function {
