@@ -103,6 +103,7 @@ void SWindow::listener(){
 				break;
 			}
 
+		// execute next action in queue
 		mActionMutex.lock();
 		if (!mSharedQueue.empty()) {
 			Action a = mSharedQueue.front();
