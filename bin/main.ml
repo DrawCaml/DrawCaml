@@ -1,12 +1,16 @@
 (* should return a DWindow instance *)
-let window = new DrawCaml.dwindow ~title:"Enrique le plus bo"
+let window = new DrawCaml.dwindow ~title:"Test Window"
+
 let grid_container = new DrawCaml.dcontainer ~layout:GridLayout
+
 grid_container#setBgColor(0,255,0);
 window#setContainer grid_container;
+
 let container1 = new DrawCaml.dcontainer
 let container2 = new DrawCaml.dcontainer
 let container3 = new DrawCaml.dcontainer
 let container4 = new DrawCaml.dcontainer
+
 container1#setBgColor(255,0,0);
 container2#setBgColor(0,0,255);
 container3#setBgColor(255,128,0);
