@@ -93,7 +93,7 @@ extern "C" value sendMessage_cpp(value window, value message) {
 	
 	mutex* m=new mutex;
 	m->lock();
-	Action action;	
+	Action action;
 	action.mResultLock = m;
 	action.mArgs={};
 	action.mFun.fN = &test; 
@@ -155,8 +155,14 @@ extern "C" value setPos_cpp(value object,value posX,value posY) {
 	Action action;	
 	action.mResultLock = m;
 	action.mArgs={posx,posy};
-	action.mFun.f2 = &(e->setPos); // DOESN'T WORK BECAUSE OF BOUNDED METHOD
+	// action.mFun.f2 = &(e->setPos); // DOESN'T WORK BECAUSE OF BOUNDED METHOD
 	// sol: modify call and function storage in action to support class methods
+	action.mFun.f2 = &SElement::setPos;
+	//in ation:
+	// when window calls action:
+	mContainer/*pointer to container of window*/->*(action.mFun.f2);
+
+
 
 	win->mActionMutex.lock();
 
