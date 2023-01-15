@@ -1,6 +1,0 @@
-description = ""
-requires = ""
-archive(byte) = "DrawCaml.cma"
-archive(native) = "DrawCaml.cmxa"
-plugin(byte) = "DrawCaml.cma"
-plugin(native) = "DrawCaml.cmxs"
