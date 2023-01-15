@@ -1,0 +1,25 @@
+lib: [
+  "_build/install/default/lib/DrawCaml/DrawCaml.a"
+  "_build/install/default/lib/DrawCaml/DrawCaml.cma"
+  "_build/install/default/lib/DrawCaml/DrawCaml.cmxa"
+  "_build/install/default/lib/DrawCaml/DrawCaml.ml"
+  "_build/install/default/lib/DrawCaml/META"
+  "_build/install/default/lib/DrawCaml/drawCaml.cmi"
+  "_build/install/default/lib/DrawCaml/drawCaml.cmt"
+  "_build/install/default/lib/DrawCaml/drawCaml.cmx"
+  "_build/install/default/lib/DrawCaml/dune-package"
+  "_build/install/default/lib/DrawCaml/libDrawCaml_stubs.a"
+  "_build/install/default/lib/DrawCaml/opam"
+]
+libexec: [
+  "_build/install/default/lib/DrawCaml/DrawCaml.cmxs"
+]
+bin: [
+  "_build/install/default/bin/DrawCaml"
+]
+doc: [
+  "_build/install/default/doc/DrawCaml/README.md"
+]
+stublibs: [
+  "_build/install/default/lib/stublibs/dllDrawCaml_stubs.so"
+]

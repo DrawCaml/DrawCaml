@@ -8,7 +8,7 @@ template <class ... P> struct Combine : P... {
    // le using qui suit est nécessaire, mais peut ne pas être
    // supporté sur certains compilateurs en 2018
    //
-   using P::operator()...;
+   //using P::operator()...;
 };
 template <class ... F>
    Combine<F...> combine(F... fs) {

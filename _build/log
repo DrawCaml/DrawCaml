@@ -1,0 +1,126 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Workspace root: /home/damien/Documents/DrawCaml
+# Auto-detected concurrency: 4
+$ /home/damien/.opam/with-coq/bin/ocamlc.opt -config > /tmp/dune_b6ca0a_output
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; for_host = None
+#  ; fdo_target_exe = None
+#  ; build_dir = "default"
+#  ; toplevel_path = Some External "/home/damien/.opam/with-coq/lib/toplevel"
+#  ; ocaml_bin = External "/home/damien/.opam/with-coq/bin"
+#  ; ocaml = Ok External "/home/damien/.opam/with-coq/bin/ocaml"
+#  ; ocamlc = External "/home/damien/.opam/with-coq/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/home/damien/.opam/with-coq/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/home/damien/.opam/with-coq/bin/ocamldep.opt"
+#  ; ocamlmklib = Ok External "/home/damien/.opam/with-coq/bin/ocamlmklib.opt"
+#  ; env =
+#      map
+#        { "DUNE_OCAML_HARDCODED" : "/home/damien/.opam/with-coq/lib"
+#        ; "DUNE_OCAML_STDLIB" : "/home/damien/.opam/with-coq/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" : "/home/damien/Documents/DrawCaml"
+#        ; "INSIDE_DUNE" : "/home/damien/Documents/DrawCaml/_build/default"
+#        ; "OCAMLFIND_IGNORE_DUPS_IN" :
+#            "/home/damien/Documents/DrawCaml/_build/install/default/lib"
+#        ; "OCAMLPATH" :
+#            "/home/damien/Documents/DrawCaml/_build/install/default/lib"
+#        ; "OCAMLTOP_INCLUDE_PATH" :
+#            "/home/damien/Documents/DrawCaml/_build/install/default/lib/toplevel"
+#        ; "OCAML_COLOR" : "always"
+#        ; "OPAMCOLOR" : "always"
+#        }
+#  ; findlib_paths = [ External "/home/damien/.opam/with-coq/lib" ]
+#  ; arch_sixtyfour = true
+#  ; natdynlink_supported = true
+#  ; supports_shared_libraries = true
+#  ; ocaml_config =
+#      { version = "4.08.1"
+#      ; standard_library_default = "/home/damien/.opam/with-coq/lib/ocaml"
+#      ; standard_library = "/home/damien/.opam/with-coq/lib/ocaml"
+#      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
+#      ; ccomp_type = "cc"
+#      ; c_compiler = "gcc"
+#      ; ocamlc_cflags =
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-fcommon"; "-fPIC" ]
+#      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
+#      ; ocamlopt_cflags =
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-fcommon" ]
+#      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
+#      ; bytecomp_c_compiler =
+#          [ "gcc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-fcommon"
+#          ; "-fPIC"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ; "-D_REENTRANT"
+#          ]
+#      ; bytecomp_c_libraries = [ "-lm"; "-ldl"; "-lpthread" ]
+#      ; native_c_compiler =
+#          [ "gcc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-fcommon"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ; "-D_REENTRANT"
+#          ]
+#      ; native_c_libraries = [ "-lm"; "-ldl" ]
+#      ; native_pack_linker = [ "ld"; "-r"; "-o" ]
+#      ; cc_profile = [ "-pg" ]
+#      ; architecture = "amd64"
+#      ; model = "default"
+#      ; int_size = 63
+#      ; word_size = 64
+#      ; system = "linux"
+#      ; asm = [ "as" ]
+#      ; asm_cfi_supported = true
+#      ; with_frame_pointers = false
+#      ; ext_exe = ""
+#      ; ext_obj = ".o"
+#      ; ext_asm = ".s"
+#      ; ext_lib = ".a"
+#      ; ext_dll = ".so"
+#      ; os_type = "Unix"
+#      ; default_executable_name = "a.out"
+#      ; systhread_supported = true
+#      ; host = "x86_64-pc-linux-gnu"
+#      ; target = "x86_64-pc-linux-gnu"
+#      ; profiling = true
+#      ; flambda = false
+#      ; spacetime = false
+#      ; safe_string = false
+#      ; exec_magic_number = "Caml1999X025"
+#      ; cmi_magic_number = "Caml1999I025"
+#      ; cmo_magic_number = "Caml1999O025"
+#      ; cma_magic_number = "Caml1999A025"
+#      ; cmx_magic_number = "Caml1999Y025"
+#      ; cmxa_magic_number = "Caml1999Z025"
+#      ; ast_impl_magic_number = "Caml1999M025"
+#      ; ast_intf_magic_number = "Caml1999N025"
+#      ; cmxs_magic_number = "Caml1999D025"
+#      ; cmt_magic_number = "Caml1999T025"
+#      ; natdynlink_supported = true
+#      ; supports_shared_libraries = true
+#      ; windows_unicode = false
+#      }
+#  }
+$ (cd _build/default/lib && /usr/bin/gcc -xc++ -fPIC -std=c++17 -g -I /home/damien/.opam/with-coq/lib/ocaml -o action.o -c action.cpp)
+> In file included from action.h:3,
+>                  from action.cpp:1:
+> /usr/include/c++/9/variant: In instantiation of ‘constexpr decltype(auto) std::__do_visit(_Visitor&&, _Variants&& ...) [with bool __use_index = false; bool __same_return_types = true; _Visitor = Combine<Action::Call()::<lambda(void (*)(int, int))> >; _Variants = {std::variant<void (SContainer::*)(int, int), void (SContainer::*)(SElement*, int, int)>&}]’:
+> /usr/include/c++/9/variant:1663:24:   required from ‘constexpr decltype(auto) std::visit(_Visitor&&, _Variants&& ...) [with _Visitor = Combine<Action::Call()::<lambda(void (*)(int, int))> >; _Variants = {std::variant<void (SContainer::*)(int, int), void (SContainer::*)(SElement*, int, int)>&}]’
+> action.cpp:25:8:   required from here
+> /usr/include/c++/9/variant:1643:13: error: no type named ‘type’ in ‘std::conditional_t<false, std::__detail::__variant::__variant_idx_cookie, std::invoke_result<Combine<Action::Call()::<lambda(void (*)(int, int))> >, void (SContainer::*&)(int, int)> >’ {aka ‘struct std::invoke_result<Combine<Action::Call()::<lambda(void (*)(int, int))> >, void (SContainer::*&)(int, int)>’}
+>  1643 |       using _Result_type = typename std::conditional_t<__use_index,
+>       |             ^~~~~~~~~~~~
+> /usr/include/c++/9/variant:1647:23: error: no type named ‘type’ in ‘std::conditional<false, std::__detail::__variant::__variant_idx_cookie, std::invoke_result<Combine<Action::Call()::<lambda(void (*)(int, int))> >, void (SContainer::*&)(int, int)> >::type’ {aka ‘struct std::invoke_result<Combine<Action::Call()::<lambda(void (*)(int, int))> >, void (SContainer::*&)(int, int)>’}
+>  1647 |       constexpr auto& __vtable = __detail::__variant::__gen_vtable<
+>       |                       ^~~~~~~~
+[1]
