@@ -11,11 +11,17 @@
 using namespace std;
 //using function = variant<function<void(int,int)>,function<void(SElement*,int,int)>>;
 //list of all possible function pointer types
-using Function = variant<void(SContainer::*)(int,int),void(SContainer::*)(SElement*,int,int)>;
+// using Function = variant<void(SContainer::*)(int,int),void(SContainer::*)(SElement*,int,int)>;
+//using Argument = variant<int,SElement*>;
 
-using Argument = variant<int,SElement*>;
+using Function = function<void(void)>;
 
-using PObject = variant<SContainer*>;
+//using PObject = variant<SContainer*>;
+
+// a, b, c;
+// std::function<void(void)> f = std::bind(&Foo::doSomethingArgs, this, a, b, c);
+// f = lambda x, y: this.something(x, y)
+// f()
 
 
 
@@ -30,9 +36,8 @@ using PObject = variant<SContainer*>;
 class Action {
 	public:
 		Function mFun;
-		vector<Argument> mArgs;
-		PObject mPObj;
-
+		//vector<Argument> mArgs;
+		//PObject mPObj;
 		mutex* mResultLock;
 		
 		void Call();

@@ -21,6 +21,19 @@
 #include <iostream>
 
 
+void sendDummyEvent(SWindow* win) {
+	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
+	XClientMessageEvent dummyEvent;
+	memset(&dummyEvent, 0, sizeof(XClientMessageEvent));
+	dummyEvent.type = ClientMessage;
+	dummyEvent.window = win->mWindow;
+	dummyEvent.format = 32;
+	XSendEvent(win->mDisplay, win->mWindow, 0, 0, (XEvent*)&dummyEvent);
+	XFlush(win->mDisplay);
+	return;
+}
+
+
 extern "C" value createWindow_cpp(value name) {
 	const char* windowName = String_val(name);
 	SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
@@ -50,10 +63,10 @@ extern "C" value createWindow_cpp(value name) {
 	return caml_copy_nativeint((long)win); 
 }
 
-void test(vector<Argument> args) {
+/*void test(vector<Argument> args) {
 	LOG("WAOUF\n");
 	return;
-}
+}*/
 
 extern "C" value sendMessage_cpp(value window, value message) {
 	SWindow* win = (SWindow *) Nativeint_val(window);
@@ -89,6 +102,41 @@ extern "C" value sendMessage_cpp(value window, value message) {
 	m->lock();
 	m->unlock();
 	LOG("Message was processed\n");*/
+	
+	return Val_unit;
+}
+
+
+extern "C" value setSize_cpp(value object,value posX,value posY) {
+	SElement* e = (SElement *) Nativeint_val(object);
+	int posx = Int_val(posX);
+	int posy = Int_val(posY);
+
+	if (!e) {
+		WARNING("Element doesn't exist\n");
+		return Val_unit;
+	}
+	SWindow* win = e->mWin;
+	
+	// TO BE GENERALIZED IN ACTION.cpp	
+	mutex* m=new mutex;
+	m->lock();
+	Action action;	
+	action.mResultLock = m;
+
+	action.mFun = bind(&SElement::setSize,e,posx,posy);
+	//in ation:
+	// when window calls action:
+
+	//factorise in a window method
+	win->mActionMutex.lock();
+	win->mSharedQueue.push(action);		
+	sendDummyEvent(win);	
+	win->mActionMutex.unlock();
+
+	LOG("Sent message!\n");
+	//on attend pas le message
+	LOG("Message was processed\n");
 	
 	return Val_unit;
 }
