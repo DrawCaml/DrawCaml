@@ -8,7 +8,6 @@
 #include "caml/intext.h"
 #include "caml/threads.h"
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
@@ -20,6 +19,7 @@
 #include "action.h"
 #include <iostream>
 
+std::vector<SWindow*> windows;
 
 void sendDummyEvent(SWindow* win) {
 	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
@@ -34,9 +34,12 @@ void sendDummyEvent(SWindow* win) {
 }
 
 
-extern "C" value createWindow_cpp(value name) {
+extern "C" value createWindow_cpp(value name, int posX, int posY, int sizeX, int sizeY) {
 	const char* windowName = String_val(name);
-	SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
+	SWindow* win = new SWindow(windowName, posX, posY, sizeX, sizeY, 1);
+	windows.push_back(win);
+
+	win->draw();
 
   	// tests (uncomment)
 	/*win->mContainer->setBgColor("yellow");
@@ -61,6 +64,15 @@ extern "C" value createWindow_cpp(value name) {
   	win->draw();*/
 
 	return caml_copy_nativeint((long)win); 
+}
+
+extern "C" value setWindowContainer_cpp(value window, value container){
+	SWindow* win = (SWindow *) Nativeint_val(window);
+	SContainer* cont = (SContainer *) Nativeint_val(container);
+	win->mContainer = cont;
+	cont->setPos(0, 0);
+	cont->setSize(win->mWidth, win->mHeight);
+	return Val_unit;
 }
 
 extern "C" value draw_cpp(value window) {//toujours pour la window !!!, l'utilisateur ne fait jamais de call draw pour un container
@@ -130,10 +142,10 @@ extern "C" value waitForClose_cpp(value window){
 
 //CONTAINER.CPP
 
-extern "C" value createContainer_cpp(value layout,value width, value height) {
-	SLayout l = (SLayout) Nativeint_val(layout);
-	int w = Int_val(width);
-	int h = Int_val(height);
+extern "C" value createContainer_cpp(int layout, int width, int height) {
+	SLayout l = (SLayout) layout;
+	int w = width;
+	int h = height;
 	SContainer* c = new SContainer(l,w,h);
 	return caml_copy_nativeint((long)c);
 }
@@ -247,24 +259,28 @@ extern "C" value setBgColor_cpp(value object,value name) {
 		return Val_unit;
 	}
 	SWindow* win = e->mWin;
-	
-	mutex* m=new mutex;
-	m->lock();
-	Action action;	
-	action.mResultLock = m;
-	action.mFun = bind(&SContainer::setBgColor,e,blase);
 
-	win->mActionMutex.lock();
+	if(win){
+		mutex* m=new mutex;
+		m->lock();
+		Action action;	
+		action.mResultLock = m;
+		action.mFun = bind(&SContainer::setBgColor,e,blase);
 
-	win->mSharedQueue.push(action);		
+		win->mActionMutex.lock();
 
-	sendDummyEvent(win);	
+		win->mSharedQueue.push(action);		
 
-	win->mActionMutex.unlock();
+		sendDummyEvent(win);	
 
-	LOG("Sent message!\n");
-	//on attend pas le message
-	LOG("Message was processed\n");
+		win->mActionMutex.unlock();
+
+		LOG("Sent message!\n");
+		//on attend pas le message
+		LOG("Message was processed\n");
+	} else {
+		e->setBgColor(blase);
+	}
 	
 	return Val_unit;
 }

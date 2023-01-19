@@ -1,8 +1,0 @@
-external createWindow : string -> nativeint = "createWindow_cpp"
-external draw : nativeint -> unit = "draw_cpp"
-external sendMessage : nativeint -> int -> unit = "sendMessage_cpp"
-external waitForClose : nativeint -> unit = "waitForClose_cpp"
-external createContainer : nativeint -> unit = "createContainer_cpp"
-external setSize : nativeint -> int -> int -> unit = "setSize_cpp"
-external setPos : nativeint -> int -> int -> unit = "setPos_cpp"
-external addElem : nativeint -> nativeint -> int -> int -> unit = "addElem_cpp"
