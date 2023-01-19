@@ -22,4 +22,4 @@ grid_container#addElem container3 (3,3)
 grid_container#addElem container4 (1,2)
 
 (* keeps the window open *)
-DrawCaml.waitForClose(window);;
+window#waitForClose ();;

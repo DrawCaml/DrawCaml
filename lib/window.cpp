@@ -46,10 +46,10 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 
 	XStoreName(mDisplay, mWindow, mName.c_str());
 
-	// create main container for the frame
-	mContainer = new SContainer(SLayout::FloatLayout);
-	mContainer->setPos(0, 0);
-	mContainer->setSize(mWidth, mHeight);
+	// create main container for the frame (moved to OCaml side)
+	// mContainer = new SContainer(SLayout::FloatLayout);
+	// mContainer->setPos(0, 0);
+	// mContainer->setSize(mWidth, mHeight);
 
 	// save relevant info for drawing
 	mGC = XCreateGC(mDisplay, mWindow, mValuemask, &mValues);

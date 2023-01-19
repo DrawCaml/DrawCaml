@@ -8,7 +8,6 @@
 #include "caml/intext.h"
 #include "caml/threads.h"
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
@@ -35,9 +34,25 @@ void sendDummyEvent(SWindow* win) {
 
 //WINDOW.CPP
 
-extern "C" value createWindow_cpp(value name) {
+void sendDummyEvent(SWindow* win) {
+	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
+	XClientMessageEvent dummyEvent;
+	memset(&dummyEvent, 0, sizeof(XClientMessageEvent));
+	dummyEvent.type = ClientMessage;
+	dummyEvent.window = win->mWindow;
+	dummyEvent.format = 32;
+	XSendEvent(win->mDisplay, win->mWindow, 0, 0, (XEvent*)&dummyEvent);
+	XFlush(win->mDisplay);
+	return;
+}
+
+
+extern "C" value createWindow_cpp(value name, int posX, int posY, int sizeX, int sizeY) {
 	const char* windowName = String_val(name);
-	SWindow* win = new SWindow(windowName, 10, 10, 500, 500, 1);
+	SWindow* win = new SWindow(windowName, posX, posY, sizeX, sizeY, 1);
+	windows.push_back(win);
+
+	win->draw();
 
   	// tests (uncomment)
 	/*win->mContainer->setBgColor("yellow");
@@ -78,7 +93,7 @@ extern "C" value draw_cpp(value window) {//toujours pour la window !!!, l'utilis
 void test(vector<Argument> args) {
 	LOG("WAOUF\n");
 	return;
-}
+}*/
 
 extern "C" value sendMessage_cpp(value window, value message) {
 	SWindow* win = (SWindow *) Nativeint_val(window);
@@ -89,7 +104,7 @@ extern "C" value sendMessage_cpp(value window, value message) {
 		return Val_unit;
 	}
 
-	win->mActionMutex.lock();
+	/*win->mActionMutex.lock();
 	
 	mutex* m=new mutex;
 	m->lock();
@@ -113,7 +128,7 @@ extern "C" value sendMessage_cpp(value window, value message) {
 	LOG("Sent message!\n");
 	m->lock();
 	m->unlock();
-	LOG("Message was processed\n");
+	LOG("Message was processed\n");*/
 	
 	return Val_unit;
 }
