@@ -1,6 +1,4 @@
-(* open DrawCaml *)
-
-type dlayout = FloatLayout | GridLayout | Other
+(* type dlayout = FloatLayout | GridLayout | Other
 
 let layout_enum = function
 	| FloatLayout -> 0
@@ -12,7 +10,6 @@ class virtual delement () =
 	object
 		val mutable size = (-1,-1)
 		val mutable pos = (-1,-1)
-		val mutable ptr = 0
 		method getSize () =
 			size
 		method getPos () =
@@ -28,7 +25,7 @@ class dcontainer ?(layout = FloatLayout) =
 	object
 		inherit delement ()
 		val mutable delement_list = ([] : delement list)
-		val ptr = createContainerEx(layout_enum layout)
+		val ptr = createContainerEx(layout_enum(layout))
 		method addElem : 'a. (#delement as 'a) -> int*int -> unit = fun elem pos_elem ->
 			let elem_coerce = (elem :> delement) in
 			elem_coerce#setPos pos_elem;
@@ -54,4 +51,4 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 			main_container <- ctr
 		method draw () =
 			if ptr then draw_elt_cpp(ptr) else failwith("Pointeur zéro pas cool")
-	end
+	end *)

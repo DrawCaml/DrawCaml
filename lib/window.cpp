@@ -13,7 +13,7 @@
 using namespace std;
 
 
-SWindow::SWindow(string name, int posX, int posY, int width, int height, int borderSize){//to do, (a lot of arguments)
+SWindow::SWindow(string name, int posX, int posY, int width, int height, int borderSize){
  	XInitThreads();
 	mName = name;
 	mPosX = posX;
@@ -60,7 +60,7 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	LOG("Window created!\n");
 }
 
-void SWindow::close(){//to do, or do we ?
+void SWindow::close(){
 	XDestroyWindow(mDisplay, mEvent.xclient.window);
 
 	XCloseDisplay(mDisplay);
@@ -103,7 +103,6 @@ void SWindow::listener(){
 				break;
 			}
 
-		// execute next action in queue
 		mActionMutex.lock();
 		if (!mSharedQueue.empty()) {
 			Action a = mSharedQueue.front();
@@ -121,7 +120,7 @@ void SWindow::listener(){
 	this->close();
 }
 
-void SWindow::draw(){//done
+void SWindow::draw(){
 	if (!mThread) {
 		mThread	= new thread(&SWindow::listener, this); 
 	}

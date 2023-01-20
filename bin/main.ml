@@ -1,25 +1,27 @@
 (* should return a DWindow instance *)
-let window = new DrawCaml.dwindow ~title:"Test Window"
+let window = new DrawCaml.dwindow ~title:"Test Window" ();;
 
-let grid_container = new DrawCaml.dcontainer ~layout:GridLayout
+ (* let grid_container = new DrawCaml.dcontainer ~layout:GridLayout ~dim:(5,5) ();; *)
 
-grid_container#setBgColor(0,255,0);
-window#setContainer grid_container;
+(* window#setContainer(grid_container);; *)
 
-let container1 = new DrawCaml.dcontainer
-let container2 = new DrawCaml.dcontainer
-let container3 = new DrawCaml.dcontainer
-let container4 = new DrawCaml.dcontainer
+let grid_container = window#getContainer ();;
+grid_container#setBgColor("green");;
 
-container1#setBgColor(255,0,0);
-container2#setBgColor(0,0,255);
-container3#setBgColor(255,128,0);
-container4#setBgColor(255,0,255);
+(* let container1 = new DrawCaml.dcontainer ();;
+let container2 = new DrawCaml.dcontainer ();;
+let container3 = new DrawCaml.dcontainer ();;
+let container4 = new DrawCaml.dcontainer ();;
 
-grid_container#addElem container1
-grid_container#addElem container2
-grid_container#addElem container3 (3,3)
-grid_container#addElem container4 (1,2)
+container1#setBgColor("red");;
+container2#setBgColor("blue");;
+container3#setBgColor("orange");;
+container4#setBgColor("purple");;
+
+grid_container#addElem container1;;
+grid_container#addElem container2;;
+grid_container#addElem container3 (3,3);;
+grid_container#addElem container4 (1,2);; *)
 
 (* keeps the window open *)
 window#waitForClose ();;

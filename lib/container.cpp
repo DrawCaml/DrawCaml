@@ -5,7 +5,7 @@
 #include "window.h"
 #include "container.h"
 
-SContainer::SContainer(SLayout lay, int width, int height){//done
+SContainer::SContainer(SLayout lay, int width, int height){
 	mLayout = lay;
 	if(lay == SLayout::GridLayout){
 		if (width > 1) _gridX = width;
@@ -15,12 +15,12 @@ SContainer::SContainer(SLayout lay, int width, int height){//done
 	}
 }
 
-void SContainer::setPos(int posX, int posY){//done
+void SContainer::setPos(int posX, int posY){
 	mPosX = posX;
 	mPosY = posY;
 }
 
-void SContainer::setSize(int sizeX, int sizeY){//done
+void SContainer::setSize(int sizeX, int sizeY){
 	mSizeX = sizeX;
 	mSizeY = sizeY;
 	if(mLayout == SLayout::GridLayout){
@@ -29,7 +29,7 @@ void SContainer::setSize(int sizeX, int sizeY){//done
 	}
 }
 
-void SContainer::addElem(SElement* elt, int posX, int posY){//done
+void SContainer::addElem(SElement* elt, int posX, int posY){
 	mElements.push_back(elt);
 
 	switch(mLayout){
@@ -77,12 +77,12 @@ void SContainer::_updateBgColor(){
 	}
 }
 
-void SContainer::setBgColor(string bgColor){//done
+void SContainer::setBgColor(string bgColor){
 	mBgColorStr = bgColor;
 }
 
 // add a parameter to access XLib stuff for drawing
-void SContainer::draw(SWindow* win, int drawX, int drawY){//not to do because not called by client
+void SContainer::draw(SWindow* win, int drawX, int drawY){
 	if(mWin != win){
 		mWin = win;
 		_updateBgColor();
