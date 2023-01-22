@@ -27,6 +27,10 @@ std::vector<SWindow*> windows;
 // to be added: a function to delete window objects
 
 
+/*
+Window methods
+*/
+
 extern "C" value createWindow_cpp(value name, value vposX, value vposY, value vsizeX, value vsizeY) {
 	const char* windowName = String_val(name);
 	int posX = Int_val(vposX), posY = Int_val(vposY);
@@ -61,44 +65,6 @@ extern "C" value draw_cpp(value window) {//toujours pour la window !!!, l'utilis
 	return Val_unit;
 }
 
-extern "C" value sendMessage_cpp(value window, value message) {
-	SWindow* win = (SWindow *) Nativeint_val(window);
-	int val = Int_val(message);
-
-	if (!win or win->mClosed) {
-		WARNING("Can't send message to a closed windows!\n");
-		return Val_unit;
-	}
-
-	/*win->mActionMutex.lock();
-	
-	mutex* m=new mutex;
-	m->lock();
-	Action action;	
-	action.mResultLock = m;
-	action.mArgs={};
-	action.mFun.fN = &test; 
-
-	win->mSharedQueue.push(action);		
-
-	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
-	XClientMessageEvent dummyEvent;
-	memset(&dummyEvent, 0, sizeof(XClientMessageEvent));
-	dummyEvent.type = ClientMessage;
-	dummyEvent.window = win->mWindow;
-	dummyEvent.format = 32;
-	XSendEvent(win->mDisplay, win->mWindow, 0, 0, (XEvent*)&dummyEvent);
-	XFlush(win->mDisplay);
-	win->mActionMutex.unlock();
-
-	LOG("Sent message!\n");
-	m->lock();
-	m->unlock();
-	LOG("Message was processed\n");*/
-	
-	return Val_unit;
-}
-
 extern "C" value waitForClose_cpp(value window){
 	SWindow* win = (SWindow *) Nativeint_val(window);
 	LOG("Waiting for window '" + win->mName + "' to close\n");
@@ -109,16 +75,9 @@ extern "C" value waitForClose_cpp(value window){
 	return Val_unit;
 }
 
-
-//CONTAINER.CPP
-
-extern "C" value createContainer_cpp(value layout, value width, value height) {
-	SLayout l = (SLayout) Int_val(layout);
-	int w = Int_val(width);
-	int h = Int_val(height);
-	SContainer* c = new SContainer(l,w,h);
-	return caml_copy_nativeint((long)c);
-}
+/*
+ Element methods
+*/
 
 extern "C" value setPos_cpp(value object,value posX,value posY) {
 	SContainer* e = (SContainer *) Nativeint_val(object);
@@ -152,6 +111,19 @@ extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
 	return Val_unit;
 }
 
+
+/*
+ Container methods
+*/
+
+extern "C" value createContainer_cpp(value layout, value width, value height) {
+	SLayout l = (SLayout) Int_val(layout);
+	int w = Int_val(width);
+	int h = Int_val(height);
+	SContainer* c = new SContainer(l,w,h);
+	return caml_copy_nativeint((long)c);
+}
+
 // Containers are the only objects to which we can add elements
 extern "C" value addElem_cpp(value object,value object_added,value posX,value posY) {
 	SContainer* e = (SContainer *) Nativeint_val(object);
@@ -169,7 +141,6 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 	
 	return Val_unit;
 }
-
 
 extern "C" value setBgColor_cpp(value object,value color) {
 	// for now only containers can change their background

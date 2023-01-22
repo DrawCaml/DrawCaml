@@ -1,14 +1,18 @@
-external createWindowEx : string -> int -> int -> int -> int -> nativeint = "createWindow_cpp"
-external drawWindowEx : nativeint -> unit = "draw_cpp"
-external sendMessage : nativeint -> int -> unit = "sendMessage_cpp"
-external waitForCloseEx : nativeint -> unit = "waitForClose_cpp"
-external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
-
-external createContainerEx : int -> int -> int -> nativeint = "createContainer_cpp"
+(* Element methods *)
 external setPosEx : nativeint -> int -> int -> unit = "setPos_cpp"
 external setSizeEx : nativeint -> int -> int -> unit = "setSize_cpp"
 external addElemEx : nativeint -> nativeint -> int -> int -> unit = "addElem_cpp"
+
+(* Conatiner methods *)
+external createContainerEx : int -> int -> int -> nativeint = "createContainer_cpp"
 external setBgColorEx : nativeint -> string -> unit = "setBgColor_cpp"
+
+(* Window methods *)
+external createWindowEx : string -> int -> int -> int -> int -> nativeint = "createWindow_cpp"
+external drawWindowEx : nativeint -> unit = "draw_cpp"
+external waitForCloseEx : nativeint -> unit = "waitForClose_cpp"
+external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
+
 
 type dlayout = FloatLayout | GridLayout | Other
 
@@ -22,6 +26,7 @@ class virtual delement () =
 	object
 		val mutable size = (-1,-1)
 		val mutable pos = (-1,-1)
+		val mutable ptr = 0n
 		method getSize () =
 			size
 		method getPos () =
@@ -30,22 +35,20 @@ class virtual delement () =
 			size <- t
 		method setPos t =
 			pos <- t
+		method getPtr () =
+			ptr
 	end
 
 (* graphical element that can manage others *)
 class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 	object
 		inherit delement ()
-		val mutable delement_list = ([] : delement list)
-		val ptr = createContainerEx (layout_enum layout) (fst dim) (snd dim)
-		(* method addElem : 'a. (#delement as 'a) -> int*int -> unit = fun elem pos_elem ->
-			let elem_coerce = (elem :> delement) in
-			elem_coerce#setPos pos_elem;
-			delement_list <- elem_coerce::delement_list *)
+		method addElem : 'a. (#delement as 'a) -> ?pos:int*int -> unit -> unit= fun elt ?(pos=(-1,-1)) ()->
+			let e = (elt :> delement) in
+			(addElemEx ptr (e#getPtr()) (fst pos) (snd pos))
 		method setBgColor (col : string) =
 			(setBgColorEx ptr col)
-		method getPtr () =
-			ptr
+		initializer ptr <- createContainerEx (layout_enum layout) (fst dim) (snd dim)
 	end
 
 (* class for the window *)
@@ -70,7 +73,7 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 			if ptr<>0n then 
 				drawWindowEx(ptr) 
 			else 
-				failwith("Pointeur zéro pas cool")
+				failwith("OCaml: NullPointerException")
 		method waitForClose () =
 			waitForCloseEx(ptr)
 		initializer setWindowContainerEx ptr (main_container#getPtr ())
