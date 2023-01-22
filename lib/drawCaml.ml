@@ -38,10 +38,10 @@ class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 		inherit delement ()
 		val mutable delement_list = ([] : delement list)
 		val ptr = createContainerEx (layout_enum layout) (fst dim) (snd dim)
-		method addElem : 'a. (#delement as 'a) -> int*int -> unit = fun elem pos_elem ->
+		(* method addElem : 'a. (#delement as 'a) -> int*int -> unit = fun elem pos_elem ->
 			let elem_coerce = (elem :> delement) in
 			elem_coerce#setPos pos_elem;
-			delement_list <- elem_coerce::delement_list
+			delement_list <- elem_coerce::delement_list *)
 		method setBgColor (col : string) =
 			(setBgColorEx ptr col)
 		method getPtr () =

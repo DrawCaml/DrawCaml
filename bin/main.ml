@@ -1,11 +1,14 @@
+(* open Unix *)
+
 (* should return a DWindow instance *)
-let window = new DrawCaml.dwindow ~title:"Test Window" ();;
+let window = new DrawCaml.dwindow ~title:"Test Window" ~pos:(50,50) ~size:(400,400) ();;
 
- (* let grid_container = new DrawCaml.dcontainer ~layout:GridLayout ~dim:(5,5) ();; *)
+let grid_container = new DrawCaml.dcontainer ~layout:GridLayout ~dim:(5,5) ();;
 
-(* window#setContainer(grid_container);; *)
+window#setContainer(grid_container);;
 
-let grid_container = window#getContainer ();;
+(* let grid_container = window#getContainer ();; *)
+
 grid_container#setBgColor("green");;
 
 (* let container1 = new DrawCaml.dcontainer ();;

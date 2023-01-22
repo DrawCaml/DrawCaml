@@ -19,49 +19,23 @@
 #include "action.h"
 #include <iostream>
 
+using Function = function<void(void)>;
+
+// keeps trace of c++ windows
 std::vector<SWindow*> windows;
 
-void sendDummyEvent(SWindow* win) {
-	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
-	XClientMessageEvent dummyEvent;
-	memset(&dummyEvent, 0, sizeof(XClientMessageEvent));
-	dummyEvent.type = ClientMessage;
-	dummyEvent.window = win->mWindow;
-	dummyEvent.format = 32;
-	XSendEvent(win->mDisplay, win->mWindow, 0, 0, (XEvent*)&dummyEvent);
-	XFlush(win->mDisplay);
-	return;
-}
+// to be added: a function to delete window objects
 
 
-extern "C" value createWindow_cpp(value name, int posX, int posY, int sizeX, int sizeY) {
+extern "C" value createWindow_cpp(value name, value vposX, value vposY, value vsizeX, value vsizeY) {
 	const char* windowName = String_val(name);
+	int posX = Int_val(vposX), posY = Int_val(vposY);
+	int sizeX = Int_val(vsizeX), sizeY = Int_val(vsizeY);
 	SWindow* win = new SWindow(windowName, posX, posY, sizeX, sizeY, 1);
+	// printf("%d %d %d %d\n", posX, posY, sizeX, sizeY);
 	windows.push_back(win);
 
 	win->draw();
-
-  	// tests (uncomment)
-	/*win->mContainer->setBgColor("yellow");
-	SContainer* cont2 = new SContainer(SLayout::GridLayout, 5, 5);
-	cont2->setBgColor("green");
-	win->mContainer->addElem(cont2, 50, 50);
-	
-	SContainer* cont3 = new SContainer(SLayout::FloatLayout);
-	cont3->setBgColor("red");
-	SContainer* cont4 = new SContainer(SLayout::FloatLayout);
-	cont4->setBgColor("blue");
-	SContainer* cont5 = new SContainer(SLayout::FloatLayout);
-	cont5->setBgColor("orange");
-	SContainer* cont6 = new SContainer(SLayout::FloatLayout);
-	cont6->setBgColor("purple");
-
-	cont2->addElem(cont3);
-	cont2->addElem(cont4);
-	cont2->addElem(cont5, 3, 3);
-	cont2->addElem(cont6, 1, 2);
-
-  	win->draw();*/
 
 	return caml_copy_nativeint((long)win); 
 }
@@ -70,6 +44,7 @@ extern "C" value setWindowContainer_cpp(value window, value container){
 	SWindow* win = (SWindow *) Nativeint_val(window);
 	SContainer* cont = (SContainer *) Nativeint_val(container);
 	win->mContainer = cont;
+	cont->updateWin(win);
 	cont->setPos(0, 0);
 	cont->setSize(win->mWidth, win->mHeight);
 	return Val_unit;
@@ -85,11 +60,6 @@ extern "C" value draw_cpp(value window) {//toujours pour la window !!!, l'utilis
 	win->draw();
 	return Val_unit;
 }
-
-/*void test(vector<Argument> args) {
-	LOG("WAOUF\n");
-	return;
-}*/
 
 extern "C" value sendMessage_cpp(value window, value message) {
 	SWindow* win = (SWindow *) Nativeint_val(window);
@@ -142,10 +112,10 @@ extern "C" value waitForClose_cpp(value window){
 
 //CONTAINER.CPP
 
-extern "C" value createContainer_cpp(int layout, int width, int height) {
-	SLayout l = (SLayout) layout;
-	int w = width;
-	int h = height;
+extern "C" value createContainer_cpp(value layout, value width, value height) {
+	SLayout l = (SLayout) Int_val(layout);
+	int w = Int_val(width);
+	int h = Int_val(height);
 	SContainer* c = new SContainer(l,w,h);
 	return caml_copy_nativeint((long)c);
 }
@@ -161,26 +131,8 @@ extern "C" value setPos_cpp(value object,value posX,value posY) {
 	}
 	SWindow* win = e->mWin;
 	
-	// TO BE GENERALIZED IN ACTION.cpp	
-	mutex* m=new mutex;
-	m->lock();
-	Action action;	
-	action.mResultLock = m;
+	Action* a = new Action(win,bind(&SContainer::setPos,e,posx,posy));	
 
-	action.mFun = bind(&SContainer::setPos,e,posx,posy);
-	//in ation:
-	// when window calls action:
-
-	//factorise in a window method
-	win->mActionMutex.lock();
-	win->mSharedQueue.push(action);		
-	sendDummyEvent(win);	
-	win->mActionMutex.unlock();
-
-	LOG("Sent message!\n");
-	//on attend pas le message
-	LOG("Message was processed\n");
-	
 	return Val_unit;
 }
 
@@ -195,21 +147,8 @@ extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
 	}
 	SWindow* win = e->mWin;
 	
-	mutex* m=new mutex;
-	m->lock();
-	Action action;	
-	action.mResultLock = m;
-	action.mFun = bind(&SElement::setSize,e,sizeX,sizeY);
+	Action* a = new Action(win,bind(&SElement::setSize,e,sizeX,sizeY));
 
-	win->mActionMutex.lock();
-	win->mSharedQueue.push(action);		
-	sendDummyEvent(win);	
-	win->mActionMutex.unlock();
-
-	LOG("Sent message!\n");
-	//on attend pas le message
-	LOG("Message was processed\n");
-	
 	return Val_unit;
 }
 
@@ -225,34 +164,18 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 		return Val_unit;
 	}
 	SWindow* win = e->mWin;
-	
-	mutex* m=new mutex;
-	m->lock();
-	Action action;	
-	action.mResultLock = m;
-	action.mFun = bind(&SContainer::addElem,e,e_add,posx,posy);
 
-	win->mActionMutex.lock();
-
-	win->mSharedQueue.push(action);		
-
-	sendDummyEvent(win);	
-
-	win->mActionMutex.unlock();
-
-	LOG("Sent message!\n");
-	//on attend pas le message
-	LOG("Message was processed\n");
+	Action* a = new Action(win,bind(&SContainer::addElem,e,e_add,posx,posy));
 	
 	return Val_unit;
 }
 
 
-extern "C" value setBgColor_cpp(value object,value name) {
+extern "C" value setBgColor_cpp(value object,value color) {
 	// for now only containers can change their background
 	// later -> More General Type
 	SContainer* e = (SContainer *) Nativeint_val(object);
-	const char* blase = String_val(name);
+	const char* col = String_val(color);
 
 	if (!e) {
 		WARNING("Element doesn't exist\n");
@@ -260,27 +183,7 @@ extern "C" value setBgColor_cpp(value object,value name) {
 	}
 	SWindow* win = e->mWin;
 
-	if(win){
-		mutex* m=new mutex;
-		m->lock();
-		Action action;	
-		action.mResultLock = m;
-		action.mFun = bind(&SContainer::setBgColor,e,blase);
-
-		win->mActionMutex.lock();
-
-		win->mSharedQueue.push(action);		
-
-		sendDummyEvent(win);	
-
-		win->mActionMutex.unlock();
-
-		LOG("Sent message!\n");
-		//on attend pas le message
-		LOG("Message was processed\n");
-	} else {
-		e->setBgColor(blase);
-	}
+	Action* a = new Action(win,bind(&SContainer::setBgColor,e,col));
 	
 	return Val_unit;
 }

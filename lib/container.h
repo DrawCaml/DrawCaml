@@ -29,6 +29,7 @@ public:
 
 	SContainer(SLayout lay, int width=1, int height=1);
 
+	void updateWin(SWindow* win);
 	virtual void draw(SWindow* win, int drawX, int drawY);
 	virtual void setSize(int sizeX, int sizeY);
 	void addElem(SElement* elt, int posX=-1, int posY=-1);

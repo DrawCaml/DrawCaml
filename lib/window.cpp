@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <thread>
 #include <mutex>
+#include <cstring>
 
 #include <X11/Xlib.h>
 #include "window.h"
@@ -79,7 +80,9 @@ void SWindow::listener(){
 			WARNING("No display\n");
 			continue;
 		}
+
 		XNextEvent(mDisplay, &mEvent);
+		// XCheckWindowEvent(mDisplay, mWindow, ExposureMask, &mEvent);
 		switch (mEvent.type) {
 			
 			// Catch events from user
@@ -101,14 +104,14 @@ void SWindow::listener(){
 			default:
 				WARNING("Caught unknown event\n");
 				break;
-			}
+		}
 
+		// Handle action	
 		mActionMutex.lock();
 		if (!mSharedQueue.empty()) {
 			Action a = mSharedQueue.front();
 			mSharedQueue.pop();
 
-			// Handle action	
 			LOG("Received message from CAML: \n");
 			a.Call();
 

@@ -81,12 +81,17 @@ void SContainer::setBgColor(string bgColor){
 	mBgColorStr = bgColor;
 }
 
-// add a parameter to access XLib stuff for drawing
-void SContainer::draw(SWindow* win, int drawX, int drawY){
+void SContainer::updateWin(SWindow* win){
 	if(mWin != win){
 		mWin = win;
 		_updateBgColor();
 	}
+}
+
+// add a parameter to access XLib stuff for drawing
+void SContainer::draw(SWindow* win, int drawX, int drawY){
+	updateWin(win);
+	_updateBgColor();
 
 	// draw the background
 	XSetForeground(mWin->mDisplay, mWin->mGC, mBgColor.pixel);

@@ -1,52 +1,49 @@
 #include "action.h"
-#include <variant>
+#include "window.h"
+#include <cstring>
+// #include <variant>
 
-// VARIANT
-// template <class ... P> struct Combine : P... {
-//    Combine(P... ps) : P{ ps }... {
-//    }
-//    //
-//    // le using qui suit est nécessaire, mais peut ne pas être
-//    // supporté sur certains compilateurs en 2018
-//    //
-//    using P::operator()...;
-// };
-// template <class ... F>
-//    Combine<F...> combine(F... fs) {
-//       return { fs ... };
-//    }
+using namespace std;
 
-// to modify
-void Action::Call() {
+using Function = function<void(void)>;
 
-	mFun();
-
-	mResultLock->unlock();
-// VARIANT
-	// visit(combine(
-	// 	[this](void(*setPos)(int,int)) {(*(get<0>(mPObj)).*(get<0>(mFun)))(get<0>(mArgs[0]),get<0>(mArgs[1]));}
-	// 	[this](void(*addElem)(SElement*,int,int)) {*mPObj.*mFun(mArgs[0],mArgs[1],mArgs[2])}
-	// 	)
-	// 	,mFun);
-	
-// OLD
-	//2 cases if class methode or not ?
-	/*switch (mArgs.size()) {
-		case 0:
-			mFun.f();
-			break;
-		case 1:
-			mFun.f1(mArgs[0]);
-			break;
-		case 2:
-			mFun.f2(mArgs[0], mArgs[1]);
-			break;
-		case 3:
-			mFun.f3(mArgs[0], mArgs[1], mArgs[2]);
-			break;
-		default:
-			mFun.fN(mArgs);
-	}*/
+void sendDummyEvent(SWindow* win) {
+	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
+	XClientMessageEvent dummyEvent;
+	memset(&dummyEvent, 0, sizeof(XClientMessageEvent));
+	dummyEvent.type = ClientMessage;
+	dummyEvent.window = win->mWindow;
+	dummyEvent.format = 32;
+	XSendEvent(win->mDisplay, win->mWindow, 0, 0, (XEvent*)&dummyEvent);
+	XFlush(win->mDisplay);
 	return;
+}
 
+Action::Action(SWindow* win, Function f){
+	if(win){
+		mutex* m = new mutex;
+		m->lock();
+		mResultLock = m;
+		mFun = f;
+
+		win->mActionMutex.lock();
+
+		win->mSharedQueue.push(*this);
+
+		sendDummyEvent(win);
+
+		win->mActionMutex.unlock();
+
+		LOG("Sent message!\n");
+	} else {
+		f();
+	}
+}
+
+
+void Action::Call() {
+	mFun();
+	mResultLock->unlock();
+	LOG("Message was processed\n");
+	return;
 }
