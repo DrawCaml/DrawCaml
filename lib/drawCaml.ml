@@ -1,16 +1,18 @@
 (* Element methods *)
-external setPosEx : nativeint -> int -> int -> unit = "setPos_cpp"
-external setSizeEx : nativeint -> int -> int -> unit = "setSize_cpp"
-external addElemEx : nativeint -> nativeint -> int -> int -> unit = "addElem_cpp"
+external getPosEx : nativeint -> int*int = "getPos_cpp"
+external getSizeEx : nativeint -> int*int = "getSize_cpp"
 
 (* Conatiner methods *)
 external createContainerEx : int -> int -> int -> nativeint = "createContainer_cpp"
 external setBgColorEx : nativeint -> string -> unit = "setBgColor_cpp"
+external addElemEx : nativeint -> nativeint -> int -> int -> unit = "addElem_cpp"
+external removeElemEx : nativeint -> nativeint -> unit = "removeElem_cpp"
 
 (* Window methods *)
 external createWindowEx : string -> int -> int -> int -> int -> nativeint = "createWindow_cpp"
 external drawWindowEx : nativeint -> unit = "draw_cpp"
 external waitForCloseEx : nativeint -> unit = "waitForClose_cpp"
+external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
 
 
@@ -30,11 +32,7 @@ class virtual delement () =
 		method getSize () =
 			size
 		method getPos () =
-			pos
-		method setSize t =
-			size <- t
-		method setPos t =
-			pos <- t
+			getPosEx ptr
 		method getPtr () =
 			ptr
 	end
@@ -43,11 +41,14 @@ class virtual delement () =
 class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 	object
 		inherit delement ()
-		method addElem : 'a. (#delement as 'a) -> ?pos:int*int -> unit -> unit= fun elt ?(pos=(-1,-1)) ()->
-			let e = (elt :> delement) in
-			(addElemEx ptr (e#getPtr()) (fst pos) (snd pos))
 		method setBgColor (col : string) =
 			(setBgColorEx ptr col)
+		method add : 'a. (#delement as 'a) -> ?pos:int*int -> unit -> unit= fun elt ?(pos=(-1,-1)) ()->
+			let e = (elt :> delement) in
+			(addElemEx ptr (e#getPtr()) (fst pos) (snd pos))
+		method remove : 'a. (#delement as 'a) -> unit = fun elt ->
+			let e = (elt :> delement) in
+			(removeElemEx ptr (e#getPtr()))
 		initializer ptr <- createContainerEx (layout_enum layout) (fst dim) (snd dim)
 	end
 
@@ -74,6 +75,8 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 				drawWindowEx(ptr) 
 			else 
 				failwith("OCaml: NullPointerException")
+		method notClosed () =
+			winNotClosedEx ptr
 		method waitForClose () =
 			waitForCloseEx(ptr)
 		initializer setWindowContainerEx ptr (main_container#getPtr ())

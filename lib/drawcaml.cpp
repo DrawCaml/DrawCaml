@@ -75,40 +75,51 @@ extern "C" value waitForClose_cpp(value window){
 	return Val_unit;
 }
 
+extern "C" value winNotClosed_cpp(value window){
+	SWindow* win = (SWindow *) Nativeint_val(window);
+	return Val_bool(!win->mClosed);
+}
+
 /*
  Element methods
 */
 
-extern "C" value setPos_cpp(value object,value posX,value posY) {
-	SContainer* e = (SContainer *) Nativeint_val(object);
-	int posx = Int_val(posX);
-	int posy = Int_val(posY);
+extern "C" value getPos_cpp(value object) {
+	SElement* e = (SElement *) Nativeint_val(object);
 
 	if (!e) {
 		WARNING("Element doesn't exist\n");
 		return Val_unit;
 	}
-	SWindow* win = e->mWin;
-	
-	Action* a = new Action(win,bind(&SContainer::setPos,e,posx,posy));	
 
-	return Val_unit;
+	int posx = e->mPosX;
+	int posy = e->mPosY;
+	
+	value pos = caml_alloc(2, 0);
+	Store_field(pos, 0, Val_int(posx));
+	Store_field(pos, 1, Val_int(posy));
+
+	return pos;
 }
 
-extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
+extern "C" value getSize_cpp(value object,value sizeX,value sizeY) {
 	SElement* e = (SElement *) Nativeint_val(object);
-	int sizex = Int_val(sizeX);
-	int sizey = Int_val(sizeY);
 
 	if (!e) {
 		WARNING("Element doesn't exist\n");
 		return Val_unit;
 	}
-	SWindow* win = e->mWin;
-	
-	Action* a = new Action(win,bind(&SElement::setSize,e,sizeX,sizeY));
 
-	return Val_unit;
+	int sizex = e->mSizeX;
+	int sizey = e->mSizeY;
+	
+	value size = caml_alloc(2, 0);
+	Store_field(size, 0, Val_int(sizex));
+	Store_field(size, 1, Val_int(sizey));
+
+	// fill pos with posx and posy
+
+	return size;
 }
 
 
@@ -137,6 +148,24 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 	}
 	SWindow* win = e->mWin;
 
+	Action* a = new Action(win,bind(&SContainer::addElem,e,e_add,posx,posy));
+	
+	return Val_unit;
+}
+
+extern "C" value removeElem_cpp(value object,value object_added,value posX,value posY) {
+	SContainer* e = (SContainer *) Nativeint_val(object);
+	int posx = Int_val(posX);
+	int posy = Int_val(posY);
+	SElement* e_add = (SElement *) Nativeint_val(object_added);
+
+	if ((!e)||(!e_add)) {
+		WARNING("Element doesn't exist\n");
+		return Val_unit;
+	}
+	SWindow* win = e->mWin;
+
+	// to be changed
 	Action* a = new Action(win,bind(&SContainer::addElem,e,e_add,posx,posy));
 	
 	return Val_unit;

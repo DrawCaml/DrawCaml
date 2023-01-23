@@ -17,10 +17,13 @@ container2#setBgColor("blue");;
 container3#setBgColor("orange");;
 container4#setBgColor("purple");;
 
-grid_container#addElem container1 ();;
-grid_container#addElem container2 ();;
-grid_container#addElem container3 ~pos:(3,3) ();;
-grid_container#addElem container4 ~pos:(1,2) ();;
+grid_container#add container1 ();;
+grid_container#add container2 ();;
+grid_container#add container3 ~pos:(3,3) ();;
+grid_container#add container4 ~pos:(1,2) ();;
 
 (* keeps the window open *)
-window#waitForClose ();;
+(* window#waitForClose ();; *)
+while window#notClosed () do 
+	()
+done;;
