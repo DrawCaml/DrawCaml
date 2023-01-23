@@ -29,6 +29,19 @@ void SContainer::setSize(int sizeX, int sizeY){
 	}
 }
 
+void SContainer::removeElem(SElement* elt){
+	for(auto it = mElements.begin(); it < mElements.end(); it++){
+		if(*it == elt){
+			mElements.erase(it);
+			break;
+		}
+	}
+	if(mLayout == SLayout::GridLayout){
+		int epos = (elt->mPosX / _wSpace) + _gridX*(elt->mPosY / _hSpace);
+		_curGridPos = min(epos, _curGridPos);
+	}
+}
+
 void SContainer::addElem(SElement* elt, int posX, int posY){
 	mElements.push_back(elt);
 

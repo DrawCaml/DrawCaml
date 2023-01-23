@@ -19,7 +19,8 @@ void sendDummyEvent(SWindow* win) {
 }
 
 Action::Action(SWindow* win, Function f){
-	if(win){
+	// printf("%d\n", win);
+	if(win && !win->mClosed){ // avoid segfaults when window is closed
 		mutex* m = new mutex;
 		m->lock();
 		mResultLock = m;

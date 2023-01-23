@@ -150,24 +150,21 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 	SWindow* win = e->mWin;
 
 	Action* a = new Action(win,bind(&SContainer::addElem,e,e_add,posx,posy));
-	
+
 	return Val_unit;
 }
 
-extern "C" value removeElem_cpp(value object,value object_added,value posX,value posY) {
+extern "C" value removeElem_cpp(value object,value object_del) {
 	SContainer* e = (SContainer *) Nativeint_val(object);
-	int posx = Int_val(posX);
-	int posy = Int_val(posY);
-	SElement* e_add = (SElement *) Nativeint_val(object_added);
+	SElement* e_del = (SElement *) Nativeint_val(object_del);
 
-	if ((!e)||(!e_add)) {
+	if ((!e)||(!e_del)) {
 		WARNING("Element doesn't exist\n");
 		return Val_unit;
 	}
 	SWindow* win = e->mWin;
 
-	// to be changed
-	Action* a = new Action(win,bind(&SContainer::addElem,e,e_add,posx,posy));
+	Action* a = new Action(win,bind(&SContainer::removeElem,e,e_del));
 	
 	return Val_unit;
 }

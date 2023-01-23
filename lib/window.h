@@ -22,7 +22,7 @@ class SWindow {
 		thread* mThread;
 		mutex mActionMutex;
 		queue<Action> mSharedQueue;
-		bool mClosed;
+		bool mClosed = false;
 
 		SContainer* mContainer;
 

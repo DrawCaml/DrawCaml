@@ -12,7 +12,7 @@ win_container#add grid_container ~pos:(100,100) ();;
 grid_container#setBgColor("green");;
 
 (* BUG: ce Unix.sleep est nécéssaire *)
-Unix.sleep 1;;
+Unix.sleepf 0.1;;
 (* car sinon les actions ci-dessous sont éxécutées avant la ligne 10,*)
 (* car la l10 est ajoutée à la queue donc son éxécution est *légèrement* *)
 (* retardée. *)
@@ -29,14 +29,14 @@ container2#setBgColor("blue");;
 container3#setBgColor("orange");;
 container4#setBgColor("purple");;
 
-grid_container#add container1 ();;
+(* grid_container#add container1 ();; *)
 grid_container#add container2 ();;
 grid_container#add container3 ~pos:(3,3) ();;
 grid_container#add container4 ~pos:(1,2) ();;
 
 
 (* marche pas sans le Unix.sleep *)
-Unix.sleep 1;;
+Unix.sleepf 0.1;;
 print_int (fst (container4#getPos ()));;
 print_newline ();;
 print_int (snd (container4#getPos ()));;
@@ -49,5 +49,9 @@ print_newline ();;
 (* keeps the window open *)
 (* window#waitForClose ();; *)
 while window#notClosed () do 
-	Unix.sleep 1
+	Unix.sleep 1;
+	grid_container#add container1 ();
+	Unix.sleep 1;
+	grid_container#remove container1;
+	grid_container#add container1 ~pos:(2,2) ()
 done;;

@@ -108,7 +108,7 @@ void SWindow::listener(){
 
 		// Handle action	
 		mActionMutex.lock();
-		if (!mSharedQueue.empty()) {
+		if (!mSharedQueue.empty() && redraw) {
 			Action a = mSharedQueue.front();
 			mSharedQueue.pop();
 
