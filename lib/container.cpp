@@ -96,7 +96,7 @@ void SContainer::draw(SWindow* win, int drawX, int drawY){
 	// draw the background
 	XSetForeground(mWin->mDisplay, mWin->mGC, mBgColor.pixel);
 	XFillRectangle(mWin->mDisplay, mWin->mWindow, mWin->mGC, drawX+mPosX, drawY+mPosY, mSizeX, mSizeY);
-	// printf("cont draw en: %d %d de taille %d %d\n", mPosX, mPosY, mSizeX, mSizeY);
+	// printf("Container drawn in: %d %d of size %d %d\n", mPosX, mPosY, mSizeX, mSizeY);
 	for (SElement* elt : mElements){
 		elt->draw(mWin, drawX+mPosX, drawY+mPosY);
 	}

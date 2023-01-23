@@ -114,10 +114,13 @@ void SWindow::listener(){
 
 			LOG("Received message from CAML: \n");
 			a.Call();
+			mContainer->draw(this, 0, 0);
+			XFlush(mDisplay);
 
 			a.mResultLock->unlock();
 		}
 		mActionMutex.unlock();
+
 	}
 	LOG("Closing the thread\n");
 	this->close();

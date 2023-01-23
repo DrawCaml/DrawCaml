@@ -54,7 +54,8 @@ extern "C" value setWindowContainer_cpp(value window, value container){
 	return Val_unit;
 }
 
-extern "C" value draw_cpp(value window) {//toujours pour la window !!!, l'utilisateur ne fait jamais de call draw pour un container
+//toujours pour la window !!!, l'utilisateur ne fait jamais de call draw pour un container
+extern "C" value draw_cpp(value window) {
 	SWindow* win = (SWindow *) Nativeint_val(window);
 
 	if (!win) {

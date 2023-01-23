@@ -30,7 +30,7 @@ class virtual delement () =
 		val mutable pos = (-1,-1)
 		val mutable ptr = 0n
 		method getSize () =
-			size
+			getSizeEx ptr
 		method getPos () =
 			getPosEx ptr
 		method getPtr () =
