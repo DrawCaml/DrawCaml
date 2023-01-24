@@ -11,14 +11,6 @@ win_container#add grid_container ~pos:(100,100) ();;
 
 grid_container#setBgColor("green");;
 
-(* BUG: ce Unix.sleep est nécéssaire *)
-Unix.sleepf 0.1;;
-(* car sinon les actions ci-dessous sont éxécutées avant la ligne 10,*)
-(* car la l10 est ajoutée à la queue donc son éxécution est *légèrement* *)
-(* retardée. *)
-(* SOL: garder pour chaque élément une file d'action à faire effectuer *)
-(* à une window dès lors que ce pointeur sera non NULL *)
-
 let container1 = new DrawCaml.dcontainer ();;
 let container2 = new DrawCaml.dcontainer ();;
 let container3 = new DrawCaml.dcontainer ();;
@@ -50,8 +42,10 @@ print_newline ();;
 (* window#waitForClose ();; *)
 while window#notClosed () do 
 	Unix.sleep 1;
+	
 	grid_container#add container1 ();
 	Unix.sleep 1;
+
 	grid_container#remove container1;
 	grid_container#add container1 ~pos:(2,2) ()
 done;;
