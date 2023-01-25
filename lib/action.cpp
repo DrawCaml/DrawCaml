@@ -37,6 +37,7 @@ Action::Action(SWindow* win, Function f){
 		LOG("Sent message!\n");
 	} else {
 		f();
+		mResultLock = NULL;
 	}
 }
 
