@@ -1,3 +1,10 @@
+(*events*)
+type event =
+| MousePress of int*int
+| MouseRelease of int*int
+| KeyPress of int
+| KeyReleased of int;;
+
 (* Element methods *)
 external getPosEx : nativeint -> int*int = "getPos_cpp"
 external getSizeEx : nativeint -> int*int = "getSize_cpp"
@@ -14,8 +21,18 @@ external drawWindowEx : nativeint -> unit = "draw_cpp"
 external waitForCloseEx : nativeint -> unit = "waitForClose_cpp"
 external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
+external setWindowEventHandlerEx : nativeint -> (event -> unit) -> unit = "setWindowEventHandler_cpp"
 
+let makeKeyPress c = print_string("construct KeyPress");print_newline();KeyPress(c);;
+let _ = Callback.register "makeKeyPress" makeKeyPress;;
 
+let makeKeyReleased c = print_string("construct KeyReleased");print_newline();KeyReleased(c);;
+let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
+
+let makeMousePress x y = MousePress(x,y);;
+let _ = Callback.register "makeMousePress" makeMousePress;;
+
+(*layouts*)
 type dlayout = FloatLayout | GridLayout | Other
 
 let layout_enum = function
@@ -56,6 +73,7 @@ class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) () =
 	object
 		val mutable main_container = new dcontainer ()
+		val mutable event_handler = (fun _ -> ())
 		val ptr = createWindowEx title (fst pos) (snd pos) (fst size) (snd size)
 		method getTitle () =
 			title
@@ -79,5 +97,10 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 			winNotClosedEx ptr
 		method waitForClose () =
 			waitForCloseEx(ptr)
+		method setEventHandler f =
+			begin
+				(event_handler <- f);
+				(setWindowEventHandlerEx ptr f)
+			end
 		initializer setWindowContainerEx ptr (main_container#getPtr ())
 	end

@@ -1,5 +1,15 @@
 #pragma once
 
+#define CAML_NAME_SPACE
+#include "caml/mlvalues.h"
+#include "caml/alloc.h"
+#include "caml/memory.h"
+#include "caml/fail.h"
+#include "caml/callback.h"
+#include "caml/custom.h"
+#include "caml/intext.h"
+#include "caml/threads.h"
+
 #include <string>
 #include <X11/Xlib.h>
 #include <thread>
@@ -42,6 +52,8 @@ class SWindow {
 		GC mGC;
 		Colormap mColormap;
 
+		value mEventHandler;
+		bool is_Xlib = false;
 
 		SWindow(string name, int posX, int posY, int width, int height, int borderSize);
 

@@ -1,3 +1,13 @@
+#define CAML_NAME_SPACE
+#include "caml/mlvalues.h"
+#include "caml/alloc.h"
+#include "caml/memory.h"
+#include "caml/fail.h"
+#include "caml/callback.h"
+#include "caml/custom.h"
+#include "caml/intext.h"
+#include "caml/threads.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -41,7 +51,7 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	mDeleteWindow = XInternAtom(mDisplay, "WM_DELETE_WINDOW", True);
 	XSetWMProtocols(mDisplay, mWindow, &mDeleteWindow, 1);
 
-	XSelectInput(mDisplay, mWindow, ExposureMask);
+	XSelectInput(mDisplay, mWindow, ExposureMask | KeyPressMask | KeyReleaseMask);
 
 	XMapWindow(mDisplay, mWindow);
 
@@ -75,6 +85,8 @@ DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
 void SWindow::listener(){
 	int redraw=1;
+	int c;
+	value ec;
 	while (redraw) {
 		if (!mDisplay) {
 			WARNING("No display\n");
@@ -101,6 +113,33 @@ void SWindow::listener(){
 				XFlush(mDisplay);
 				break;
 
+			case KeyPress:
+				LOG("Caught KeyPress event %d\n");
+				c = mEvent.xkey.keycode;
+				ec = caml_callback(*caml_named_value("makeKeyPress"), Val_int(c));
+				if (mEventHandler) {
+					is_Xlib = true;
+					caml_callback(mEventHandler, ec);
+					is_Xlib = false;
+				}
+				else {
+					WARNING("Event handler not defined\n");
+				}
+				break;
+
+			case KeyRelease:
+				LOG("Caught KeyRelease event\n");
+				c = mEvent.xkey.keycode; 
+				ec = caml_callback(*caml_named_value("makeKeyReleased"), Val_int(c));
+				if (mEventHandler) {
+					is_Xlib = true;
+					caml_callback(mEventHandler, ec);
+					is_Xlib = false;
+				}
+				else {
+					WARNING("Event handler not defined\n");
+				}
+				break;
 			default:
 				WARNING("Caught unknown event\n");
 				break;

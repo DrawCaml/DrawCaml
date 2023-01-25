@@ -150,7 +150,7 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 	SWindow* win = e->mWin;
 
 	Action* a = new Action(win,bind(&SContainer::addElem,e,e_add,posx,posy));
-	if(win && a && a->mResultLock) {
+	if(win && a && a->mResultLock && !(win->is_Xlib)) {
 		(a->mResultLock)->lock();
 	}
 
@@ -169,7 +169,7 @@ extern "C" value removeElem_cpp(value object,value object_del) {
 
 	Action* a = new Action(win,bind(&SContainer::removeElem,e,e_del));
 	
-	if(win && a && a->mResultLock) {
+	if(win && a && a->mResultLock && !(win->is_Xlib)) {
 		(a->mResultLock)->lock();
 	}
 	
@@ -189,9 +189,15 @@ extern "C" value setBgColor_cpp(value object,value color) {
 	SWindow* win = e->mWin;
 
 	Action* a = new Action(win,bind(&SContainer::setBgColor,e,col));
-	if(win && a && a->mResultLock) {
+	if(win && a && a->mResultLock && !(win->is_Xlib)) {
 		(a->mResultLock)->lock();
 	}
 
+	return Val_unit;
+}
+
+extern "C" value setWindowEventHandler_cpp(value window, value f){
+	SWindow* win = (SWindow *) Nativeint_val(window);
+	win->mEventHandler = f;
 	return Val_unit;
 }
