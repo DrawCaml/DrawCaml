@@ -62,6 +62,9 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	// mContainer->setPos(0, 0);
 	// mContainer->setSize(mWidth, mHeight);
 
+	// disable auto repeat for events
+	XAutoRepeatOff(mDisplay);
+
 	// save relevant info for drawing
 	mGC = XCreateGC(mDisplay, mWindow, mValuemask, &mValues);
 	XSync(mDisplay, False);
