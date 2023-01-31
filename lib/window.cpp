@@ -75,6 +75,8 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 }
 
 void SWindow::close(){
+	XAutoRepeatOn(mDisplay);
+
 	XDestroyWindow(mDisplay, mEvent.xclient.window);
 
 	XCloseDisplay(mDisplay);
