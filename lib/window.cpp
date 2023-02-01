@@ -51,7 +51,8 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	mDeleteWindow = XInternAtom(mDisplay, "WM_DELETE_WINDOW", True);
 	XSetWMProtocols(mDisplay, mWindow, &mDeleteWindow, 1);
 
-	XSelectInput(mDisplay, mWindow, ExposureMask | KeyPressMask | KeyReleaseMask);
+	XSelectInput(mDisplay, mWindow, 
+		FocusChangeMask | ExposureMask | KeyPressMask | KeyReleaseMask);
 
 	XMapWindow(mDisplay, mWindow);
 
@@ -116,6 +117,14 @@ void SWindow::listener(){
 			case Expose:
 				mContainer->draw(this, 0, 0);
 				XFlush(mDisplay);
+				break;
+
+			case FocusIn:
+				XAutoRepeatOff(mDisplay);
+				break;
+
+			case FocusOut:
+				XAutoRepeatOn(mDisplay);
 				break;
 
 			case KeyPress:
