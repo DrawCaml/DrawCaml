@@ -141,7 +141,7 @@ void SWindow::listener(){
 			  		if (nev.type == KeyPress && nev.xkey.time == mEvent.xkey.time &&
 				      nev.xkey.keycode == mEvent.xkey.keycode){
 				      	LOG("Caught false KeyRelease\n");
-				      	// XNextEvent(mDisplay, &mEvent);
+				      	XNextEvent(mDisplay, &mEvent);
 				      	break;
 			  		}
 				}
