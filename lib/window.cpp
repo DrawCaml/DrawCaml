@@ -134,14 +134,17 @@ void SWindow::listener(){
 
 			case KeyRelease:
 				
-				XEvent nev;
-				XPeekEvent(mDisplay, &nev);
-	    
-		  		if (nev.type == KeyPress && nev.xkey.time == mEvent.xkey.time &&
-			      nev.xkey.keycode == mEvent.xkey.keycode){
-			      	LOG("Caught false KeyRelease\n");
-			      	break;
-		  		}
+				if(XPending(mDisplay)){
+					XEvent nev;
+					XPeekEvent(mDisplay, &nev);
+
+			  		if (nev.type == KeyPress && nev.xkey.time == mEvent.xkey.time &&
+				      nev.xkey.keycode == mEvent.xkey.keycode){
+				      	LOG("Caught false KeyRelease\n");
+				      	// XNextEvent(mDisplay, &mEvent);
+				      	break;
+			  		}
+				}
 
 				LOG("Caught KeyRelease event\n");
 
