@@ -22,10 +22,12 @@ inline size_t _readableThreadId() {
 }
 
 inline void _print_logs(const string message, const char* level) {
+#ifdef DEBUG
 	auto time = std::time(nullptr);
 	stringstream msg;
 	msg << "[" << put_time(localtime(&time), "%T") << "][" << level << "] " << _readableThreadId() << ": " << message;
 	cout << msg.str(); // thread safe
+#endif
 }
 
 inline void LOG(const string message) {

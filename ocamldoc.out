@@ -1,0 +1,275 @@
+\documentclass[11pt]{article} 
+\usepackage[latin1]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage{textcomp}
+\usepackage{fullpage} 
+\usepackage{url} 
+\usepackage{ocamldoc}
+\begin{document}
+\tableofcontents
+\section{Module {\tt{DrawCaml}}}
+\label{module:DrawCaml}\index{DrawCaml@\verb`DrawCaml`}
+
+
+\ocamldocvspace{0.5cm}
+
+
+
+\label{val:DrawCaml.getPosEx}\begin{ocamldoccode}
+val getPosEx : nativeint -> int * int
+\end{ocamldoccode}
+\index{getPosEx@\verb`getPosEx`}
+
+
+
+
+\label{val:DrawCaml.getSizeEx}\begin{ocamldoccode}
+val getSizeEx : nativeint -> int * int
+\end{ocamldoccode}
+\index{getSizeEx@\verb`getSizeEx`}
+
+
+
+
+\label{val:DrawCaml.createContainerEx}\begin{ocamldoccode}
+val createContainerEx : int -> int -> int -> nativeint
+\end{ocamldoccode}
+\index{createContainerEx@\verb`createContainerEx`}
+
+
+
+
+\label{val:DrawCaml.setBgColorEx}\begin{ocamldoccode}
+val setBgColorEx : nativeint -> string -> unit
+\end{ocamldoccode}
+\index{setBgColorEx@\verb`setBgColorEx`}
+
+
+
+
+\label{val:DrawCaml.addElemEx}\begin{ocamldoccode}
+val addElemEx : nativeint -> nativeint -> int -> int -> unit
+\end{ocamldoccode}
+\index{addElemEx@\verb`addElemEx`}
+
+
+
+
+\label{val:DrawCaml.removeElemEx}\begin{ocamldoccode}
+val removeElemEx : nativeint -> nativeint -> unit
+\end{ocamldoccode}
+\index{removeElemEx@\verb`removeElemEx`}
+
+
+
+
+\label{val:DrawCaml.createWindowEx}\begin{ocamldoccode}
+val createWindowEx : string -> int -> int -> int -> int -> nativeint
+\end{ocamldoccode}
+\index{createWindowEx@\verb`createWindowEx`}
+
+
+
+
+\label{val:DrawCaml.drawWindowEx}\begin{ocamldoccode}
+val drawWindowEx : nativeint -> unit
+\end{ocamldoccode}
+\index{drawWindowEx@\verb`drawWindowEx`}
+
+
+
+
+\label{val:DrawCaml.waitForCloseEx}\begin{ocamldoccode}
+val waitForCloseEx : nativeint -> unit
+\end{ocamldoccode}
+\index{waitForCloseEx@\verb`waitForCloseEx`}
+
+
+
+
+\label{val:DrawCaml.winNotClosedEx}\begin{ocamldoccode}
+val winNotClosedEx : nativeint -> bool
+\end{ocamldoccode}
+\index{winNotClosedEx@\verb`winNotClosedEx`}
+
+
+
+
+\label{val:DrawCaml.setWindowContainerEx}\begin{ocamldoccode}
+val setWindowContainerEx : nativeint -> nativeint -> unit
+\end{ocamldoccode}
+\index{setWindowContainerEx@\verb`setWindowContainerEx`}
+
+
+
+
+\label{type:DrawCaml.dlayout}\begin{ocamldoccode}
+type dlayout =
+  | FloatLayout
+  | GridLayout
+  | Other
+\end{ocamldoccode}
+\index{dlayout@\verb`dlayout`}
+
+
+
+
+\label{val:DrawCaml.layout-underscoreenum}\begin{ocamldoccode}
+val layout_enum : dlayout -> int
+\end{ocamldoccode}
+\index{layout-underscoreenum@\verb`layout_enum`}
+
+
+
+
+\begin{ocamldoccode}
+{\tt{class virtual delement : }}{\tt{unit -> }}\end{ocamldoccode}
+\label{class:DrawCaml.delement}\index{delement@\verb`delement`}
+
+\begin{ocamldocobjectend}
+
+
+\label{val:DrawCaml.delement.size}\begin{ocamldoccode}
+val mutable size : int * int
+\end{ocamldoccode}
+\index{size@\verb`size`}
+
+
+\label{val:DrawCaml.delement.pos}\begin{ocamldoccode}
+val mutable pos : int * int
+\end{ocamldoccode}
+\index{pos@\verb`pos`}
+
+
+\label{val:DrawCaml.delement.ptr}\begin{ocamldoccode}
+val mutable ptr : nativeint
+\end{ocamldoccode}
+\index{ptr@\verb`ptr`}
+
+
+\label{method:DrawCaml.delement.getSize}\begin{ocamldoccode}
+method getSize : unit -> int * int
+\end{ocamldoccode}
+\index{getSize@\verb`getSize`}
+
+
+\label{method:DrawCaml.delement.getPos}\begin{ocamldoccode}
+method getPos : unit -> int * int
+\end{ocamldoccode}
+\index{getPos@\verb`getPos`}
+
+
+\label{method:DrawCaml.delement.getPtr}\begin{ocamldoccode}
+method getPtr : unit -> nativeint
+\end{ocamldoccode}
+\index{getPtr@\verb`getPtr`}
+\end{ocamldocobjectend}
+
+
+
+
+
+
+\begin{ocamldoccode}
+{\tt{class dcontainer : }}{\tt{?layout:dlayout -> ?dim:int * int -> unit -> }}\end{ocamldoccode}
+\label{class:DrawCaml.dcontainer}\index{dcontainer@\verb`dcontainer`}
+
+\begin{ocamldocobjectend}
+
+
+{\tt{inherit DrawCaml.delement}} [\ref{class:DrawCaml.delement}]
+
+\label{method:DrawCaml.dcontainer.setBgColor}\begin{ocamldoccode}
+method setBgColor : string -> unit
+\end{ocamldoccode}
+\index{setBgColor@\verb`setBgColor`}
+
+
+\label{method:DrawCaml.dcontainer.add}\begin{ocamldoccode}
+method add : {\textquotesingle}a. (#DrawCaml.delement as {\textquotesingle}a) -> ?pos:int * int -> unit -> unit
+\end{ocamldoccode}
+\index{add@\verb`add`}
+
+
+\label{method:DrawCaml.dcontainer.remove}\begin{ocamldoccode}
+method remove : {\textquotesingle}b. (#DrawCaml.delement as {\textquotesingle}b) -> unit
+\end{ocamldoccode}
+\index{remove@\verb`remove`}
+\end{ocamldocobjectend}
+
+
+
+
+
+
+\begin{ocamldoccode}
+{\tt{class dwindow : }}{\tt{?title:string -> ?pos:int * int -> ?size:int * int -> unit -> }}\end{ocamldoccode}
+\label{class:DrawCaml.dwindow}\index{dwindow@\verb`dwindow`}
+
+\begin{ocamldocobjectend}
+
+
+\label{val:DrawCaml.dwindow.main-underscorecontainer}\begin{ocamldoccode}
+val mutable main_container : DrawCaml.dcontainer
+\end{ocamldoccode}
+\index{main-underscorecontainer@\verb`main_container`}
+
+
+\label{val:DrawCaml.dwindow.ptr}\begin{ocamldoccode}
+val ptr : nativeint
+\end{ocamldoccode}
+\index{ptr@\verb`ptr`}
+
+
+\label{method:DrawCaml.dwindow.getTitle}\begin{ocamldoccode}
+method getTitle : unit -> string
+\end{ocamldoccode}
+\index{getTitle@\verb`getTitle`}
+
+
+\label{method:DrawCaml.dwindow.getSize}\begin{ocamldoccode}
+method getSize : unit -> int * int
+\end{ocamldoccode}
+\index{getSize@\verb`getSize`}
+
+
+\label{method:DrawCaml.dwindow.getPos}\begin{ocamldoccode}
+method getPos : unit -> int * int
+\end{ocamldoccode}
+\index{getPos@\verb`getPos`}
+
+
+\label{method:DrawCaml.dwindow.getContainer}\begin{ocamldoccode}
+method getContainer : unit -> DrawCaml.dcontainer
+\end{ocamldoccode}
+\index{getContainer@\verb`getContainer`}
+
+
+\label{method:DrawCaml.dwindow.setContainer}\begin{ocamldoccode}
+method setContainer : DrawCaml.dcontainer -> unit
+\end{ocamldoccode}
+\index{setContainer@\verb`setContainer`}
+
+
+\label{method:DrawCaml.dwindow.draw}\begin{ocamldoccode}
+method draw : unit -> unit
+\end{ocamldoccode}
+\index{draw@\verb`draw`}
+
+
+\label{method:DrawCaml.dwindow.notClosed}\begin{ocamldoccode}
+method notClosed : unit -> bool
+\end{ocamldoccode}
+\index{notClosed@\verb`notClosed`}
+
+
+\label{method:DrawCaml.dwindow.waitForClose}\begin{ocamldoccode}
+method waitForClose : unit -> unit
+\end{ocamldoccode}
+\index{waitForClose@\verb`waitForClose`}
+\end{ocamldocobjectend}
+
+
+
+
+\end{document}

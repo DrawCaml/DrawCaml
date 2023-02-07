@@ -1,0 +1,98 @@
+/* General styles */
+body {
+  font: 1rem sans-serif;
+  color: #222;
+  text-align: left;
+  padding: 1rem;
+  margin: 0;
+  background-color: #f9f9f9;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Specific heading styles */
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #006699;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #006699;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #006699;
+}
+
+/* Text styles */
+.keyword {
+  font-weight: bold;
+  color: #cc0000;
+}
+
+.comment {
+  color: #008000;
+}
+
+.constructor {
+  color: #0000cc;
+}
+
+.type {
+  color: #5C6585;
+}
+
+.string {
+  color: #800000;
+}
+
+.warning {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+/* Links */
+a {
+  color: #16DFF;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: #ddd;
+  text-decoration: underline;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Deprecated elements */
+.deprecated {
+  color: #888;
+  font-style: italic;
+}
+

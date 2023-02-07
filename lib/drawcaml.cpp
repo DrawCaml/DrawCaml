@@ -189,9 +189,9 @@ extern "C" value setBgColor_cpp(value object,value color) {
 	SWindow* win = e->mWin;
 
 	Action* a = new Action(win,bind(&SContainer::setBgColor,e,col));
-	if(win && a && a->mResultLock && !(win->is_Xlib)) {
-		(a->mResultLock)->lock();
-	}
+	//if(win && a && a->mResultLock && !(win->is_Xlib)) {
+	//	(a->mResultLock)->lock();
+	//}
 
 	return Val_unit;
 }
