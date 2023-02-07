@@ -9,6 +9,10 @@ type event =
 external getPosEx : nativeint -> int*int = "getPos_cpp"
 external getSizeEx : nativeint -> int*int = "getSize_cpp"
 
+(* label methods *)
+external createLabelEx : string -> int -> string -> nativeint = "createLabel_cpp"
+external setTextEx : nativeint -> string -> unit = "setText_cpp"
+
 (* Conatiner methods *)
 external createContainerEx : int -> int -> int -> nativeint = "createContainer_cpp"
 external setBgColorEx : nativeint -> string -> unit = "setBgColor_cpp"
@@ -53,6 +57,19 @@ class virtual delement () =
 		method getPtr () =
 			ptr
 	end
+
+(* graphical element that prints text *)
+class dlabel ?(text="") ?(font="helvetica") ?(fontSize=12) () =
+	object
+		inherit delement ()
+(* 		method setColor (col : string) = 
+			(setFgColorEx ptr col) *)
+		method setText (txt : string) =
+			(setTextEx ptr txt)
+		initializer ptr <- createLabelEx text fontSize font
+end
+
+(* graphical element that prints an Image *)
 
 (* graphical element that can manage others *)
 class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =

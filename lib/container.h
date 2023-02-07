@@ -34,7 +34,6 @@ public:
 	virtual void setSize(int sizeX, int sizeY);
 	void removeElem(SElement* elt);
 	void addElem(SElement* elt, int posX=-1, int posY=-1);
-	void setPos(int posX, int posY);
 
 	void setBgColor(string bgColor);
 };

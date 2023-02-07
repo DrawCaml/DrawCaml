@@ -15,11 +15,6 @@ SContainer::SContainer(SLayout lay, int width, int height){
 	}
 }
 
-void SContainer::setPos(int posX, int posY){
-	mPosX = posX;
-	mPosY = posY;
-}
-
 void SContainer::setSize(int sizeX, int sizeY){
 	mSizeX = sizeX;
 	mSizeY = sizeY;
@@ -85,7 +80,7 @@ void SContainer::_updateBgColor(){
 	if(mBgColorStr == "") return;
 	Status rc = XAllocNamedColor(mWin->mDisplay, mWin->mColormap, mBgColorStr.c_str(), &mBgColor, &mBgColor);
 	if (rc == 0) {
-		fprintf(stderr, "XAllocNamedColor - failed to allocated %s color.\n", mBgColorStr.c_str());
+		ERROR("XAllocNamedColor - failed to allocate" + mBgColorStr + "color.\n");
 		exit(1);
 	}
 }

@@ -27,6 +27,10 @@ grid_container#add container3 ~pos:(3,3) ();;
 grid_container#add container4 ~pos:(1,2) ();;
 
 
+(* test label *)
+let testLabel = new DrawCaml.dlabel ~text:"testlabel" ();;
+grid_container#add testLabel ~pos:(0,4) ();;
+
 (* marche pas sans le Unix.sleep *)
 Unix.sleepf 0.1;;
 print_int (fst (container4#getPos ()));;
@@ -40,15 +44,20 @@ print_newline ();;
 
 let f e =
 	match e with
-	|DrawCaml.KeyPress(_) -> print_string("press\n");grid_container#remove container1;
-					grid_container#add container1 ~pos:(2,2) ();
-	|DrawCaml.KeyReleased(_) -> print_string("released\n");grid_container#add container1 ~pos:(1,0) ();
+	|DrawCaml.KeyPress(_) -> 	print_string("press\n");
+								grid_container#remove container1;
+								grid_container#add container1 ~pos:(2,2) ();
+	|DrawCaml.KeyReleased(_) -> print_string("released\n");
+								grid_container#remove container1;
+								grid_container#add container1 ~pos:(1,0) ();
 	|_ -> ();;
 
 window#setEventHandler f;;
+
 (* keeps the window open *)
-(* window#waitForClose ();; *)
-while window#notClosed () do 
+window#waitForClose ();;
+
+(* while window#notClosed () do 
 	Unix.sleep 1;
 	
 	(*grid_container#add container1 ();
@@ -56,4 +65,4 @@ while window#notClosed () do
 
 	grid_container#remove container1;
 	grid_container#add container1 ~pos:(2,2) ();*)
-done;;
+done;; *)

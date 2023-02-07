@@ -49,7 +49,8 @@ extern "C" value setWindowContainer_cpp(value window, value container){
 	SContainer* cont = (SContainer *) Nativeint_val(container);
 	win->mContainer = cont;
 	cont->updateWin(win);
-	cont->setPos(0, 0);
+	cont->mPosX = 0;
+	cont->mPosY = 0;
 	cont->setSize(win->mWidth, win->mHeight);
 	return Val_unit;
 }
@@ -123,6 +124,30 @@ extern "C" value getSize_cpp(value object,value sizeX,value sizeY) {
 	return size;
 }
 
+/*
+Label methods
+*/
+
+extern "C" value createLabel_cpp(value text, value size, value font, value pos) {
+	const char* txt = String_val(text);
+	int s = Int_val(size);
+	const char* ft = String_val(font);
+	const char* strpos = String_val(pos);
+	SLabel* l = new SLabel();
+	l->setText(txt);
+	// l->setFontSize(s);
+	// l->setPos(strpos);
+	l->setFont(ft);
+	return caml_copy_nativeint((long)l);
+}
+
+extern "C" value setText_cpp(value lbl, value text){
+	SLabel* l = (SLabel*) Nativeint_val(lbl);
+	const char* txt = String_val(text);
+	l->setText(txt);
+	return Val_unit;
+}
+
 
 /*
  Container methods
@@ -176,6 +201,7 @@ extern "C" value removeElem_cpp(value object,value object_del) {
 	return Val_unit;
 }
 
+// possible to change BG of any SElement ?
 extern "C" value setBgColor_cpp(value object,value color) {
 	// for now only containers can change their background
 	// later -> More General Type
