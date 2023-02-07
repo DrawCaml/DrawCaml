@@ -82,6 +82,7 @@ DRAW WINDOW (BLOCKING) --> called in a separate thread
 void SWindow::listener(){
 	int redraw=1;
 	int c;
+	auto last_draw_time = std::chrono::high_resolution_clock::now();
 	value ec;
 	while (redraw) {
 		if (!mDisplay) {
@@ -164,8 +165,13 @@ void SWindow::listener(){
 
 			LOG("Received message from CAML: \n");
 			a.Call();
-			mContainer->draw(this, 0, 0);
-			XFlush(mDisplay);
+			auto actual_time = std::chrono::high_resolution_clock::now();
+			if (std::chrono::duration_cast<std::chrono::microseconds>(actual_time-last_draw_time).count() > 100000) {  	
+				mContainer->draw(this, 0, 0);
+				XFlush(mDisplay);
+				last_draw_time = actual_time;
+				WARNING("Drawing\n");
+			}
 
 			a.mResultLock->unlock();
 		}
