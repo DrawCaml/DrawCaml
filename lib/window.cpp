@@ -51,7 +51,8 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	mDeleteWindow = XInternAtom(mDisplay, "WM_DELETE_WINDOW", True);
 	XSetWMProtocols(mDisplay, mWindow, &mDeleteWindow, 1);
 
-	XSelectInput(mDisplay, mWindow, ExposureMask | KeyPressMask | KeyReleaseMask);
+	XSelectInput(mDisplay, mWindow, 
+		FocusChangeMask | ExposureMask | KeyPressMask | KeyReleaseMask);
 
 	XMapWindow(mDisplay, mWindow);
 
@@ -62,8 +63,8 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	// mContainer->setPos(0, 0);
 	// mContainer->setSize(mWidth, mHeight);
 
-	// disable auto repeat for events
-	XAutoRepeatOff(mDisplay);
+	// disable auto repeat for events (bad)
+	// XAutoRepeatOff(mDisplay);
 
 	// save relevant info for drawing
 	mGC = XCreateGC(mDisplay, mWindow, mValuemask, &mValues);
@@ -75,8 +76,6 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 }
 
 void SWindow::close(){
-	XAutoRepeatOn(mDisplay);
-
 	XDestroyWindow(mDisplay, mEvent.xclient.window);
 
 	XCloseDisplay(mDisplay);
@@ -120,6 +119,7 @@ void SWindow::listener(){
 				break;
 
 			case KeyPress:
+				// ADD ARRAY TO DETERMINE IF A KEY IS ALREADY TRIGGERED ?
 				LOG("Caught KeyPress event %d\n");
 				c = mEvent.xkey.keycode;
 				ec = caml_callback(*caml_named_value("makeKeyPress"), Val_int(c));
@@ -134,7 +134,21 @@ void SWindow::listener(){
 				break;
 
 			case KeyRelease:
+				
+				if(XPending(mDisplay)){
+					XEvent nev;
+					XPeekEvent(mDisplay, &nev);
+
+			  		if (nev.type == KeyPress && nev.xkey.time == mEvent.xkey.time &&
+				      nev.xkey.keycode == mEvent.xkey.keycode){
+				      	LOG("Caught false KeyRelease\n");
+				      	XNextEvent(mDisplay, &mEvent);
+				      	break;
+			  		}
+				}
+
 				LOG("Caught KeyRelease event\n");
+
 				c = mEvent.xkey.keycode; 
 				ec = caml_callback(*caml_named_value("makeKeyReleased"), Val_int(c));
 				if (mEventHandler) {
