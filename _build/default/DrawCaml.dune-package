@@ -1,0 +1,59 @@
+(lang dune 3.6)
+(name DrawCaml)
+(sections
+ (lib .)
+ (libexec .)
+ (bin ../../bin)
+ (doc ../../doc/DrawCaml)
+ (stublibs ../stublibs))
+(files
+ (lib
+  (DrawCaml.a
+   DrawCaml.cma
+   DrawCaml.cmxa
+   META
+   drawCaml.cmi
+   drawCaml.cmt
+   drawCaml.cmx
+   drawCaml.ml
+   drawCaml__.cmi
+   drawCaml__.cmt
+   drawCaml__.cmx
+   drawCaml__.ml
+   drawCaml__Syst_classes.cmi
+   drawCaml__Syst_classes.cmt
+   drawCaml__Syst_classes.cmx
+   dune-package
+   libDrawCaml_stubs.a
+   opam
+   syst_classes.ml))
+ (libexec (DrawCaml.cmxs))
+ (bin (DrawCaml))
+ (doc (README.md))
+ (stublibs (dllDrawCaml_stubs.so)))
+(library
+ (name DrawCaml)
+ (kind normal)
+ (archives (byte DrawCaml.cma) (native DrawCaml.cmxa))
+ (plugins (byte DrawCaml.cma) (native DrawCaml.cmxs))
+ (foreign_objects action.o container.o drawcaml.o window.o)
+ (foreign_archives (archives (for all) (files libDrawCaml_stubs.a)))
+ (native_archives DrawCaml.a)
+ (main_module_name DrawCaml)
+ (modes byte native)
+ (modules
+  (wrapped
+   (main_module_name DrawCaml)
+   (modules
+    ((name DrawCaml) (obj_name drawCaml) (visibility public) (impl))
+    ((name Syst_classes)
+     (obj_name drawCaml__Syst_classes)
+     (visibility public)
+     (impl)))
+   (alias_module
+    (name DrawCaml__)
+    (obj_name drawCaml__)
+    (visibility public)
+    (kind alias)
+    (impl))
+   (wrapped true))))
