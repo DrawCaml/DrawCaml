@@ -5,7 +5,7 @@ let window = new DrawCaml.dwindow ~title:"SNAKE" ~pos:(50,50) ~size:(800,800) ()
 let win_container = window#getContainer ();;
 
 (* grid sidelength *)
-let gsl = 11;;
+let gsl = 30;;
 
 win_container#setBgColor("black");;
 

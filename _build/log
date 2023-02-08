@@ -3,7 +3,7 @@
 # Shared cache: disabled
 # Workspace root: "/home/killian/Bureau/Travail ENS/M1/Info/PI/DrawCaml"
 # Auto-detected concurrency: 12
-$ /usr/bin/ocamlc.opt -config > /tmp/dune_bfb6f0_output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune_ac252c_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -154,6 +154,4 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune_bfb6f0_output
 #  }
 $ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl bin/snake.ml) > _build/default/bin/.snake.eobjs/snake.ml.d
 $ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.snake.eobjs/byte -I bin/.snake.eobjs/native -I lib/.DrawCaml.objs/byte -I lib/.DrawCaml.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o bin/.snake.eobjs/native/dune__exe__Snake.cmx -c -impl bin/snake.ml)
-$ (cd _build/default/lib && /usr/bin/x86_64-linux-gnu-gcc -xc++ -fPIC -std=c++17 -g -I /usr/lib/ocaml -o drawcaml.o -c drawcaml.cpp)
-$ (cd _build/default && /usr/bin/ocamlmklib.opt -g -o lib/DrawCaml_stubs lib/window.o lib/element.o lib/drawcaml.o lib/container.o lib/action.o -ldopt '-lX11 -lpthread' -ldopt -lstdc++)
 $ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/snake.exe lib/DrawCaml.cmxa -I lib /usr/lib/ocaml/unix.cmxa -I /usr/lib/ocaml bin/.snake.eobjs/native/dune__exe.cmx bin/.snake.eobjs/native/dune__exe__Snake.cmx)
