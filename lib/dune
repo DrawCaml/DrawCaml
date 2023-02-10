@@ -5,7 +5,7 @@
   (language cxx)
   (names drawcaml window action element container)
   (flags (:include cflags) -xc++ -fPIC -std=c++17))
- (c_library_flags (:include libs) -lstdc++))
+ (c_library_flags (:include libs) -lstdc++ -lXext))
 
 (rule
  (targets cflags libs)

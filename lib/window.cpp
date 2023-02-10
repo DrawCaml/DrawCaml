@@ -17,6 +17,7 @@
 #include <cstring>
 
 #include <X11/Xlib.h>
+#include <X11/extensions/Xdbe.h>
 #include "window.h"
 #include "container.h"
 #include "utils.h"
@@ -61,6 +62,9 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	// save relevant info for drawing
 	mGC = XCreateGC(mDisplay, mWindow, mValuemask, &mValues);
 	XSync(mDisplay, False);
+
+	// Initialize back buffer
+	mBackBuffer = XdbeAllocateBackBufferName(mDisplay, mWindow, 0);
 
 	mColormap = DefaultColormap(mDisplay, mScreen);
 
@@ -166,9 +170,16 @@ void SWindow::listener(){
 			LOG("Received message from CAML: \n");
 			a.Call();
 			auto actual_time = std::chrono::high_resolution_clock::now();
-			if (std::chrono::duration_cast<std::chrono::microseconds>(actual_time-last_draw_time).count() > 100000) {  	
+			if (std::chrono::duration_cast<std::chrono::microseconds>(
+				actual_time-last_draw_time).count() > 90000) {  	
 				mContainer->draw(this, 0, 0);
-				XFlush(mDisplay);
+				
+				// swap buffers
+				XdbeSwapInfo swap_info;
+			    swap_info.swap_window = mWindow;
+    			swap_info.swap_action = 0;
+    			XdbeSwapBuffers(mDisplay, &swap_info, 1);
+				
 				last_draw_time = actual_time;
 				WARNING("Drawing\n");
 			}

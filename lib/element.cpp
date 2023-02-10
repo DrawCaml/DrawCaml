@@ -56,7 +56,7 @@ void SLabel::draw(SWindow* win, int drawX, int drawY){
 	if(mFontStruct){
 		XSetForeground(mWin->mDisplay, mWin->mGC, mColor.pixel);
 		XSetFont(mWin->mDisplay, mWin->mGC, mFontStruct->fid);
-		XDrawString(mWin->mDisplay, mWin->mWindow, mWin->mGC, drawX+mPosX, drawY+mPosY, mText, strlen(mText));
+		XDrawString(mWin->mDisplay, mWin->mBackBuffer, mWin->mGC, drawX+mPosX, drawY+mPosY, mText, strlen(mText));
 	}
 	else WARNING("Label not printed\n");
 }

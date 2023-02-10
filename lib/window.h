@@ -12,6 +12,7 @@
 
 #include <string>
 #include <X11/Xlib.h>
+#include <X11/extensions/Xdbe.h>
 #include <thread>
 #include <mutex>
 #include <queue>
@@ -51,6 +52,8 @@ class SWindow {
 
 		GC mGC;
 		Colormap mColormap;
+
+		XdbeBackBuffer mBackBuffer;
 
 		value mEventHandler;
 		bool is_Xlib = false;

@@ -129,11 +129,12 @@ let f e =
 
 window#setEventHandler f;;
 
-win_container#add gtest ~pos:(0,0) ();;
 
 while window#notClosed () do 
     Unix.sleepf 0.2;
-    if not game.lost then begin
+    if game.lost then begin
+        win_container#add gtest ~pos:(0,0) ()
+    end else begin
         snake_step game;
         draw game grid_containers;
     end;
