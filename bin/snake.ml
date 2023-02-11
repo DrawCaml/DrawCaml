@@ -5,7 +5,7 @@ let window = new DrawCaml.dwindow ~title:"SNAKE" ~pos:(50,50) ~size:(800,800) ()
 let win_container = window#getContainer ();;
 
 (* grid sidelength *)
-let gsl = 30;;
+let gsl = 20;;
 
 win_container#setBgColor("black");;
 
@@ -38,7 +38,7 @@ for i=0 to gsl-1 do
 done;;
 
 gtest#setBgColor "red";;
-gtest#setSize (100,100);;
+gtest#setSize (400,400);;
 
 let matrix_iteri m f = Array.iteri (fun i l -> Array.iteri (fun j c -> f i j c) l) m;;
 
@@ -130,12 +130,23 @@ let f e =
 window#setEventHandler f;;
 
 
-while window#notClosed () do 
-    Unix.sleepf 0.2;
-    if game.lost then begin
-        win_container#add gtest ~pos:(0,0) ()
-    end else begin
-        snake_step game;
-        draw game grid_containers;
-    end;
+let lastTime = ref (Unix.gettimeofday ());;
+let actualTime = ref 0.;;
+
+while window#notClosed () do
+    actualTime := Unix.gettimeofday ();
+    
+    (* use this condition instead of Unix.sleep *)
+    if !actualTime -. !lastTime > 0.15 then begin
+        
+        if game.lost then begin
+            win_container#add gtest ~pos:(200,200) ()
+        end else begin
+            snake_step game;
+            draw game grid_containers;
+        end;
+        lastTime := !actualTime;
+    
+    end
+    (* LAGGY: Unix.sleepf 0.07; *)
 done;;
