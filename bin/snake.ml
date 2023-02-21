@@ -104,7 +104,8 @@ let snake_step state =
             state.grid.(ni).(nj) <- Snake;
             add_food state;
             state.score <- state.score + 1;
-            Printf.printf "Score: %d\n" state.score;
+            Printf.printf "Score: %d" state.score;
+            print_newline();
         );
         Queue.push new_head state.snake;
         let (i,j) = new_head in state.grid.(i).(j) <- Snake;
@@ -121,10 +122,10 @@ let change_dir newdir state =
 
 let f e =
 	match e with
-    |DrawCaml.KeyPress(114) -> change_dir East  game;
-    |DrawCaml.KeyPress(116) -> change_dir South game;
-    |DrawCaml.KeyPress(113) -> change_dir West  game;
-    |DrawCaml.KeyPress(111) -> change_dir North game;
+    |DrawCaml.KeyPressed(Right) -> change_dir East  game;
+    |DrawCaml.KeyPressed(Down) -> change_dir South game;
+    |DrawCaml.KeyPressed(Left) -> change_dir West  game;
+    |DrawCaml.KeyPressed(Up) -> change_dir North game;
 	|_ -> ();;
 
 window#setEventHandler f;;

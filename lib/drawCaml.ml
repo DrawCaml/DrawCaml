@@ -1,9 +1,17 @@
 (*events*)
+type key =
+| Letter of char
+| Left
+| Up 
+| Right
+| Down
+| Space
+;;
+
 type event =
-| MousePress of int*int
-| MouseRelease of int*int
-| KeyPress of int
-| KeyReleased of int;;
+|KeyPressed of key
+|KeyReleased of key
+;;
 
 (* Element methods *)
 external getPosEx : nativeint -> int*int = "getPos_cpp"
@@ -28,14 +36,29 @@ external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
 external setWindowEventHandlerEx : nativeint -> (event -> unit) -> unit = "setWindowEventHandler_cpp"
 
-let makeKeyPress c = print_string("construct KeyPress - "); print_int c; print_newline();KeyPress(c);;
-let _ = Callback.register "makeKeyPress" makeKeyPress;;
+let makeKey i = 
+	match i with
+	| 0x20 -> Space
+	| 0xff51 -> Left
+	| 0xff52 -> Up
+	| 0xff53 -> Right
+	| 0xff54 -> Down
+	| k when (k>=0x61)&&(k<=0x7a) -> Letter(Char.chr(k))
+	| _ -> Space;;
 
-let makeKeyReleased c = print_string("construct KeyReleased");print_newline();KeyReleased(c);;
+let makeKeyPressed i = (* print_string("makeKeyPressed");print_newline (); *)KeyPressed(makeKey i);;
+let makeKeyReleased i = (* print_string("makeKeyReleased");print_newline (); *)KeyReleased(makeKey i);;
+
+let _ = Callback.register "makeKeyPressed" makeKeyPressed;;
+let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
+
+
+
+(*let makeArrow c = print_string("construct KeyReleased");print_newline();KeyReleased(c);;
 let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
 
 let makeMousePress x y = MousePress(x,y);;
-let _ = Callback.register "makeMousePress" makeMousePress;;
+let _ = Callback.register "makeMousePress" makeMousePress;;*)
 
 (*layouts*)
 type dlayout = FloatLayout | GridLayout | Other
