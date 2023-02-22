@@ -11,6 +11,8 @@ using namespace std;
 
 using Function = function<void(void)>;
 
+void sendDummyEvent(SWindow* win);
+
 class Action {
 	public:
 		Function mFun;

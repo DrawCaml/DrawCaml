@@ -71,7 +71,6 @@ extern "C" value waitForClose_cpp(value window){
 	SWindow* win = (SWindow *) Nativeint_val(window);
 	LOG("Waiting for window '" + win->mName + "' to close\n");
 	while(!win->mClosed) {
-		continue;
 	}
 	LOG("Window Closed\n");
 	return Val_unit;

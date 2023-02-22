@@ -38,7 +38,8 @@ void SContainer::removeElem(SElement* elt){
 }
 
 void SContainer::addElem(SElement* elt, int posX, int posY){
-	mElements.push_back(elt);
+	if(find(mElements.begin(), mElements.end(), elt) == mElements.end())
+		mElements.push_back(elt);
 
 	switch(mLayout){
 		case SLayout::FloatLayout:

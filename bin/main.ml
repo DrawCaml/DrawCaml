@@ -45,10 +45,10 @@ print_newline ();;
 let f e =
 	match e with
 	|DrawCaml.KeyPress(_) -> 	print_string("press\n");
-								grid_container#remove container1;
+								(* grid_container#remove container1; *)
 								grid_container#add container1 ~pos:(2,2) ();
 	|DrawCaml.KeyReleased(_) -> print_string("released\n");
-								grid_container#remove container1;
+								(* grid_container#remove container1; *)
 								grid_container#add container1 ~pos:(1,0) ();
 	|_ -> ();;
 

@@ -21,6 +21,7 @@
 #include "window.h"
 #include "container.h"
 #include "utils.h"
+#include "action.h"
 
 using namespace std;
 
@@ -85,8 +86,9 @@ DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
 void SWindow::listener(){
 	int redraw=1;
-	int c;
+	int c, catchup = 0;
 	auto last_draw_time = std::chrono::high_resolution_clock::now();
+	// std::this_thread::sleep_for(std::chrono::milliseconds(90));
 	value ec;
 	while (redraw) {
 		if (!mDisplay) {
@@ -111,7 +113,7 @@ void SWindow::listener(){
 			// Draw recursively the elements in the frame
 			case Expose:
 				mContainer->draw(this, 0, 0);
-				XFlush(mDisplay);
+				sendDummyEvent(this);
 				break;
 
 			case KeyPress:
@@ -161,6 +163,7 @@ void SWindow::listener(){
 				break;
 		}
 
+
 		// Handle action	
 		mActionMutex.lock();
 		if (!mSharedQueue.empty() && redraw) {
@@ -169,25 +172,31 @@ void SWindow::listener(){
 
 			LOG("Received message from CAML: \n");
 			a.Call();
-			auto actual_time = std::chrono::high_resolution_clock::now();
-			if (std::chrono::duration_cast<std::chrono::microseconds>(
-				actual_time-last_draw_time).count() > 90000) {  	
-				mContainer->draw(this, 0, 0);
-				
-				// swap buffers
-				XdbeSwapInfo swap_info;
-			    swap_info.swap_window = mWindow;
-    			swap_info.swap_action = 0;
-    			XdbeSwapBuffers(mDisplay, &swap_info, 1);
-				
-				last_draw_time = actual_time;
-				WARNING("Drawing\n");
-			}
 
 			a.mResultLock->unlock();
 		}
 		mActionMutex.unlock();
 
+		auto actual_time = std::chrono::high_resolution_clock::now();
+		if (std::chrono::duration_cast<std::chrono::microseconds>(
+			actual_time-last_draw_time).count() > 90000) {
+			mContainer->draw(this, 0, 0);
+
+			// swap buffers
+			XdbeSwapInfo swap_info;
+		    swap_info.swap_window = mWindow;
+			swap_info.swap_action = 0;
+			XdbeSwapBuffers(mDisplay, &swap_info, 1);
+			
+			catchup = 0;
+
+			last_draw_time = actual_time;
+			WARNING("Drawing\n");
+		} else if(!catchup) {
+			sendDummyEvent(this);
+			catchup = 1;
+		}
+	
 	}
 	LOG("Closing the thread\n");
 	this->close();
