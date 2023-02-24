@@ -85,8 +85,7 @@ void SWindow::close(){
 DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
 void SWindow::listener(){
-	int redraw=1;
-	int c, catchup = 0;
+	int redraw=1, c;
 	auto last_draw_time = std::chrono::high_resolution_clock::now();
 	// std::this_thread::sleep_for(std::chrono::milliseconds(90));
 	value ec;
@@ -190,14 +189,10 @@ void SWindow::listener(){
 			swap_info.swap_action = 0;
 			XdbeSwapBuffers(mDisplay, &swap_info, 1);
 			
-			catchup = 0;
-
 			last_draw_time = actual_time;
 			WARNING("Drawing\n");
 		} else if(!XPending(mDisplay)) {
 			sendDummyEvent(this);
-			// cout << "catchup=1" << endl;
-			catchup = 1;
 		}
 	
 	}

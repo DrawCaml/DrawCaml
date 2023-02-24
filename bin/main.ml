@@ -21,8 +21,8 @@ container2#setBgColor("blue");;
 container3#setBgColor("orange");;
 container4#setBgColor("purple");;
 
-(* grid_container#add container1 ();; *)
 grid_container#add container2 ();;
+grid_container#add container1 ();;
 grid_container#add container3 ~pos:(3,3) ();;
 grid_container#add container4 ~pos:(1,2) ();;
 
@@ -44,10 +44,10 @@ print_newline ();;
 
 let f e =
 	match e with
-	|DrawCaml.KeyPress(_) -> 	print_string("press\n");
+	|DrawCaml.KeyPress(_) -> 	print_string("press"); print_newline ();
 								(* grid_container#remove container1; *)
 								grid_container#add container1 ~pos:(2,2) ()
-	|DrawCaml.KeyReleased(_) -> print_string("released\n");
+	|DrawCaml.KeyReleased(_) -> print_string("released"); print_newline ();
 								(* grid_container#remove container1; *)
 								grid_container#add container1 ~pos:(1,0) ()
 	|_ -> ();;
