@@ -24,6 +24,7 @@
 
 using namespace std;
 
+
 class SWindow {
 	public:
 		string mName;
@@ -63,5 +64,6 @@ class SWindow {
 		void close();
 		void draw();
 		void listener();
+		value keyEventToCaml(int keycode, bool is_pressed);
 
 };

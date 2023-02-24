@@ -18,6 +18,7 @@
 
 #include <X11/Xlib.h>
 #include <X11/extensions/Xdbe.h>
+#include <X11/keysym.h>
 #include "window.h"
 #include "container.h"
 #include "utils.h"
@@ -81,6 +82,32 @@ void SWindow::close(){
 	LOG("Window closed\n");
 }
 
+value SWindow::keyEventToCaml(int keycode, bool is_pressed) {
+	//method because may use the display for cross platform layout
+	int nothing;
+	value ec;
+	KeySym *t;
+	int r;
+	t = XGetKeyboardMapping(mDisplay, keycode, 1, &nothing);
+	r = t[0];
+	XFree(t);
+	//printf("%X\n",r);
+
+	//cout << "translated keycode " << (char) r <<endl;
+
+	// space : 0x20
+	// arrows : 0xff51 to 0xff54
+	// letters : 0x61 to 0x7a
+	if (is_pressed) {
+		ec =caml_callback(*caml_named_value("makeKeyPressed"), Val_int(r));
+	}
+	else {
+		ec =caml_callback(*caml_named_value("makeKeyReleased"), Val_int(r));
+	}
+	//cout << "built event" << endl;
+	return ec;
+}
+ 
 /*
 DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
@@ -119,9 +146,9 @@ void SWindow::listener(){
 
 			case KeyPress:
 				// ADD ARRAY TO DETERMINE IF A KEY IS ALREADY TRIGGERED ?
-				LOG("Caught KeyPress event %d\n");
-				c = mEvent.xkey.keycode;
-				ec = caml_callback(*caml_named_value("makeKeyPress"), Val_int(c));
+				LOG("Caught KeyPress event\n");
+				ec = keyEventToCaml(mEvent.xkey.keycode, true);
+				
 				if (mEventHandler) {
 					is_Xlib = true;
 					caml_callback(mEventHandler, ec);
@@ -148,8 +175,8 @@ void SWindow::listener(){
 
 				LOG("Caught KeyRelease event\n");
 
-				c = mEvent.xkey.keycode; 
-				ec = caml_callback(*caml_named_value("makeKeyReleased"), Val_int(c));
+				ec = keyEventToCaml(mEvent.xkey.keycode, false);
+				
 				if (mEventHandler) {
 					is_Xlib = true;
 					caml_callback(mEventHandler, ec);
