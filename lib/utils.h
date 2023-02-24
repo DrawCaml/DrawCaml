@@ -13,7 +13,7 @@ using namespace std;
 #define YELLOW "\033[33m"
 #define DEFAULT "\033[0m"
 
-#define DEBUG
+// #define DEBUG
 
 inline size_t _readableThreadId() {
     static atomic<size_t> thread_idx{0};

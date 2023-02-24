@@ -28,10 +28,10 @@ external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
 external setWindowEventHandlerEx : nativeint -> (event -> unit) -> unit = "setWindowEventHandler_cpp"
 
-let makeKeyPress c = print_string("construct KeyPress - "); print_int c; print_newline();KeyPress(c);;
+let makeKeyPress c = (* print_string("construct KeyPress - "); print_int c; print_newline(); *)KeyPress(c);;
 let _ = Callback.register "makeKeyPress" makeKeyPress;;
 
-let makeKeyReleased c = print_string("construct KeyReleased");print_newline();KeyReleased(c);;
+let makeKeyReleased c = (* print_string("construct KeyReleased");print_newline(); *)KeyReleased(c);;
 let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
 
 let makeMousePress x y = MousePress(x,y);;

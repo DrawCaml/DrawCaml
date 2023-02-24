@@ -1,4 +1,4 @@
 (executable
  (public_name DrawCaml)
- (name main)
+ (name snake)
  (libraries DrawCaml unix))

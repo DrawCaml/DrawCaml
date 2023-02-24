@@ -5,7 +5,7 @@ let window = new DrawCaml.dwindow ~title:"SNAKE" ~pos:(50,50) ~size:(800,800) ()
 let win_container = window#getContainer ();;
 
 (* grid sidelength *)
-let gsl = 20;;
+let gsl = 30;;
 
 win_container#setBgColor("black");;
 
@@ -137,7 +137,7 @@ while window#notClosed () do
     actualTime := Unix.gettimeofday ();
     
     (* use this condition instead of Unix.sleep *)
-    if !actualTime -. !lastTime > 0.15 then begin
+    if !actualTime -. !lastTime > 0.10 then begin
         
         if game.lost then begin
             win_container#add gtest ~pos:(200,200) ()

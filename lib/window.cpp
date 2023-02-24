@@ -107,6 +107,8 @@ void SWindow::listener(){
 				if (mEvent.xclient.data.l[0] == (long int)mDeleteWindow) {
 					redraw=0;
 					LOG("Caught window delete event\n");
+				} else {
+					LOG("Dummy Event !\n");
 				}
 				break;
 			
@@ -192,8 +194,9 @@ void SWindow::listener(){
 
 			last_draw_time = actual_time;
 			WARNING("Drawing\n");
-		} else if(!catchup) {
+		} else if(!XPending(mDisplay)) {
 			sendDummyEvent(this);
+			// cout << "catchup=1" << endl;
 			catchup = 1;
 		}
 	
