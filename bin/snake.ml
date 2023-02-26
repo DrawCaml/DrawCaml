@@ -5,7 +5,7 @@ let window = new DrawCaml.dwindow ~title:"SNAKE" ~pos:(50,50) ~size:(800,800) ()
 let win_container = window#getContainer ();;
 
 (* grid sidelength *)
-let gsl = 30;;
+let gsl = 20;;
 
 win_container#setBgColor("black");;
 
@@ -36,6 +36,7 @@ for i=0 to gsl-1 do
             grid_container#add grid_containers.(i).(j) ~pos:(i,j) ();
     done;
 done;;
+
 
 gtest#setBgColor "red";;
 gtest#setSize (400,400);;

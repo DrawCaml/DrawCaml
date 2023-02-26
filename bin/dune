@@ -2,3 +2,7 @@
  (public_names DCmain DCsnake)
  (names main snake)
  (libraries DrawCaml unix))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

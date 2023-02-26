@@ -14,7 +14,7 @@ void SLabel::_update(){
 
 	XAllocNamedColor(mWin->mDisplay, mWin->mColormap, mColorStr, &mColor, &mColor);
 
-	mFontStruct = XLoadQueryFont(mWin->mDisplay, mFontStr.c_str());
+	mFontStruct = XLoadQueryFont(mWin->mDisplay, "fixed");
 	if(!mFontStruct){
 		ERROR("SLABEL: Cannot load font " + mFontStr + " !\n");
 		// LOG("Available fonts:\n");
