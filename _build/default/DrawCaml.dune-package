@@ -1,0 +1,37 @@
+(lang dune 3.6)
+(name DrawCaml)
+(sections
+ (lib .)
+ (libexec .)
+ (bin ../../bin)
+ (doc ../../doc/DrawCaml)
+ (stublibs ../stublibs))
+(files
+ (lib
+  (DrawCaml.a
+   DrawCaml.cma
+   DrawCaml.cmxa
+   META
+   drawCaml.cmi
+   drawCaml.cmt
+   drawCaml.cmx
+   drawCaml.ml
+   dune-package
+   libDrawCaml_stubs.a
+   opam))
+ (libexec (DrawCaml.cmxs))
+ (bin (DrawCaml))
+ (doc (README.md))
+ (stublibs (dllDrawCaml_stubs.so)))
+(library
+ (name DrawCaml)
+ (kind normal)
+ (archives (byte DrawCaml.cma) (native DrawCaml.cmxa))
+ (plugins (byte DrawCaml.cma) (native DrawCaml.cmxs))
+ (foreign_objects action.o container.o drawcaml.o element.o window.o)
+ (foreign_archives (archives (for all) (files libDrawCaml_stubs.a)))
+ (native_archives DrawCaml.a)
+ (main_module_name DrawCaml)
+ (modes byte native)
+ (modules
+  (singleton (name DrawCaml) (obj_name drawCaml) (visibility public) (impl))))

@@ -1,4 +1,8 @@
 (executable
  (public_name DrawCaml)
- (name snake)
+ (name tetris)
  (libraries DrawCaml unix))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))
