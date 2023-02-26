@@ -8,7 +8,6 @@
 <link rel="Up" href="index.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of values" rel=Appendix href="index_values.html">
-<link title="Index of class attributes" rel=Appendix href="index_attributes.html">
 <link title="Index of class methods" rel=Appendix href="index_methods.html">
 <link title="Index of classes" rel=Appendix href="index_classes.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
@@ -21,17 +20,70 @@
 
 <pre><span id="MODULEDrawCaml"><span class="keyword">module</span> DrawCaml</span>: <code class="code">sig</code> <a href="DrawCaml.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
-<pre><span id="VALgetPosEx"><span class="keyword">val</span> getPosEx</span> : <code class="type">nativeint -&gt; int * int</code></pre>
-<pre><span id="VALgetSizeEx"><span class="keyword">val</span> getSizeEx</span> : <code class="type">nativeint -&gt; int * int</code></pre>
-<pre><span id="VALcreateContainerEx"><span class="keyword">val</span> createContainerEx</span> : <code class="type">int -&gt; int -&gt; int -&gt; nativeint</code></pre>
-<pre><span id="VALsetBgColorEx"><span class="keyword">val</span> setBgColorEx</span> : <code class="type">nativeint -&gt; string -&gt; unit</code></pre>
-<pre><span id="VALaddElemEx"><span class="keyword">val</span> addElemEx</span> : <code class="type">nativeint -&gt; nativeint -&gt; int -&gt; int -&gt; unit</code></pre>
-<pre><span id="VALremoveElemEx"><span class="keyword">val</span> removeElemEx</span> : <code class="type">nativeint -&gt; nativeint -&gt; unit</code></pre>
-<pre><span id="VALcreateWindowEx"><span class="keyword">val</span> createWindowEx</span> : <code class="type">string -&gt; int -&gt; int -&gt; int -&gt; int -&gt; nativeint</code></pre>
-<pre><span id="VALdrawWindowEx"><span class="keyword">val</span> drawWindowEx</span> : <code class="type">nativeint -&gt; unit</code></pre>
-<pre><span id="VALwaitForCloseEx"><span class="keyword">val</span> waitForCloseEx</span> : <code class="type">nativeint -&gt; unit</code></pre>
-<pre><span id="VALwinNotClosedEx"><span class="keyword">val</span> winNotClosedEx</span> : <code class="type">nativeint -&gt; bool</code></pre>
-<pre><span id="VALsetWindowContainerEx"><span class="keyword">val</span> setWindowContainerEx</span> : <code class="type">nativeint -&gt; nativeint -&gt; unit</code></pre>
+<pre><code><span id="TYPEkey"><span class="keyword">type</span> <code class="type"></code>key</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTkey.Letter"><span class="constructor">Letter</span></span> <span class="keyword">of</span> <code class="type">char</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTkey.Left"><span class="constructor">Left</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTkey.Up"><span class="constructor">Up</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTkey.Right"><span class="constructor">Right</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTkey.Down"><span class="constructor">Down</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTkey.Space"><span class="constructor">Space</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><code><span id="TYPEevent"><span class="keyword">type</span> <code class="type"></code>event</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTevent.KeyPressed"><span class="constructor">KeyPressed</span></span> <span class="keyword">of</span> <code class="type"><a href="DrawCaml.html#TYPEkey">key</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTevent.KeyReleased"><span class="constructor">KeyReleased</span></span> <span class="keyword">of</span> <code class="type"><a href="DrawCaml.html#TYPEkey">key</a></code></code></td>
+
+</tr></table>
+
+
+
 <pre><code><span id="TYPEdlayout"><span class="keyword">type</span> <code class="type"></code>dlayout</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
@@ -59,5 +111,18 @@
 
 <pre><span id="VALlayout_enum"><span class="keyword">val</span> layout_enum</span> : <code class="type"><a href="DrawCaml.html#TYPEdlayout">dlayout</a> -&gt; int</code></pre>
 <pre><span id="TYPEdelement"><span class="keyword">class</span> <span class="keyword">virtual</span> <a href="DrawCaml.delement-c.html">delement</a></span> : <code class="type">unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.delement-c.html">..</a> <code class="code">end</code></pre>
-<pre><span id="TYPEdcontainer"><span class="keyword">class</span> <a href="DrawCaml.dcontainer-c.html">dcontainer</a></span> : <code class="type">?layout:dlayout -&gt; ?dim:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dcontainer-c.html">..</a> <code class="code">end</code></pre>
-<pre><span id="TYPEdwindow"><span class="keyword">class</span> <a href="DrawCaml.dwindow-c.html">dwindow</a></span> : <code class="type">?title:string -&gt; ?pos:int * int -&gt; ?size:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dwindow-c.html">..</a> <code class="code">end</code></pre></body></html>
+<pre><span id="TYPEdlabel"><span class="keyword">class</span> <a href="DrawCaml.dlabel-c.html">dlabel</a></span> : <code class="type">?text:string -&gt; ?font:string -&gt; ?fontSize:int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dlabel-c.html">..</a> <code class="code">end</code></pre><div class="info">
+<p>graphical element that prints text</p>
+
+</div>
+
+<pre><span id="TYPEdcontainer"><span class="keyword">class</span> <a href="DrawCaml.dcontainer-c.html">dcontainer</a></span> : <code class="type">?layout:dlayout -&gt; ?dim:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dcontainer-c.html">..</a> <code class="code">end</code></pre><div class="info">
+<p>graphical element that can manage others</p>
+
+</div>
+
+<pre><span id="TYPEdwindow"><span class="keyword">class</span> <a href="DrawCaml.dwindow-c.html">dwindow</a></span> : <code class="type">?title:string -&gt; ?pos:int * int -&gt; ?size:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dwindow-c.html">..</a> <code class="code">end</code></pre><div class="info">
+<p>class for the window</p>
+
+</div>
+</body></html>

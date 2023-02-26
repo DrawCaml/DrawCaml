@@ -13,6 +13,8 @@ type event =
 |KeyReleased of key
 ;;
 
+
+(**/**)
 (* Element methods *)
 external getPosEx : nativeint -> int*int = "getPos_cpp"
 external getSizeEx : nativeint -> int*int = "getSize_cpp"
@@ -51,7 +53,7 @@ let makeKeyReleased i = (* print_string("makeKeyReleased");print_newline (); *)K
 
 let _ = Callback.register "makeKeyPressed" makeKeyPressed;;
 let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
-
+(**/**)
 
 
 (*let makeArrow c = print_string("construct KeyReleased");print_newline();KeyReleased(c);;
@@ -71,9 +73,12 @@ let layout_enum = function
 (* abstract type for elements of the window *)
 class virtual delement () =
 	object
+        (**/**)
 		val mutable size = (-1,-1)
 		val mutable pos = (-1,-1)
 		val mutable ptr = 0n
+        (**/**)
+        (** Gets the size :o *)
 		method getSize () =
 			getSizeEx ptr
 		method setSize (sx,sy) =
@@ -84,7 +89,7 @@ class virtual delement () =
 			ptr
 	end
 
-(* graphical element that prints text *)
+(** graphical element that prints text *)
 class dlabel ?(text="") ?(font="helvetica") ?(fontSize=12) () =
 	object
 		inherit delement ()
@@ -97,7 +102,7 @@ end
 
 (* graphical element that prints an Image *)
 
-(* graphical element that can manage others *)
+(** graphical element that can manage others *)
 class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 	object
 		inherit delement ()
@@ -112,12 +117,14 @@ class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 		initializer ptr <- createContainerEx (layout_enum layout) (fst dim) (snd dim)
 	end
 
-(* class for the window *)
+(** class for the window *)
 class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) () =
 	object
+        (**/**)
 		val mutable main_container = new dcontainer ()
 		val mutable event_handler = (fun _ -> ())
 		val ptr = createWindowEx title (fst pos) (snd pos) (fst size) (snd size)
+        (**/**)
 		method getTitle () =
 			title
 		method getSize () =

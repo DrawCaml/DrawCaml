@@ -9,7 +9,6 @@
 <link rel="Up" href="DrawCaml.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of values" rel=Appendix href="index_values.html">
-<link title="Index of class attributes" rel=Appendix href="index_attributes.html">
 <link title="Index of class methods" rel=Appendix href="index_methods.html">
 <link title="Index of classes" rel=Appendix href="index_classes.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
@@ -21,10 +20,13 @@
 &nbsp;</div>
 <h1>Class <a href="type_DrawCaml.dwindow.html">DrawCaml.dwindow</a></h1>
 
-<pre><span id="TYPEdwindow"><span class="keyword">class</span> dwindow</span> : <code class="type">?title:string -&gt; ?pos:int * int -&gt; ?size:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dwindow-c.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<pre><span id="TYPEdwindow"><span class="keyword">class</span> dwindow</span> : <code class="type">?title:string -&gt; ?pos:int * int -&gt; ?size:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dwindow-c.html">..</a> <code class="code">end</code></pre><div class="info class top">
+<div class="info-desc">
+<p>class for the window</p>
+</div>
+</div>
+<hr width="100%">
 
-<pre><span id="ATTmain_container"><span class="keyword">val</span> <span class="keyword">mutable</span> main_container</span> : <code class="type"><a href="DrawCaml.dcontainer-c.html">dcontainer</a></code></pre>
-<pre><span id="ATTptr"><span class="keyword">val</span> ptr</span> : <code class="type">nativeint</code></pre>
 <pre><span id="METHODgetTitle"><span class="keyword">method</span> getTitle</span> : <code class="type">unit -&gt; string</code></pre>
 <pre><span id="METHODgetSize"><span class="keyword">method</span> getSize</span> : <code class="type">unit -&gt; int * int</code></pre>
 <pre><span id="METHODgetPos"><span class="keyword">method</span> getPos</span> : <code class="type">unit -&gt; int * int</code></pre>
@@ -32,4 +34,5 @@
 <pre><span id="METHODsetContainer"><span class="keyword">method</span> setContainer</span> : <code class="type"><a href="DrawCaml.dcontainer-c.html">dcontainer</a> -&gt; unit</code></pre>
 <pre><span id="METHODdraw"><span class="keyword">method</span> draw</span> : <code class="type">unit -&gt; unit</code></pre>
 <pre><span id="METHODnotClosed"><span class="keyword">method</span> notClosed</span> : <code class="type">unit -&gt; bool</code></pre>
-<pre><span id="METHODwaitForClose"><span class="keyword">method</span> waitForClose</span> : <code class="type">unit -&gt; unit</code></pre></body></html>
+<pre><span id="METHODwaitForClose"><span class="keyword">method</span> waitForClose</span> : <code class="type">unit -&gt; unit</code></pre>
+<pre><span id="METHODsetEventHandler"><span class="keyword">method</span> setEventHandler</span> : <code class="type">(<a href="DrawCaml.html#TYPEevent">event</a> -&gt; unit) -&gt; unit</code></pre></body></html>
