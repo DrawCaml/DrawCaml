@@ -146,15 +146,12 @@ extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
 Label methods
 */
 
-extern "C" value createLabel_cpp(value text, value size, value font, value pos) {
+extern "C" value createLabel_cpp(value text, value size, value font) {
 	const char* txt = String_val(text);
 	int s = Int_val(size);
 	const char* ft = String_val(font);
-	const char* strpos = String_val(pos);
 	SLabel* l = new SLabel();
 	l->setText(txt);
-	// l->setFontSize(s);
-	// l->setPos(strpos);
 	l->setFont(ft);
 	return caml_copy_nativeint((long)l);
 }
@@ -162,7 +159,24 @@ extern "C" value createLabel_cpp(value text, value size, value font, value pos) 
 extern "C" value setText_cpp(value lbl, value text){
 	SLabel* l = (SLabel*) Nativeint_val(lbl);
 	const char* txt = String_val(text);
-	l->setText(txt);
+	SWindow* win = l->mWin;
+	Action* a = new Action(win, bind(&SLabel::setText, l, txt));
+	return Val_unit;
+}
+
+extern "C" value setLabelColor_cpp(value lbl, value col){
+	SLabel* l = (SLabel*) Nativeint_val(lbl);
+	const char* color = String_val(col);
+	SWindow* win = l->mWin;
+	Action* a = new Action(win, bind(&SLabel::setColor, l, color));
+	return Val_unit;
+}
+
+extern "C" value setLabelFont_cpp(value lbl, value ft){
+	SLabel* l = (SLabel*) Nativeint_val(lbl);
+	const char* font = String_val(ft);
+	SWindow* win = l->mWin;
+	Action* a = new Action(win, bind(&SLabel::setFont, l, font));
 	return Val_unit;
 }
 

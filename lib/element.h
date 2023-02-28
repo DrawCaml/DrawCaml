@@ -33,8 +33,7 @@ public:
 
 	void setText(const char* text);
 	void setFont(const char* font);
-	void setFontSize(int fontsize);
-	void setColor(const char* font);
+	void setColor(const char* col);
 
 	virtual void setSize(int sizeX, int sizeY);
 	virtual void draw(SWindow* win, int drawX, int drawY);

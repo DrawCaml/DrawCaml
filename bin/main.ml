@@ -29,6 +29,8 @@ grid_container#add container4 ~pos:(1,2) ();;
 
 (* test label *)
 let testLabel = new DrawCaml.dlabel ~text:"testlabel" ();;
+testLabel#setColor "blue";;
+(* testLabel#setFont "fixed";; *)
 grid_container#add testLabel ~pos:(0,4) ();;
 
 (* marche pas sans le Unix.sleep *)
@@ -44,11 +46,13 @@ print_newline ();;
 
 let f e =
 	match e with
-	|DrawCaml.KeyPressed(_) -> 	print_string("press\n");
-								(* grid_container#remove container1; *)
-								grid_container#add container1 ~pos:(2,2) ();
-	|DrawCaml.KeyReleased(_) -> print_string("released\n");
-								(* grid_container#remove container1; *)
+	|DrawCaml.KeyPressed(_) -> 	print_string("press");
+								print_newline ();
+								testLabel#setColor "white";
+								grid_container#add container1 ~pos:(2,2) ()
+	|DrawCaml.KeyReleased(_) -> print_string("released");
+								print_newline ();
+								testLabel#setColor "purple";
 								grid_container#add container1 ~pos:(1,0) ();;
 
 window#setEventHandler f;;

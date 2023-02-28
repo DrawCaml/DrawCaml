@@ -21,6 +21,8 @@ external setSizeEx : nativeint -> int -> int -> unit = "setSize_cpp"
 (* label methods *)
 external createLabelEx : string -> int -> string -> nativeint = "createLabel_cpp"
 external setTextEx : nativeint -> string -> unit = "setText_cpp"
+external setLabelColorEx : nativeint -> string -> unit = "setLabelColor_cpp"
+external setLabelFontEx : nativeint -> string -> unit = "setLabelFont_cpp"
 
 (* Conatiner methods *)
 external createContainerEx : int -> int -> int -> nativeint = "createContainer_cpp"
@@ -46,18 +48,13 @@ let makeKey i =
 	| k when (k>=0x61)&&(k<=0x7a) -> Letter(Char.chr(k))
 	| _ -> Space;;
 
-let makeKeyPressed i = (* print_string("makeKeyPressed");print_newline (); *)KeyPressed(makeKey i);;
-let makeKeyReleased i = (* print_string("makeKeyReleased");print_newline (); *)KeyReleased(makeKey i);;
+let makeKeyPressed i = KeyPressed(makeKey i);;
+let makeKeyReleased i = KeyReleased(makeKey i);;
 
 let _ = Callback.register "makeKeyPressed" makeKeyPressed;;
 let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
 
-
-
-(*let makeArrow c = print_string("construct KeyReleased");print_newline();KeyReleased(c);;
-let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
-
-let makeMousePress x y = MousePress(x,y);;
+(*let makeMousePress x y = MousePress(x,y);;
 let _ = Callback.register "makeMousePress" makeMousePress;;*)
 
 (*layouts*)
@@ -85,11 +82,14 @@ class virtual delement () =
 	end
 
 (* graphical element that prints text *)
-class dlabel ?(text="") ?(font="helvetica") ?(fontSize=12) () =
+class dlabel ?(text="") ?(font="*helvetica*-r-*-20-*") ?(fontSize=12) () =
 	object
 		inherit delement ()
-(* 		method setColor (col : string) = 
-			(setFgColorEx ptr col) *)
+		method setColor (col : string) = 
+			(setLabelColorEx ptr col)
+		(* Specify the font of the label using X logical font format (use ```xlsfonts``` to see available fonts) *)
+		method setFont (ft : string) =
+			(setLabelFontEx ptr ft)
 		method setText (txt : string) =
 			(setTextEx ptr txt)
 		initializer ptr <- createLabelEx text fontSize font

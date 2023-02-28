@@ -14,7 +14,7 @@ void SLabel::_update(){
 
 	XAllocNamedColor(mWin->mDisplay, mWin->mColormap, mColorStr, &mColor, &mColor);
 
-	mFontStruct = XLoadQueryFont(mWin->mDisplay, "fixed");
+	mFontStruct = XLoadQueryFont(mWin->mDisplay, mFontStr.c_str());
 	if(!mFontStruct){
 		ERROR("SLABEL: Cannot load font " + mFontStr + " !\n");
 		// LOG("Available fonts:\n");
@@ -28,7 +28,6 @@ void SLabel::_update(){
 // For now on, only xlib fonts are supported 
 void SLabel::setFont(const char* font){
 	string s(font);
-	s = "*-" + s + "-*-r-*-20-*";
 	mFontStr = s;
 }
 
@@ -40,12 +39,8 @@ void SLabel::setColor(const char* col){
 	mColorStr = col;
 }
 
-void SLabel::setFontSize(int fontsize){
-	// TBD
-}
-
 void SLabel::setSize(int sizeX, int sizeY){
-	// TBD
+	// to resize a label, use the appropriate X font
 }
 
 void SLabel::draw(SWindow* win, int drawX, int drawY){
