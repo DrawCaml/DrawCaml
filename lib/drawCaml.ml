@@ -56,7 +56,7 @@ let makeKeyReleased i = KeyReleased(makeKey i);;
 let _ = Callback.register "makeKeyPressed" makeKeyPressed;;
 let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
 
-(*let makeMousePress x y = MousePress(x,y);;
+(*let makeMousePress x y = MousePress(x,y);;*)
 (**/**)
 
 
@@ -97,7 +97,7 @@ class dlabel ?(text="") ?(font="*helvetica*-r-*-20-*") ?(fontSize=12) () =
 		inherit delement ()
 		method setColor (col : string) = 
 			(setLabelColorEx ptr col)
-		(** Specify the font of the label using X logical font format (use ```xlsfonts``` to see available fonts) *)
+		(* Specify the font of the label using X logical font format (use ```xlsfonts``` to see available fonts) *)
 		method setFont (ft : string) =
 			(setLabelFontEx ptr ft)
 		method setText (txt : string) =
