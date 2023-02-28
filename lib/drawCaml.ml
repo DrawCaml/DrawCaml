@@ -13,6 +13,8 @@ type event =
 |KeyReleased of key
 ;;
 
+
+(**/**)
 (* Element methods *)
 external getPosEx : nativeint -> int*int = "getPos_cpp"
 external getSizeEx : nativeint -> int*int = "getSize_cpp"
@@ -55,6 +57,11 @@ let _ = Callback.register "makeKeyPressed" makeKeyPressed;;
 let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
 
 (*let makeMousePress x y = MousePress(x,y);;
+(**/**)
+
+
+(*
+let makeMousePress x y = MousePress(x,y);;
 let _ = Callback.register "makeMousePress" makeMousePress;;*)
 
 (*layouts*)
@@ -68,9 +75,12 @@ let layout_enum = function
 (* abstract type for elements of the window *)
 class virtual delement () =
 	object
+        (**/**)
 		val mutable size = (-1,-1)
 		val mutable pos = (-1,-1)
 		val mutable ptr = 0n
+        (**/**)
+        (** Gets the size :o *)
 		method getSize () =
 			getSizeEx ptr
 		method setSize (sx,sy) =
@@ -87,7 +97,7 @@ class dlabel ?(text="") ?(font="*helvetica*-r-*-20-*") ?(fontSize=12) () =
 		inherit delement ()
 		method setColor (col : string) = 
 			(setLabelColorEx ptr col)
-		(* Specify the font of the label using X logical font format (use ```xlsfonts``` to see available fonts) *)
+		(** Specify the font of the label using X logical font format (use ```xlsfonts``` to see available fonts) *)
 		method setFont (ft : string) =
 			(setLabelFontEx ptr ft)
 		method setText (txt : string) =
@@ -97,7 +107,7 @@ end
 
 (* graphical element that prints an Image *)
 
-(* graphical element that can manage others *)
+(** graphical element that can manage others *)
 class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 	object
 		inherit delement ()
@@ -112,12 +122,14 @@ class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 		initializer ptr <- createContainerEx (layout_enum layout) (fst dim) (snd dim)
 	end
 
-(* class for the window *)
+(** class for the window *)
 class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) () =
 	object
+        (**/**)
 		val mutable main_container = new dcontainer ()
 		val mutable event_handler = (fun _ -> ())
 		val ptr = createWindowEx title (fst pos) (snd pos) (fst size) (snd size)
+        (**/**)
 		method getTitle () =
 			title
 		method getSize () =

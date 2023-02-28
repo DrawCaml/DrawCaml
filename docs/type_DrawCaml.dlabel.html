@@ -8,21 +8,20 @@
 <link title="Index of class methods" rel=Appendix href="index_methods.html">
 <link title="Index of classes" rel=Appendix href="index_classes.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
-<link title="DrawCaml" rel="Chapter" href="DrawCaml.html"><title>DrawCaml.dcontainer</title>
+<link title="DrawCaml" rel="Chapter" href="DrawCaml.html"><title>DrawCaml.dlabel</title>
 </head>
 <body>
-<code class="code">?layout:dlayout&nbsp;<span class="keywordsign">-&gt;</span><br>
-?dim:int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span><br>
+<code class="code">?text:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+?font:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+?fontSize:int&nbsp;<span class="keywordsign">-&gt;</span><br>
 unit&nbsp;<span class="keywordsign">-&gt;</span><br>
 <span class="keyword">object</span><br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;<span class="keyword">mutable</span>&nbsp;pos&nbsp;:&nbsp;int&nbsp;*&nbsp;int<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;<span class="keyword">mutable</span>&nbsp;ptr&nbsp;:&nbsp;nativeint<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;<span class="keyword">mutable</span>&nbsp;size&nbsp;:&nbsp;int&nbsp;*&nbsp;int<br>
-&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;add&nbsp;:&nbsp;<span class="keywordsign">#</span><span class="constructor">DrawCaml</span>.delement&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?pos:int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">method</span>&nbsp;getPos&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;*&nbsp;int<br>
 &nbsp;&nbsp;<span class="keyword">method</span>&nbsp;getPtr&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;nativeint<br>
 &nbsp;&nbsp;<span class="keyword">method</span>&nbsp;getSize&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;*&nbsp;int<br>
-&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;remove&nbsp;:&nbsp;<span class="keywordsign">#</span><span class="constructor">DrawCaml</span>.delement&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
-&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;setBgColor&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">method</span>&nbsp;setSize&nbsp;:&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;setText&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 <span class="keyword">end</span></code></body></html>
