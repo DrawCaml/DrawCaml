@@ -254,8 +254,10 @@ extern "C" value setBgColor_cpp(value object,value color) {
 	return Val_unit;
 }
 
+//unused
+/*
 extern "C" value setWindowEventHandler_cpp(value window, value f){
 	SWindow* win = (SWindow *) Nativeint_val(window);
 	win->mEventHandler = f;
 	return Val_unit;
-}
+}*/

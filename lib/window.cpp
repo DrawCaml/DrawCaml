@@ -116,6 +116,7 @@ void SWindow::listener(){
 	auto last_draw_time = std::chrono::high_resolution_clock::now();
 	// std::this_thread::sleep_for(std::chrono::milliseconds(90));
 	value ec;
+	const value* closure_f;
 	while (redraw) {
 		if (!mDisplay) {
 			WARNING("No display\n");
@@ -148,10 +149,11 @@ void SWindow::listener(){
 				// ADD ARRAY TO DETERMINE IF A KEY IS ALREADY TRIGGERED ?
 				LOG("Caught KeyPress event\n");
 				ec = keyEventToCaml(mEvent.xkey.keycode, true);
-				
-				if (mEventHandler) {
+				closure_f = caml_named_value("event_handler");
+				if (closure_f) {
 					is_Xlib = true;
-					caml_callback(mEventHandler, ec);
+					caml_callback(*closure_f, ec);
+					//caml_callback(mEventHandler, ec);
 					is_Xlib = false;
 				}
 				else {
@@ -176,10 +178,11 @@ void SWindow::listener(){
 				LOG("Caught KeyRelease event\n");
 
 				ec = keyEventToCaml(mEvent.xkey.keycode, false);
-				
-				if (mEventHandler) {
+				closure_f = caml_named_value("event_handler");
+				if (closure_f) {
 					is_Xlib = true;
-					caml_callback(mEventHandler, ec);
+					caml_callback(*closure_f, ec);
+					//caml_callback(mEventHandler, ec);
 					is_Xlib = false;
 				}
 				else {
