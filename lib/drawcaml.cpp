@@ -31,6 +31,8 @@ std::vector<SWindow*> windows;
 Window methods
 */
 
+/// Wow
+/// This is awesome function
 extern "C" value createWindow_cpp(value name, value vposX, value vposY, value vsizeX, value vsizeY) {
 	const char* windowName = String_val(name);
 	int posX = Int_val(vposX), posY = Int_val(vposY);

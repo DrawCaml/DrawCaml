@@ -3,6 +3,10 @@
 
 ![DrawCaml logo](https://cdn.discordapp.com/attachments/1017077725418246264/1017365387131760732/telechargement.png)
 
+# Documentation
+
+Documentation can be found on [Github Pages](https://drawcaml.github.io/DrawCaml)
+
 # Project organisation
 
 ```
