@@ -114,9 +114,7 @@ DRAW WINDOW (BLOCKING) --> called in a separate thread
 void SWindow::listener(){
 	int redraw=1, c;
 	auto last_draw_time = std::chrono::high_resolution_clock::now();
-	// std::this_thread::sleep_for(std::chrono::milliseconds(90));
 	value ec;
-	const value* closure_f;
 	while (redraw) {
 		if (!mDisplay) {
 			WARNING("No display\n");
@@ -124,7 +122,6 @@ void SWindow::listener(){
 		}
 
 		XNextEvent(mDisplay, &mEvent);
-		// XCheckWindowEvent(mDisplay, mWindow, ExposureMask, &mEvent);
 		switch (mEvent.type) {
 			
 			// Catch events from user
@@ -149,14 +146,12 @@ void SWindow::listener(){
 				// ADD ARRAY TO DETERMINE IF A KEY IS ALREADY TRIGGERED ?
 				LOG("Caught KeyPress event\n");
 				ec = keyEventToCaml(mEvent.xkey.keycode, true);
-				closure_f = caml_named_value("event_handler");
-				if (closure_f) {
+				if (mEventHandler) {
 					is_Xlib = true;
-					caml_callback(*closure_f, ec);
-					//caml_callback(mEventHandler, ec);
+					caml_callback(mEventHandler, ec);
 					is_Xlib = false;
-				}
-				else {
+				
+				} else {
 					WARNING("Event handler not defined\n");
 				}
 				break;
@@ -178,14 +173,11 @@ void SWindow::listener(){
 				LOG("Caught KeyRelease event\n");
 
 				ec = keyEventToCaml(mEvent.xkey.keycode, false);
-				closure_f = caml_named_value("event_handler");
-				if (closure_f) {
+				if (mEventHandler) {
 					is_Xlib = true;
-					caml_callback(*closure_f, ec);
-					//caml_callback(mEventHandler, ec);
+					caml_callback(mEventHandler, ec);
 					is_Xlib = false;
-				}
-				else {
+				} else {
 					WARNING("Event handler not defined\n");
 				}
 				break;

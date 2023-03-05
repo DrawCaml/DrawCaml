@@ -38,7 +38,7 @@ external drawWindowEx : nativeint -> unit = "draw_cpp"
 external waitForCloseEx : nativeint -> unit = "waitForClose_cpp"
 external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
-(*external setWindowEventHandlerEx : nativeint -> (event -> unit) -> unit = "setWindowEventHandler_cpp"*)
+external setWindowEventHandlerEx : nativeint -> (event -> unit) -> unit = "setWindowEventHandler_cpp"
 
 let makeKey i = 
 	match i with
@@ -155,8 +155,7 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 		method setEventHandler f =
 			begin
 				(event_handler <- f);
-				(Callback.register "event_handler" f);
-				(*(setWindowEventHandlerEx ptr f)*)
+				(setWindowEventHandlerEx ptr f)
 			end
 		initializer setWindowContainerEx ptr (main_container#getPtr ())
 	end
