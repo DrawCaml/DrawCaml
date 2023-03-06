@@ -10,25 +10,36 @@ Documentation can be found on [Github Pages](https://drawcaml.github.io/DrawCaml
 # Project organisation
 
 ```
-├── bin
+├── bin             // example files to test the library
 │   ├── dune
-│   └── main.ml           // where we call the DrawCaml library from OCaml
+│   ├── main.ml     // a simple code that contains all the features
+│   └── snake.ml    // a simple snake game
+├── docs            // project documentation
+├── doxygen_config
 ├── DrawCaml.opam
-├── dune-project   
-├── lib
-│   ├── discover
+├── dune-project
+├── lib                             // code of drawcaml library
 │   │   ├── discover.ml
 │   │   └── dune
-│   ├── DrawCaml.ml       // the root of the library
+│   ├── action.cpp
+│   ├── action.h
+│   ├── container.cpp
+│   ├── container.h
+│   ├── CPP_Doc.md
+│   ├── discover
+│   ├── drawcaml.cpp
+│   ├── drawCaml.ml
 │   ├── dune
-│   ├── testc.cpp         // the root of the C++ interface
+│   ├── element.cpp
+│   ├── element.h
+│   ├── test.cpp
+│   ├── utils.h
 │   ├── window.cpp
 │   └── window.h
-├── makefile
-├── README.md
-└── test
-    ├── dune
-    └── ProjetIntegre.ml  // these OCaml files test the library
+├── makefile        // makefile to build documentation 
+├── ocamldoc.out
+├── ocamldoc.sty
+└── README.md
 ```
 
 # Dependencies

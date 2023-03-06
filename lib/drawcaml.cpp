@@ -24,9 +24,6 @@ using Function = function<void(void)>;
 // keeps trace of c++ windows
 std::vector<SWindow*> windows;
 
-// to be added: a function to delete window objects
-
-
 /*
 Window methods
 */
@@ -38,7 +35,6 @@ extern "C" value createWindow_cpp(value name, value vposX, value vposY, value vs
 	int posX = Int_val(vposX), posY = Int_val(vposY);
 	int sizeX = Int_val(vsizeX), sizeY = Int_val(vsizeY);
 	SWindow* win = new SWindow(windowName, posX, posY, sizeX, sizeY, 1);
-	// printf("%d %d %d %d\n", posX, posY, sizeX, sizeY);
 	windows.push_back(win);
 
 	win->draw();
@@ -54,18 +50,6 @@ extern "C" value setWindowContainer_cpp(value window, value container){
 	cont->mPosX = 0;
 	cont->mPosY = 0;
 	cont->setSize(win->mWidth, win->mHeight);
-	return Val_unit;
-}
-
-//toujours pour la window !!!, l'utilisateur ne fait jamais de call draw pour un container
-extern "C" value draw_cpp(value window) {
-	SWindow* win = (SWindow *) Nativeint_val(window);
-
-	if (!win) {
-		WARNING("Window doesn't exist\n");
-		return Val_unit;
-	}
-	win->draw();
 	return Val_unit;
 }
 

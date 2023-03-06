@@ -34,7 +34,6 @@ external removeElemEx : nativeint -> nativeint -> unit = "removeElem_cpp"
 
 (* Window methods *)
 external createWindowEx : string -> int -> int -> int -> int -> nativeint = "createWindow_cpp"
-external drawWindowEx : nativeint -> unit = "draw_cpp"
 external waitForCloseEx : nativeint -> unit = "waitForClose_cpp"
 external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
@@ -120,14 +119,12 @@ class dlabel ?(text="") ?(font="*helvetica*-r-*-20-*") ?(fontSize=12) () =
 		initializer ptr <- createLabelEx text fontSize font
 end
 
-(* graphical element that prints an Image *)
-
-(** Base element, that simply contains other elements *)
+(** Base element that can contain other elements and arrange them *)
 class dcontainer ?(layout = FloatLayout) ?(dim = (1,1)) () =
 	object
 		inherit delement ()
 
-        (** Set the color of the background of the countainer *)
+        (** Set the color of the background of the container *)
 		method setBgColor (col : string) =
 			(setBgColorEx ptr col)
 
@@ -152,7 +149,7 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 		val ptr = createWindowEx title (fst pos) (snd pos) (fst size) (snd size)
         (**/**)
 
-        (** Get the titl of the window *)
+        (** Get the title of the window *)
 		method getTitle () =
 			title
 
@@ -175,13 +172,6 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 			(setWindowContainerEx ptr (ctr#getPtr ()))
 			end
 
-        (** Recursively redraw the childs of the window *)
-		method draw () =
-			if ptr<>0n then 
-				drawWindowEx(ptr) 
-			else 
-				failwith("OCaml: NullPointerException")
-
         (** Checks if the windows is closed *)
 		method notClosed () =
 			winNotClosedEx ptr
@@ -190,7 +180,7 @@ class dwindow ?(title = "DrawCaml Window") ?(pos = (10,10)) ?(size = (100,100)) 
 		method waitForClose () =
 			waitForCloseEx(ptr)
 
-        (** Binds an event handler for the user keyboard interraction *)
+        (** Binds an event handler for the user keyboard interaction *)
 		method setEventHandler f =
 			begin
 				(event_handler <- f);

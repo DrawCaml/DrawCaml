@@ -1,3 +1,3 @@
 # C++ documentation of DrawCaml's internal code:
 
-[test](annotated.html)
+**Class Hierarchy**: [see](hierarchy.html)
