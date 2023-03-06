@@ -50,4 +50,7 @@ Documentation can be found on [Github Pages](https://drawcaml.github.io/DrawCaml
 
 # Running the project
 
-Once all dependencies are installed, you can build the library with `dune build`. To compile the *main.ml* file to access the lib, do `dune build bin/main.exe` and do `dune exec ./bin/main.exe` to execute it.
+Once all dependencies are installed, you can build the library with `dune build`. 
+To compile the *main.ml* file to access the lib, do `dune build bin/main.exe`.
+To compile and run it, do `dune exec ./bin/main.exe`.
+The same commands stands for the *snake.ml* file.
