@@ -55,7 +55,7 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 	XSetWMProtocols(mDisplay, mWindow, &mDeleteWindow, 1);
 
 	XSelectInput(mDisplay, mWindow, 
-		/*FocusChangeMask |*/ ExposureMask | KeyPressMask | KeyReleaseMask);
+		ButtonReleaseMask | ButtonPressMask | ExposureMask | KeyPressMask | KeyReleaseMask);
 
 	XMapWindow(mDisplay, mWindow);
 
@@ -91,9 +91,6 @@ value SWindow::keyEventToCaml(int keycode, bool is_pressed) {
 	t = XGetKeyboardMapping(mDisplay, keycode, 1, &nothing);
 	r = t[0];
 	XFree(t);
-	//printf("%X\n",r);
-
-	//cout << "translated keycode " << (char) r <<endl;
 
 	// space : 0x20
 	// arrows : 0xff51 to 0xff54
@@ -104,7 +101,6 @@ value SWindow::keyEventToCaml(int keycode, bool is_pressed) {
 	else {
 		ec =caml_callback(*caml_named_value("makeKeyReleased"), Val_int(r));
 	}
-	//cout << "built event" << endl;
 	return ec;
 }
  
@@ -115,6 +111,7 @@ void SWindow::listener(){
 	int redraw=1, c;
 	auto last_draw_time = std::chrono::high_resolution_clock::now();
 	value ec;
+	int x, y, button;
 	while (redraw) {
 		if (!mDisplay) {
 			WARNING("No display\n");
@@ -181,6 +178,41 @@ void SWindow::listener(){
 					WARNING("Event handler not defined\n");
 				}
 				break;
+
+			case ButtonPress:
+				LOG("Caught MousePress event\n");
+				x = mEvent.xbutton.x;
+                y = mEvent.xbutton.y;
+                button = mEvent.xbutton.button;
+                ec = caml_callback3(
+                	*caml_named_value("makeMousePress"), Val_int(x), Val_int(y), Val_int(button));
+				if (mEventHandler) {
+					is_Xlib = true;
+					caml_callback(mEventHandler, ec);
+					is_Xlib = false;
+				
+				} else {
+					WARNING("Event handler not defined\n");
+				}
+				break;
+
+			case ButtonRelease:
+				LOG("Caught MouseRelease event\n");
+				x = mEvent.xbutton.x;
+                y = mEvent.xbutton.y;
+                button = mEvent.xbutton.button;
+                ec = caml_callback3(
+                	*caml_named_value("makeMouseRelease"), Val_int(x), Val_int(y), Val_int(button));
+				if (mEventHandler) {
+					is_Xlib = true;
+					caml_callback(mEventHandler, ec);
+					is_Xlib = false;
+				
+				} else {
+					WARNING("Event handler not defined\n");
+				}
+				break;
+
 			default:
 				WARNING("Caught unknown event\n");
 				break;

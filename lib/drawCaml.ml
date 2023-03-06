@@ -9,6 +9,8 @@ type key =
 ;;
 
 type event =
+| MousePressed of int*int*int
+| MouseReleased of int*int*int
 | KeyPressed of key
 | KeyReleased of key
 ;;
@@ -49,19 +51,19 @@ let makeKey i =
 	| k when (k>=0x61)&&(k<=0x7a) -> Letter(Char.chr(k))
 	| _ -> Space;;
 
+let makeMousePress x y b = MousePressed(x,y,b);;
+let makeMouseRelease x y b = MouseReleased(x,y,b);;
+
+let _ = Callback.register "makeMousePress" makeMousePress;;
+let _ = Callback.register "makeMouseRelease" makeMouseRelease;;
+
 let makeKeyPressed i = KeyPressed(makeKey i);;
 let makeKeyReleased i = KeyReleased(makeKey i);;
 
 let _ = Callback.register "makeKeyPressed" makeKeyPressed;;
 let _ = Callback.register "makeKeyReleased" makeKeyReleased;;
 
-(*let makeMousePress x y = MousePress(x,y);;*)
 (**/**)
-
-
-(*
-let makeMousePress x y = MousePress(x,y);;
-let _ = Callback.register "makeMousePress" makeMousePress;;*)
 
 (** Different types of layout. In the float layout, you give relative pixel positions,
 in the grid layout, you give indexes *)

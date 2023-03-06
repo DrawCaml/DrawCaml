@@ -53,8 +53,14 @@ let f e =
 	|DrawCaml.KeyReleased(_) -> print_string("released");
 								print_newline ();
 								testLabel#setColor "purple";
-								grid_container#add container1 ~pos:(1,0) ();;
-
+								grid_container#add container1 ~pos:(1,0) ()
+	|DrawCaml.MousePressed(x,y,b) -> print_string("Mouse pressed: x=");
+								print_int(x); print_string(" y="); print_int(y);
+								print_string(" b="); print_int(b); print_newline()
+	|DrawCaml.MouseReleased(x,y,b) -> print_string("Mouse released: x=");
+								print_int(x); print_string(" y="); print_int(y);
+								print_string(" b="); print_int(b); print_newline()
+;;
 window#setEventHandler f;;
 
 (* keeps the window open *)

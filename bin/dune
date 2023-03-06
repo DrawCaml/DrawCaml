@@ -1,6 +1,6 @@
 (executables
- (public_names DCmain DCsnake DCtetris)
- (names main snake tetris)
+ (public_names DCmain DCsnake)
+ (names main snake)
  (libraries DrawCaml unix))
 
 (env
