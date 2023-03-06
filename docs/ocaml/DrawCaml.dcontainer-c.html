@@ -9,7 +9,6 @@
 <link rel="next" href="DrawCaml.dwindow-c.html">
 <link rel="Up" href="DrawCaml.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
-<link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of class methods" rel=Appendix href="index_methods.html">
 <link title="Index of classes" rel=Appendix href="index_classes.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
@@ -24,7 +23,7 @@
 
 <pre><span id="TYPEdcontainer"><span class="keyword">class</span> dcontainer</span> : <code class="type">?layout:dlayout -&gt; ?dim:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dcontainer-c.html">..</a> <code class="code">end</code></pre><div class="info class top">
 <div class="info-desc">
-<p>graphical element that can manage others</p>
+<p>Base element, that simply contains other elements</p>
 </div>
 </div>
 <b>Inherits</b><ul>
@@ -32,6 +31,21 @@
 </ul>
 <hr width="100%">
 
-<pre><span id="METHODsetBgColor"><span class="keyword">method</span> setBgColor</span> : <code class="type">string -&gt; unit</code></pre>
-<pre><span id="METHODadd"><span class="keyword">method</span> add</span> : <code class="type">'a. (#<a href="DrawCaml.delement-c.html">delement</a> as 'a) -&gt; ?pos:int * int -&gt; unit -&gt; unit</code></pre>
-<pre><span id="METHODremove"><span class="keyword">method</span> remove</span> : <code class="type">'b. (#<a href="DrawCaml.delement-c.html">delement</a> as 'b) -&gt; unit</code></pre></body></html>
+<pre><span id="METHODsetBgColor"><span class="keyword">method</span> setBgColor</span> : <code class="type">string -&gt; unit</code></pre><div class="info ">
+<div class="info-desc">
+<p>Set the color of the background of the countainer</p>
+</div>
+</div>
+
+<pre><span id="METHODadd"><span class="keyword">method</span> add</span> : <code class="type">'a. (#<a href="DrawCaml.delement-c.html">delement</a> as 'a) -&gt; ?pos:int * int -&gt; unit -&gt; unit</code></pre><div class="info ">
+<div class="info-desc">
+<p>Add an element in the container, at a given position</p>
+</div>
+</div>
+
+<pre><span id="METHODremove"><span class="keyword">method</span> remove</span> : <code class="type">'b. (#<a href="DrawCaml.delement-c.html">delement</a> as 'b) -&gt; unit</code></pre><div class="info ">
+<div class="info-desc">
+<p>Removes a specified element from the container</p>
+</div>
+</div>
+</body></html>

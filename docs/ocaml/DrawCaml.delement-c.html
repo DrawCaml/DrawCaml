@@ -8,7 +8,6 @@
 <link rel="next" href="DrawCaml.dlabel-c.html">
 <link rel="Up" href="DrawCaml.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
-<link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of class methods" rel=Appendix href="index_methods.html">
 <link title="Index of classes" rel=Appendix href="index_classes.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
@@ -20,14 +19,28 @@
 </div>
 <h1>Class virtual <a href="type_DrawCaml.delement.html">DrawCaml.delement</a></h1>
 
-<pre><span id="TYPEdelement"><span class="keyword">class</span> <span class="keyword">virtual</span> delement</span> : <code class="type">unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.delement-c.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<pre><span id="TYPEdelement"><span class="keyword">class</span> <span class="keyword">virtual</span> delement</span> : <code class="type">unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.delement-c.html">..</a> <code class="code">end</code></pre><div class="info class top">
+<div class="info-desc">
+<p>Abstract type for the elements of the window</p>
+</div>
+</div>
+<hr width="100%">
 
 <pre><span id="METHODgetSize"><span class="keyword">method</span> getSize</span> : <code class="type">unit -&gt; int * int</code></pre><div class="info ">
 <div class="info-desc">
-<p>Gets the size :o</p>
+<p>Gets the size of the element</p>
 </div>
 </div>
 
-<pre><span id="METHODsetSize"><span class="keyword">method</span> setSize</span> : <code class="type">int * int -&gt; unit</code></pre>
-<pre><span id="METHODgetPos"><span class="keyword">method</span> getPos</span> : <code class="type">unit -&gt; int * int</code></pre>
-<pre><span id="METHODgetPtr"><span class="keyword">method</span> getPtr</span> : <code class="type">unit -&gt; nativeint</code></pre></body></html>
+<pre><span id="METHODsetSize"><span class="keyword">method</span> setSize</span> : <code class="type">int * int -&gt; unit</code></pre><div class="info ">
+<div class="info-desc">
+<p>Sets the size of the element</p>
+</div>
+</div>
+
+<pre><span id="METHODgetPos"><span class="keyword">method</span> getPos</span> : <code class="type">unit -&gt; int * int</code></pre><div class="info ">
+<div class="info-desc">
+<p>Get the relative position of the element</p>
+</div>
+</div>
+</body></html>

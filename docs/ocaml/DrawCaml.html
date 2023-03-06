@@ -7,7 +7,6 @@
 <link rel="Start" href="index.html">
 <link rel="Up" href="index.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
-<link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of class methods" rel=Appendix href="index_methods.html">
 <link title="Index of classes" rel=Appendix href="index_classes.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
@@ -107,18 +106,31 @@
 
 </tr></table>
 
+<div class="info ">
+<div class="info-desc">
+<p>Different types of layout. In the float layout, you give relative pixel positions,
+in the grid layout, you give indexes</p>
+</div>
+</div>
 
 
-<pre><span id="VALlayout_enum"><span class="keyword">val</span> layout_enum</span> : <code class="type"><a href="DrawCaml.html#TYPEdlayout">dlayout</a> -&gt; int</code></pre>
-<pre><span id="TYPEdelement"><span class="keyword">class</span> <span class="keyword">virtual</span> <a href="DrawCaml.delement-c.html">delement</a></span> : <code class="type">unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.delement-c.html">..</a> <code class="code">end</code></pre>
-<pre><span id="TYPEdlabel"><span class="keyword">class</span> <a href="DrawCaml.dlabel-c.html">dlabel</a></span> : <code class="type">?text:string -&gt; ?font:string -&gt; ?fontSize:int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dlabel-c.html">..</a> <code class="code">end</code></pre>
+<pre><span id="TYPEdelement"><span class="keyword">class</span> <span class="keyword">virtual</span> <a href="DrawCaml.delement-c.html">delement</a></span> : <code class="type">unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.delement-c.html">..</a> <code class="code">end</code></pre><div class="info">
+<p>Abstract type for the elements of the window</p>
+
+</div>
+
+<pre><span id="TYPEdlabel"><span class="keyword">class</span> <a href="DrawCaml.dlabel-c.html">dlabel</a></span> : <code class="type">?text:string -&gt; ?font:string -&gt; ?fontSize:int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dlabel-c.html">..</a> <code class="code">end</code></pre><div class="info">
+<p>Graphical element that prints text</p>
+
+</div>
+
 <pre><span id="TYPEdcontainer"><span class="keyword">class</span> <a href="DrawCaml.dcontainer-c.html">dcontainer</a></span> : <code class="type">?layout:dlayout -&gt; ?dim:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dcontainer-c.html">..</a> <code class="code">end</code></pre><div class="info">
-<p>graphical element that can manage others</p>
+<p>Base element, that simply contains other elements</p>
 
 </div>
 
 <pre><span id="TYPEdwindow"><span class="keyword">class</span> <a href="DrawCaml.dwindow-c.html">dwindow</a></span> : <code class="type">?title:string -&gt; ?pos:int * int -&gt; ?size:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dwindow-c.html">..</a> <code class="code">end</code></pre><div class="info">
-<p>class for the window</p>
+<p>Main window class</p>
 
 </div>
 </body></html>
