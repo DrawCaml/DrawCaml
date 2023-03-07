@@ -132,9 +132,8 @@ extern "C" value setSize_cpp(value object,value sizeX,value sizeY) {
 Label methods
 */
 
-extern "C" value createLabel_cpp(value text, value size, value font) {
+extern "C" value createLabel_cpp(value text, value font) {
 	const char* txt = String_val(text);
-	int s = Int_val(size);
 	const char* ft = String_val(font);
 	SLabel* l = new SLabel();
 	l->setText(txt);

@@ -21,10 +21,17 @@
 </div>
 <h1>Class <a href="type_DrawCaml.dlabel.html">DrawCaml.dlabel</a></h1>
 
-<pre><span id="TYPEdlabel"><span class="keyword">class</span> dlabel</span> : <code class="type">?text:string -&gt; ?font:string -&gt; ?fontSize:int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dlabel-c.html">..</a> <code class="code">end</code></pre><div class="info class top">
+<pre><span id="TYPEdlabel"><span class="keyword">class</span> dlabel</span> : <code class="type">?text:string -&gt; ?font:string -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dlabel-c.html">..</a> <code class="code">end</code></pre><div class="info class top">
 <div class="info-desc">
-<p>Graphical element that prints text</p>
-</div>
+<p>Graphical element that prints text to the screen.</p>
+
+<p>When you create a dlabel, you can specify 2 optionnal arguments:</p>
+<ul>
+<li>text: the text to print</li>
+<li>font: the font to use (see setFont for format)</li>
+</ul>
+<p>Example:</p>
+<pre class="codepre"><code class="code">let lab = new DrawCaml.dlabel ~text:"hello world" ~font="*helvetica*-r-*-20-*" ();;</code></pre></div>
 </div>
 <b>Inherits</b><ul>
 <li><a href="DrawCaml.delement-c.html"><code class="code">DrawCaml.delement</code></a></li>
@@ -39,7 +46,7 @@
 
 <pre><span id="METHODsetFont"><span class="keyword">method</span> setFont</span> : <code class="type">string -&gt; unit</code></pre><div class="info ">
 <div class="info-desc">
-<p>Specify the font of the label using X logical font format (use ```xlsfonts``` to see available fonts)</p>
+<p>Specify the font of the label using X logical font format (use <code class="code">xlsfonts</code> to see available fonts)</p>
 </div>
 </div>
 

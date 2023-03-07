@@ -17,7 +17,12 @@
 &nbsp;</div>
 <h1>Module <a href="type_DrawCaml.html">DrawCaml</a></h1>
 
-<pre><span id="MODULEDrawCaml"><span class="keyword">module</span> DrawCaml</span>: <code class="code">sig</code> <a href="DrawCaml.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<pre><span id="MODULEDrawCaml"><span class="keyword">module</span> DrawCaml</span>: <code class="code">sig</code> <a href="DrawCaml.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>Type for clean handling of keyboard events</p>
+</div>
+</div>
+<hr width="100%">
 
 <pre><code><span id="TYPEkey"><span class="keyword">type</span> <code class="type"></code>key</span> = </code></pre><table class="typetable">
 <tr>
@@ -61,11 +66,32 @@
 <td align="left" valign="top" >
 <code><span id="TYPEELTkey.Space"><span class="constructor">Space</span></span></code></td>
 
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTkey.Other"><span class="constructor">Other</span></span> <span class="keyword">of</span> <code class="type">int</code></code></td>
+
 </tr></table>
 
 
 
 <pre><code><span id="TYPEevent"><span class="keyword">type</span> <code class="type"></code>event</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTevent.MousePressed"><span class="constructor">MousePressed</span></span> <span class="keyword">of</span> <code class="type">int * int * int</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTevent.MouseReleased"><span class="constructor">MouseReleased</span></span> <span class="keyword">of</span> <code class="type">int * int * int</code></code></td>
+
+</tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
@@ -81,6 +107,11 @@
 
 </tr></table>
 
+<div class="info ">
+<div class="info-desc">
+<p>Type for the event caught in the eventHandler of the window.</p>
+</div>
+</div>
 
 
 <pre><code><span id="TYPEdlayout"><span class="keyword">type</span> <code class="type"></code>dlayout</span> = </code></pre><table class="typetable">
@@ -108,29 +139,33 @@
 
 <div class="info ">
 <div class="info-desc">
-<p>Different types of layout. In the float layout, you give relative pixel positions,
-in the grid layout, you give indexes</p>
+<p>Different types of layout:</p>
+<ul>
+<li>The <b>float layout</b> allows you to place elements by giving their exact position in the layout</li>
+<li>The <b>grid layout</b> allows you to place elements in a grid by giving their coordinates in the grid</li>
+</ul>
+<p>Note that the use of Other is deprecated.</p>
 </div>
 </div>
 
 
 <pre><span id="TYPEdelement"><span class="keyword">class</span> <span class="keyword">virtual</span> <a href="DrawCaml.delement-c.html">delement</a></span> : <code class="type">unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.delement-c.html">..</a> <code class="code">end</code></pre><div class="info">
-<p>Abstract type for the elements of the window</p>
+<p>Abstract type for the elements of the window.</p>
 
 </div>
 
-<pre><span id="TYPEdlabel"><span class="keyword">class</span> <a href="DrawCaml.dlabel-c.html">dlabel</a></span> : <code class="type">?text:string -&gt; ?font:string -&gt; ?fontSize:int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dlabel-c.html">..</a> <code class="code">end</code></pre><div class="info">
-<p>Graphical element that prints text</p>
+<pre><span id="TYPEdlabel"><span class="keyword">class</span> <a href="DrawCaml.dlabel-c.html">dlabel</a></span> : <code class="type">?text:string -&gt; ?font:string -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dlabel-c.html">..</a> <code class="code">end</code></pre><div class="info">
+<p>Graphical element that prints text to the screen.</p>
 
 </div>
 
 <pre><span id="TYPEdcontainer"><span class="keyword">class</span> <a href="DrawCaml.dcontainer-c.html">dcontainer</a></span> : <code class="type">?layout:dlayout -&gt; ?dim:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dcontainer-c.html">..</a> <code class="code">end</code></pre><div class="info">
-<p>Base element that can contain other elements and arrange them</p>
+<p>Base element that can contain other elements and arrange them.</p>
 
 </div>
 
 <pre><span id="TYPEdwindow"><span class="keyword">class</span> <a href="DrawCaml.dwindow-c.html">dwindow</a></span> : <code class="type">?title:string -&gt; ?pos:int * int -&gt; ?size:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dwindow-c.html">..</a> <code class="code">end</code></pre><div class="info">
-<p>Main window class</p>
+<p>Object consisting of the main window.</p>
 
 </div>
 </body></html>

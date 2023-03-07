@@ -21,8 +21,17 @@
 
 <pre><span id="TYPEdwindow"><span class="keyword">class</span> dwindow</span> : <code class="type">?title:string -&gt; ?pos:int * int -&gt; ?size:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dwindow-c.html">..</a> <code class="code">end</code></pre><div class="info class top">
 <div class="info-desc">
-<p>Main window class</p>
-</div>
+<p>Object consisting of the main window.</p>
+
+<p>When you create a dwindow, you can specify 3 optionnal arguments:</p>
+<ul>
+<li>title: the title of the frame</li>
+<li>pos: the position of the frame relative to the screen</li>
+<li>size: the size of the created window</li>
+</ul>
+<p>Example:</p>
+<pre class="codepre"><code class="code">let window = new DrawCaml.dwindow ~title:"Test Window" ~pos:(50,50) ~size:(500,500) ();;
+</code></pre></div>
 </div>
 <hr width="100%">
 
@@ -70,7 +79,8 @@
 
 <pre><span id="METHODsetEventHandler"><span class="keyword">method</span> setEventHandler</span> : <code class="type">(<a href="DrawCaml.html#TYPEevent">event</a> -&gt; unit) -&gt; unit</code></pre><div class="info ">
 <div class="info-desc">
-<p>Binds an event handler for the user keyboard interaction</p>
+<p>Binds an event handler for the user keyboard interaction. 
+        An event handler should be a function <a href="DrawCaml.html#TYPEevent">event</a>-&gt;unit.</p>
 </div>
 </div>
 </body></html>

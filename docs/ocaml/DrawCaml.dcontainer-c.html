@@ -23,8 +23,17 @@
 
 <pre><span id="TYPEdcontainer"><span class="keyword">class</span> dcontainer</span> : <code class="type">?layout:dlayout -&gt; ?dim:int * int -&gt; unit -&gt; </code><code class="code">object</code> <a href="DrawCaml.dcontainer-c.html">..</a> <code class="code">end</code></pre><div class="info class top">
 <div class="info-desc">
-<p>Base element that can contain other elements and arrange them</p>
-</div>
+<p>Base element that can contain other elements and arrange them.</p>
+
+<p>When you create a dcontainer, you can specify 2 optionnal arguments:</p>
+<ul>
+<li>layout: layout of the container, see <a href="DrawCaml.html#TYPEdlayout">dlayout</a></li>
+<li>dim: the dimension of the grid, only relevant when layout is a GridLayout</li>
+</ul>
+<p>Examples:</p>
+<pre class="codepre"><code class="code">let grid = new DrawCaml.dcontainer ~layout:GridLayout ~dim:(5,5) ();;
+let float = new DrawCaml.dcontainer ~layout:FloatLayout ();;
+</code></pre></div>
 </div>
 <b>Inherits</b><ul>
 <li><a href="DrawCaml.delement-c.html"><code class="code">DrawCaml.delement</code></a></li>
@@ -39,7 +48,7 @@
 
 <pre><span id="METHODadd"><span class="keyword">method</span> add</span> : <code class="type">'a. (#<a href="DrawCaml.delement-c.html">delement</a> as 'a) -&gt; ?pos:int * int -&gt; unit -&gt; unit</code></pre><div class="info ">
 <div class="info-desc">
-<p>Add an element in the container, at a given position</p>
+<p>Add an element in the container, at the given position</p>
 </div>
 </div>
 
