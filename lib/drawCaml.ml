@@ -1,4 +1,4 @@
-(*events*)
+(**Documentation for Drawcaml graphical module*)
 
 (** Type for clean handling of keyboard events*)
 type key =
