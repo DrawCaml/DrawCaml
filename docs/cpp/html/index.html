@@ -67,7 +67,32 @@ $(function() {
 <div class="title">C++ documentation of DrawCaml's internal code: </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_lib_CPP_Doc"></a> <b>Class Hierarchy</b>: <a href="hierarchy.html">see</a> </p>
+<div class="textblock"><p><a class="anchor" id="md_lib_CPP_Doc"></a> </p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Structure:</h1>
+<p>The internal code for the library is inside the <code>lib</code> folder of the repository.</p>
+<div class="fragment"><div class="line">├── lib                     // code of drawcaml library</div>
+<div class="line">|   |</div>
+<div class="line">│   ├── action.cpp          // interaction with C++ queue</div>
+<div class="line">│   ├── action.h</div>
+<div class="line">|   |</div>
+<div class="line">│   ├── container.cpp       // code for Drawcaml.dcontainer</div>
+<div class="line">│   ├── container.h</div>
+<div class="line">|   |</div>
+<div class="line">│   ├── drawcaml.cpp        // methods to interface our C++ code with our OCaml code</div>
+<div class="line">│   ├── drawCaml.ml         // OCaml part of the lib + wrappers to drawcaml.cpp methods</div>
+<div class="line">|   |</div>
+<div class="line">│   ├── element.cpp         // code for abstract object Drawcaml.delement</div>
+<div class="line">│   ├── element.h</div>
+<div class="line">|   |</div>
+<div class="line">│   ├── utils.h             // Some utilitary functions: LOG, WARNING, ERROR...</div>
+<div class="line">|   |</div>
+<div class="line">│   ├── window.cpp          // code for the window</div>
+<div class="line">│   └── window.h</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+Objects</h1>
+<p>C++ code keeps the exact same objects as created from OCaml side.</p>
+<p>The definition and interactions of these objects can be seen <a href="hierarchy.html">here</a>. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
