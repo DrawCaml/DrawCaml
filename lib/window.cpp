@@ -28,6 +28,9 @@ using namespace std;
 
 
 SWindow::SWindow(string name, int posX, int posY, int width, int height, int borderSize){
+	/**
+	 * window constructor
+	*/
  	XInitThreads();
 	mName = name;
 	mPosX = posX;
@@ -74,6 +77,9 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 }
 
 void SWindow::close(){
+	/**
+	 * window closing
+	*/
 	XDestroyWindow(mDisplay, mEvent.xclient.window);
 
 	XCloseDisplay(mDisplay);
@@ -83,18 +89,20 @@ void SWindow::close(){
 }
 
 value SWindow::keyEventToCaml(int keycode, bool is_pressed) {
-	//method because may use the display for cross platform layout
+	/** 
+	 * method that construct the right Ocaml type for an event by making an ocaml callback
+	*/
 	int nothing;
 	value ec;
 	KeySym *t;
 	int r;
+	// transformation from the physical keycode to the virtual keysym
+	// all keysym can be found here : https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h
 	t = XGetKeyboardMapping(mDisplay, keycode, 1, &nothing);
 	r = t[0];
 	XFree(t);
 
-	// space : 0x20
-	// arrows : 0xff51 to 0xff54
-	// letters : 0x61 to 0x7a
+	// call back to Ocaml
 	if (is_pressed) {
 		ec =caml_callback(*caml_named_value("makeKeyPressed"), Val_int(r));
 	}
@@ -108,16 +116,19 @@ value SWindow::keyEventToCaml(int keycode, bool is_pressed) {
 DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
 void SWindow::listener(){
+	/**
+	 * infinite loop for event listening, window drawing and handling user actions
+	*/
 	int redraw=1, c;
 	auto last_draw_time = std::chrono::high_resolution_clock::now();
 	value ec;
 	int x, y, button;
-	while (redraw) {
+	while (redraw) {//
 		if (!mDisplay) {
 			WARNING("No display\n");
 			continue;
 		}
-
+		//catch next event
 		XNextEvent(mDisplay, &mEvent);
 		switch (mEvent.type) {
 			
@@ -140,10 +151,11 @@ void SWindow::listener(){
 				break;
 
 			case KeyPress:
-				// ADD ARRAY TO DETERMINE IF A KEY IS ALREADY TRIGGERED ?
 				LOG("Caught KeyPress event\n");
 				ec = keyEventToCaml(mEvent.xkey.keycode, true);
-				if (mEventHandler) {
+				if (mEventHandler) {//call back to Ocaml to handle the event depending the action the user defined
+					// the is_Xlib bool is set to true so that the Xlib thread doesn't wait for the result of an action it is supposed
+					// to give to itself
 					is_Xlib = true;
 					caml_callback(mEventHandler, ec);
 					is_Xlib = false;
@@ -155,6 +167,7 @@ void SWindow::listener(){
 
 			case KeyRelease:
 				
+				// first test that the event is not a virtual event that the OS sends when the key is holded
 				if(XPending(mDisplay)){
 					XEvent nev;
 					XPeekEvent(mDisplay, &nev);
@@ -219,7 +232,7 @@ void SWindow::listener(){
 		}
 
 
-		// Handle action	
+		// Handle on action from the queue
 		mActionMutex.lock();
 		if (!mSharedQueue.empty() && redraw) {
 			Action a = mSharedQueue.front();
@@ -227,11 +240,12 @@ void SWindow::listener(){
 
 			LOG("Received message from CAML: \n");
 			a.Call();
-
+			// tell the Ocaml thread that the result of the action is ready
 			a.mResultLock->unlock();
 		}
 		mActionMutex.unlock();
 
+		// drawing of the window with double buffer for no blinking
 		auto actual_time = std::chrono::high_resolution_clock::now();
 		if (std::chrono::duration_cast<std::chrono::microseconds>(
 			actual_time-last_draw_time).count() > 90000) {
@@ -255,6 +269,9 @@ void SWindow::listener(){
 }
 
 void SWindow::draw(){
+	/** 
+	 * create the "Xlib" thread that will listen to events and draw the window
+	*/
 	if (!mThread) {
 		mThread	= new thread(&SWindow::listener, this); 
 	}

@@ -27,13 +27,16 @@ using namespace std;
 
 class SWindow {
 	public:
+		//window parameters
 		string mName;
 		int mPosX, mPosY;
 		int mWidth, mHeight, mBorderSize;
 
+		//attributes for user actions handling
 		thread* mThread;
 		mutex mActionMutex;
 		queue<Action> mSharedQueue;
+
 		bool mClosed = false;
 
 		SContainer* mContainer;
@@ -56,6 +59,7 @@ class SWindow {
 
 		XdbeBackBuffer mBackBuffer;
 
+		// event handling attributes
 		value mEventHandler;
 		bool is_Xlib = false;
 

@@ -45,6 +45,7 @@ external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
 external setWindowEventHandlerEx : nativeint -> (event -> unit) -> unit = "setWindowEventHandler_cpp"
 
+(** Constructors for event types *)
 let makeKey i = 
 	match i with
 	| 0x20 -> Space

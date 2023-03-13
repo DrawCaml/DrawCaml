@@ -86,18 +86,19 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> sendDummyEvent(<a class="code" href="classSWindow.html">SWindow</a>* win);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classAction.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classAction.html">Action</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        Function mFun;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        mutex* mResultLock;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classAction.html">Action</a>(<a class="code" href="classSWindow.html">SWindow</a>* win, Function f);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">void</span> Call();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;};</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// class for user action</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classAction.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classAction.html">Action</a> {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        Function mFun;<span class="comment">//void(void) function will all parameters already binded</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        mutex* mResultLock;<span class="comment">// lock to wait for the result of the action</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classAction.html">Action</a>(<a class="code" href="classSWindow.html">SWindow</a>* win, Function f);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> Call();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="ttc" id="aclassAction_html"><div class="ttname"><a href="classAction.html">Action</a></div><div class="ttdef"><b>Definition:</b> action.h:16</div></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="ttc" id="aclassAction_html"><div class="ttname"><a href="classAction.html">Action</a></div><div class="ttdef"><b>Definition:</b> action.h:17</div></div>
 <div class="ttc" id="aclassSWindow_html"><div class="ttname"><a href="classSWindow.html">SWindow</a></div><div class="ttdef"><b>Definition:</b> window.h:28</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

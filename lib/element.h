@@ -2,7 +2,6 @@
 
 #include "utils.h"
 
-// #include "window.h"
 class SWindow;
 
 class SElement {
@@ -38,7 +37,3 @@ public:
 	virtual void setSize(int sizeX, int sizeY);
 	virtual void draw(SWindow* win, int drawX, int drawY);
 };
-
-// class SImage : public SElement {
-
-// };

@@ -24,12 +24,17 @@ using Function = function<void(void)>;
 // keeps trace of c++ windows
 std::vector<SWindow*> windows;
 
+/**
+ * All the functions in this file are unpacking parameters from Ocaml and either pushing an user action into the queue
+ * (and waiting or not for the answer) or grabing directly some information about the window
+ * 
+ * For user actions we bind the method with its parameters so that the queue only contains void(void) functions
+*/
+
 /*
 Window methods
 */
 
-/// Wow
-/// This is awesome function
 extern "C" value createWindow_cpp(value name, value vposX, value vposY, value vsizeX, value vsizeY) {
 	const char* windowName = String_val(name);
 	int posX = Int_val(vposX), posY = Int_val(vposY);
@@ -192,6 +197,7 @@ extern "C" value addElem_cpp(value object,value object_added,value posX,value po
 	SWindow* win = e->mWin;
 
 	Action* a = new Action(win,bind(&SContainer::addElem,e,e_add,posx,posy));
+	//waiting for the end of the action to resume
 	if(win && a && a->mResultLock && !(win->is_Xlib)) {
 		(a->mResultLock)->lock();
 	}
@@ -218,10 +224,7 @@ extern "C" value removeElem_cpp(value object,value object_del) {
 	return Val_unit;
 }
 
-// possible to change BG of any SElement ?
 extern "C" value setBgColor_cpp(value object,value color) {
-	// for now only containers can change their background
-	// later -> More General Type
 	SContainer* e = (SContainer *) Nativeint_val(object);
 	const char* col = String_val(color);
 
@@ -232,9 +235,6 @@ extern "C" value setBgColor_cpp(value object,value color) {
 	SWindow* win = e->mWin;
 
 	Action* a = new Action(win,bind(&SContainer::setBgColor,e,col));
-	//if(win && a && a->mResultLock && !(win->is_Xlib)) {
-	//	(a->mResultLock)->lock();
-	//}
 
 	return Val_unit;
 }

@@ -7,6 +7,9 @@ using namespace std;
 using Function = function<void(void)>;
 
 void sendDummyEvent(SWindow* win) {
+	/**
+	 * sends a dummy event to the Xlib thread so that it looks into the action queue 
+	*/
 	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
 	XClientMessageEvent dummyEvent;
 	memset(&dummyEvent, 0, sizeof(XClientMessageEvent));
@@ -19,7 +22,9 @@ void sendDummyEvent(SWindow* win) {
 }
 
 Action::Action(SWindow* win, Function f){
-	// printf("%d\n", win);
+	/**
+	 * constructor that directly pushes the action into the queue
+	*/
 	if(win && !win->mClosed){ // avoid segfaults when window is closed
 		mutex* m = new mutex;
 		m->lock();
@@ -27,9 +32,9 @@ Action::Action(SWindow* win, Function f){
 		mFun = f;
 
 		win->mActionMutex.lock();
-
+		//pushes the action into the queue
 		win->mSharedQueue.push(*this);
-
+		//tell the Xlib thread that we have pushed an action to the queue for it to execute
 		sendDummyEvent(win);
 
 		win->mActionMutex.unlock();
@@ -43,6 +48,9 @@ Action::Action(SWindow* win, Function f){
 
 
 void Action::Call() {
+	/**
+	 * just call the void(void) function of the action
+	*/
 	mFun();
 	mResultLock->unlock();
 	LOG("Message was processed\n");

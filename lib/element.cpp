@@ -9,6 +9,10 @@
 SLABEL METHODS
 */
 
+/**
+ * the names speak for themselves
+*/
+
 void SLabel::_update(){
 	if(!mColorStr) mColorStr = "black";
 
@@ -17,11 +21,6 @@ void SLabel::_update(){
 	mFontStruct = XLoadQueryFont(mWin->mDisplay, mFontStr.c_str());
 	if(!mFontStruct){
 		ERROR("SLABEL: Cannot load font " + mFontStr + " !\n");
-		// LOG("Available fonts:\n");
-		// int mx;
-		// char** l = XListFonts(mWin->mDisplay, "*-normal-*", 100, &mx);
-		// for (int i = 0; i < mx; ++i)
-		// 	cout << l[i] << endl;
 	}
 }
 
@@ -55,7 +54,3 @@ void SLabel::draw(SWindow* win, int drawX, int drawY){
 	}
 	else WARNING("Label not printed\n");
 }
-
-/*
-SIMAGE METHODS
-*/
