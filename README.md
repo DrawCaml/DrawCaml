@@ -3,6 +3,12 @@
 
 ![DrawCaml logo](https://cdn.discordapp.com/attachments/1017077725418246264/1017365387131760732/telechargement.png)
 
+# What is DrawCaml ?
+
+DrawCaml is a graphical module for OCaml, built for Unix architectures. It lays on X11 library, and is developped using C++.
+
+Our motivation was to make easier the creation of graphical applications with OCaml, by using Object Oriented part of OCaml, and make its use closer to modern graphical modules that exists in other languages. 
+
 # Documentation
 
 Documentation can be found on [Github Pages](https://drawcaml.github.io/DrawCaml)
