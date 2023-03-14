@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DrawCaml: Dependencies</title>
+<title>DrawCaml: Tutorial</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,25 +64,27 @@ $(function() {
 </div><!-- top -->
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Dependencies </div>  </div>
+<div class="title">Tutorial </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>DrawCaml is an OCaml library on top of C++ X11. It is compiled using Opam. The dependencies are:</p>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md4"></a>
+Dependencies</h1>
+<p>DrawCaml is an OCaml library on top of C++ X11. It is compiled using Opam. The dependencies are:</p>
 <ul>
 <li><a href="https://www.x.org">x11 library</a></li>
 <li><a href="https://opam.ocaml.org/doc/Install.html">opam</a></li>
 <li>dune and dune-configurator (<code>opam install dune dune-configurator</code>)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md4"></a>
-Installing the library and testing it</h1>
-<p>Once you got all dependencies, you can clone this repository</p>
-<p><code>git clone <a href="https://github.com/Drawcaml/drawcaml.git">https://github.com/Drawcaml/drawcaml.git</a></code></p>
-<p>You can then run an example code with</p>
-<p><code>cd; dune exec snake.exe</code> for example</p>
-<p>If everything worked, you should see a window getting opened.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
+Installing the library and testing it</h1>
+<p>Once you got all dependencies, you can clone this repository:</p>
+<p><code>git clone <a href="https://github.com/Drawcaml/drawcaml.git">https://github.com/Drawcaml/drawcaml.git</a></code></p>
+<p>You can then run an example code with:</p>
+<p><code>dune exec bin/snake.exe</code> for example.</p>
+<p>If everything worked, you should see a window getting opened.</p>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Simple example</h1>
-<p>Like many graphical libraries, DrawCaml uses a container paradigm. To see all the containers, there is the full documentation available <a href="../../ocaml/DrawCaml.html">here</a></p>
+<p>Like many graphical libraries, DrawCaml uses containers to manage graphical elements. To see how to use it, there is the full documentation available <a href="../../ocaml/DrawCaml.html">here</a> .</p>
 <p>Here is a very short example, that simply creates a window of size 500 by 500, and puts it's background color to yellow.</p>
 <div class="fragment"><div class="line">let window = new DrawCaml.dwindow ~title:&quot;Test Window&quot; ~pos:(50,50) ~size:(500,500) ();;</div>
 <div class="line">let win_container = window#getContainer ();;</div>
@@ -106,7 +108,7 @@ Simple example</h1>
 <div class="line">window#waitForClose ();;</div>
 </div><!-- fragment --><p><img src="../../example2.png" alt="example2" class="inline"/></p>
 <p>Here, we used the same base code as the first example, but we added a grid container as child of the main container. A grid container has a simple grid structure, where we can put other containers. To test this, we create a new container with <code>new DrawCaml.dcontainer</code> and add it to the grid container.</p>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Event handler</h1>
 <p>DrawCaml adds the possibility to setup an event handler, to handle the keyboard and mouse events from the user.</p>
 <div class="fragment"><div class="line">let window = new DrawCaml.dwindow ~title:&quot;Test Window&quot; ~pos:(50,50) ~size:(500,500) ();;</div>
@@ -125,8 +127,8 @@ Event handler</h1>
 <div class="line">    Printf.printf &quot;Window is still open\n%!&quot;;</div>
 <div class="line">done;;</div>
 </div><!-- fragment --><p>The event handler takes an object of type <code>event</code> and can match it to perform actions accordingly. Please note that because the event handler relies on multithreading, you have to be careful about the <a href="https://ocaml.org/docs/garbage-collection">garbage collector</a>. Performing some simple actions shouldn't cause any issues.</p>
-<p>Not also the different way of ending the program: using <code>window#notClosed ()</code>, we can check whether the user closed the window or not, and use it in a while condition.</p>
-<p>For further code example, see the folder <code>/bin/</code> from the repository, and refer to the DrawCaml documentation <a href="../../ocaml/DrawCaml.html">here</a> </p>
+<p>Note also the different ways of telling to the program to keep the window open: using <code>window#notClosed ()</code>, we can check whether the user closed the window or not, and use it in a while condition.</p>
+<p>For further code examples, see the folder <code>/bin/</code> from the repository, and refer to the DrawCaml documentation <a href="../../ocaml/DrawCaml.html">here</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

@@ -1,3 +1,5 @@
+# Tutorial
+
 # Dependencies
 
 DrawCaml is an OCaml library on top of C++ X11. It is compiled using Opam. 
@@ -9,19 +11,19 @@ The dependencies are:
 
 # Installing the library and testing it
 
-Once you got all dependencies, you can clone this repository 
+Once you got all dependencies, you can clone this repository:
 
 `git clone https://github.com/Drawcaml/drawcaml.git`
 
-You can then run an example code with
+You can then run an example code with:
 
-`cd; dune exec snake.exe` for example
+`dune exec bin/snake.exe` for example.
 
 If everything worked, you should see a window getting opened.
 
 # Simple example
 
-Like many graphical libraries, DrawCaml uses a container paradigm. To see all the containers, there is the full documentation available [here](../../ocaml/DrawCaml.html) 
+Like many graphical libraries, DrawCaml uses containers to manage graphical elements. To see how to use it, there is the full documentation available [here](../../ocaml/DrawCaml.html) .
 
 Here is a very short example, that simply creates a window of size 500 by 500, and puts it's background color to yellow.
 
@@ -82,6 +84,6 @@ done;;
 
 The event handler takes an object of type `event` and can match it to perform actions accordingly. Please note that because the event handler relies on multithreading, you have to be careful about the [garbage collector](https://ocaml.org/docs/garbage-collection). Performing some simple actions shouldn't cause any issues.
 
-Not also the different way of ending the program: using `window#notClosed ()`, we can check whether the user closed the window or not, and use it in a while condition.
+Note also the different ways of telling to the program to keep the window open: using `window#notClosed ()`, we can check whether the user closed the window or not, and use it in a while condition.
 
-For further code example, see the folder `/bin/` from the repository, and refer to the DrawCaml documentation [here](../../ocaml/DrawCaml.html)
+For further code examples, see the folder `/bin/` from the repository, and refer to the DrawCaml documentation [here](../../ocaml/DrawCaml.html).
