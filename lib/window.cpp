@@ -28,9 +28,6 @@ using namespace std;
 
 
 SWindow::SWindow(string name, int posX, int posY, int width, int height, int borderSize){
-	/**
-	 * window constructor
-	*/
  	XInitThreads();
 	mName = name;
 	mPosX = posX;
@@ -77,9 +74,6 @@ SWindow::SWindow(string name, int posX, int posY, int width, int height, int bor
 }
 
 void SWindow::close(){
-	/**
-	 * window closing
-	*/
 	XDestroyWindow(mDisplay, mEvent.xclient.window);
 
 	XCloseDisplay(mDisplay);
@@ -89,8 +83,8 @@ void SWindow::close(){
 }
 
 value SWindow::keyEventToCaml(int keycode, bool is_pressed) {
-	/** 
-	 * method that construct the right Ocaml type for an event by making an ocaml callback
+	/**
+	 * Method that construct the right Ocaml type for an event by making an ocaml callback
 	*/
 	int nothing;
 	value ec;
@@ -116,7 +110,7 @@ value SWindow::keyEventToCaml(int keycode, bool is_pressed) {
 DRAW WINDOW (BLOCKING) --> called in a separate thread
 */
 void SWindow::listener(){
-	/**
+	/*
 	 * infinite loop for event listening, window drawing and handling user actions
 	*/
 	int redraw=1, c;
@@ -269,9 +263,6 @@ void SWindow::listener(){
 }
 
 void SWindow::draw(){
-	/** 
-	 * create the "Xlib" thread that will listen to events and draw the window
-	*/
 	if (!mThread) {
 		mThread	= new thread(&SWindow::listener, this); 
 	}

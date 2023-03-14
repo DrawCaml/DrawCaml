@@ -97,55 +97,56 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classSWindow.html">   28</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSWindow.html">SWindow</a> {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="comment">//window parameters</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordtype">string</span> mName;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordtype">int</span> mPosX, mPosY;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">int</span> mWidth, mHeight, mBorderSize;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="comment">//attributes for user actions handling</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        thread* mThread;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        mutex mActionMutex;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        queue&lt;Action&gt; mSharedQueue;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">bool</span> mClosed = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classSContainer.html">SContainer</a>* mContainer;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">        XLib parameters</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        Window mWindow;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        Display *mDisplay;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">int</span> mScreen;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        XEvent mEvent;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        Atom mDeleteWindow; <span class="comment">// used for clean exit</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> mValuemask = 0;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        XGCValues mValues;  </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        GC mGC;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        Colormap mColormap;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        XdbeBackBuffer mBackBuffer;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classSWindow.html">   30</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSWindow.html">SWindow</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="comment">//window parameters</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">string</span> mName;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">int</span> mPosX, mPosY;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">int</span> mWidth, mHeight, mBorderSize;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="comment">//attributes for user actions handling</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        thread* mThread;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        mutex mActionMutex;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classSWindow.html#a9e1215b541bc1060890553942f9bd2f4">   43</a></span>&#160;        queue&lt;Action&gt; <a class="code" href="classSWindow.html#a9e1215b541bc1060890553942f9bd2f4">mSharedQueue</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">bool</span> mClosed = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classSContainer.html">SContainer</a>* mContainer;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="comment">/*</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">        XLib parameters</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">        */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        Window mWindow;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        Display *mDisplay;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">int</span> mScreen;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        XEvent mEvent;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        Atom mDeleteWindow; <span class="comment">// used for clean exit</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> mValuemask = 0;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        XGCValues mValues;  </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">// event handling attributes</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        value mEventHandler;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">bool</span> is_Xlib = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="classSWindow.html">SWindow</a>(<span class="keywordtype">string</span> name, <span class="keywordtype">int</span> posX, <span class="keywordtype">int</span> posY, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> borderSize);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> close();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">void</span> draw();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">void</span> listener();</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        value keyEventToCaml(<span class="keywordtype">int</span> keycode, <span class="keywordtype">bool</span> is_pressed);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;};</div>
-<div class="ttc" id="aclassSContainer_html"><div class="ttname"><a href="classSContainer.html">SContainer</a></div><div class="ttdef"><b>Definition:</b> container.h:14</div></div>
-<div class="ttc" id="aclassSWindow_html"><div class="ttname"><a href="classSWindow.html">SWindow</a></div><div class="ttdef"><b>Definition:</b> window.h:28</div></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        GC mGC;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        Colormap mColormap;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classSWindow.html#a36a5a096252f8a3e88d4bd122c86c3e4">   68</a></span>&#160;        XdbeBackBuffer <a class="code" href="classSWindow.html#a36a5a096252f8a3e88d4bd122c86c3e4">mBackBuffer</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">// event handling attributes</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        value mEventHandler;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">bool</span> is_Xlib = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classSWindow.html">SWindow</a>(<span class="keywordtype">string</span> name, <span class="keywordtype">int</span> posX, <span class="keywordtype">int</span> posY, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">int</span> borderSize);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">void</span> close();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordtype">void</span> draw();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">void</span> listener();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        value keyEventToCaml(<span class="keywordtype">int</span> keycode, <span class="keywordtype">bool</span> is_pressed);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;};</div>
+<div class="ttc" id="aclassSContainer_html"><div class="ttname"><a href="classSContainer.html">SContainer</a></div><div class="ttdef"><b>Definition:</b> container.h:20</div></div>
+<div class="ttc" id="aclassSWindow_html"><div class="ttname"><a href="classSWindow.html">SWindow</a></div><div class="ttdef"><b>Definition:</b> window.h:30</div></div>
+<div class="ttc" id="aclassSWindow_html_a36a5a096252f8a3e88d4bd122c86c3e4"><div class="ttname"><a href="classSWindow.html#a36a5a096252f8a3e88d4bd122c86c3e4">SWindow::mBackBuffer</a></div><div class="ttdeci">XdbeBackBuffer mBackBuffer</div><div class="ttdef"><b>Definition:</b> window.h:68</div></div>
+<div class="ttc" id="aclassSWindow_html_a9e1215b541bc1060890553942f9bd2f4"><div class="ttname"><a href="classSWindow.html#a9e1215b541bc1060890553942f9bd2f4">SWindow::mSharedQueue</a></div><div class="ttdeci">queue&lt; Action &gt; mSharedQueue</div><div class="ttdef"><b>Definition:</b> window.h:43</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

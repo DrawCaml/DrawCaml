@@ -7,7 +7,7 @@ using namespace std;
 using Function = function<void(void)>;
 
 void sendDummyEvent(SWindow* win) {
-	/**
+	/*
 	 * sends a dummy event to the Xlib thread so that it looks into the action queue 
 	*/
 	// https://stackoverflow.com/questions/8592292/how-to-quit-the-blocking-of-xlibs-xnextevent
@@ -22,7 +22,7 @@ void sendDummyEvent(SWindow* win) {
 }
 
 Action::Action(SWindow* win, Function f){
-	/**
+	/*
 	 * constructor that directly pushes the action into the queue
 	*/
 	if(win && !win->mClosed){ // avoid segfaults when window is closed
@@ -48,7 +48,7 @@ Action::Action(SWindow* win, Function f){
 
 
 void Action::Call() {
-	/**
+	/*
 	 * just call the void(void) function of the action
 	*/
 	mFun();

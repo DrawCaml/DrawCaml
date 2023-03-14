@@ -13,13 +13,30 @@ using Function = function<void(void)>;
 
 void sendDummyEvent(SWindow* win);
 
-// class for user action
+/**
+ * Object consisting of actions to be performed on the window, stored in window's queue.
+ */
 class Action {
 	public:
-		Function mFun;//void(void) function will all parameters already binded
-		mutex* mResultLock;// lock to wait for the result of the action
+		/**
+		 * void(void) function with all parameters already binded
+		 */
+		Function mFun;
+
+		/**
+		 * lock to wait for the result of the action
+		 */
+		mutex* mResultLock;
 		
+		/**
+		 * The constructor of Action adds it directly to the queue of the given window. (if not null)
+		 */
 		Action(SWindow* win, Function f);
+
+		/**
+		 * Performs the action (calls the function f given in the constructor). 
+		 * Called by window's queue.
+		 */
 		void Call();
 };
 

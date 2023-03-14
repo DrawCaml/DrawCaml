@@ -5,10 +5,6 @@
 #include "window.h"
 #include "container.h"
 
-/**
- * the names speak for themselves
-*/
-
 SContainer::SContainer(SLayout lay, int width, int height){
 	mLayout = lay;
 	if(lay == SLayout::GridLayout){

@@ -77,42 +77,48 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">class </span><a class="code" href="classSWindow.html">SWindow</a>;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classSElement.html">    7</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSElement.html">SElement</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keywordtype">int</span> mPosX, mPosY;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keywordtype">int</span> mSizeX = 0, mSizeY = 0;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="classSWindow.html">SWindow</a>* mWin; <span class="comment">// to keep access to XLib stuff</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> setSize(<span class="keywordtype">int</span> sizeX, <span class="keywordtype">int</span> sizeY){}</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> draw(<a class="code" href="classSWindow.html">SWindow</a>* win, <span class="keywordtype">int</span> drawX, <span class="keywordtype">int</span> drawY){</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        LOG(<span class="stringliteral">&quot;parent draw\n&quot;</span>);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    }</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;};</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classSLabel.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSLabel.html">SLabel</a> : <span class="keyword">public</span> <a class="code" href="classSElement.html">SElement</a> {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">void</span> _update();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* mText;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">string</span> mFontStr;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    XFontStruct* mFontStruct;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* mColorStr;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    XColor mColor;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> setText(<span class="keyword">const</span> <span class="keywordtype">char</span>* text);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> setFont(<span class="keyword">const</span> <span class="keywordtype">char</span>* font);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> setColor(<span class="keyword">const</span> <span class="keywordtype">char</span>* col);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> setSize(<span class="keywordtype">int</span> sizeX, <span class="keywordtype">int</span> sizeY);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> draw(<a class="code" href="classSWindow.html">SWindow</a>* win, <span class="keywordtype">int</span> drawX, <span class="keywordtype">int</span> drawY);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;};</div>
-<div class="ttc" id="aclassSElement_html"><div class="ttname"><a href="classSElement.html">SElement</a></div><div class="ttdef"><b>Definition:</b> element.h:7</div></div>
-<div class="ttc" id="aclassSLabel_html"><div class="ttname"><a href="classSLabel.html">SLabel</a></div><div class="ttdef"><b>Definition:</b> element.h:20</div></div>
-<div class="ttc" id="aclassSWindow_html"><div class="ttname"><a href="classSWindow.html">SWindow</a></div><div class="ttdef"><b>Definition:</b> window.h:28</div></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classSElement.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSElement.html">SElement</a> {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordtype">int</span> mPosX, mPosY;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordtype">int</span> mSizeX = 0, mSizeY = 0;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="classSWindow.html">SWindow</a>* mWin; <span class="comment">// to keep access to XLib stuff</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> setSize(<span class="keywordtype">int</span> sizeX, <span class="keywordtype">int</span> sizeY){}</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> draw(<a class="code" href="classSWindow.html">SWindow</a>* win, <span class="keywordtype">int</span> drawX, <span class="keywordtype">int</span> drawY){</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        LOG(<span class="stringliteral">&quot;parent draw\n&quot;</span>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classSLabel.html">   26</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSLabel.html">SLabel</a> : <span class="keyword">public</span> <a class="code" href="classSElement.html">SElement</a> {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> _update();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classSLabel.html#a7bc9136aef3f2af6c89c19f82b4182d3">   34</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classSLabel.html#a7bc9136aef3f2af6c89c19f82b4182d3">mText</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classSLabel.html#af4f795b1c3907e50e6c9bd012f66e8eb">   39</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classSLabel.html#af4f795b1c3907e50e6c9bd012f66e8eb">mFontStr</a>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    XFontStruct* mFontStruct;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classSLabel.html#a2f8ae90e4b6827abb70760a792741d1f">   45</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classSLabel.html#a2f8ae90e4b6827abb70760a792741d1f">mColorStr</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    XColor mColor;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSLabel.html#a25ffcf7f16a842c02af4d3f7e9d9aae6">setText</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* text);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSLabel.html#ae13d2fcc394494515569dd23187d0dd0">setFont</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* font);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSLabel.html#aaa57decf342caa2af1944509a16fe68c">setColor</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* col);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> setSize(<span class="keywordtype">int</span> sizeX, <span class="keywordtype">int</span> sizeY);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> draw(<a class="code" href="classSWindow.html">SWindow</a>* win, <span class="keywordtype">int</span> drawX, <span class="keywordtype">int</span> drawY);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
+<div class="ttc" id="aclassSElement_html"><div class="ttname"><a href="classSElement.html">SElement</a></div><div class="ttdef"><b>Definition:</b> element.h:10</div></div>
+<div class="ttc" id="aclassSLabel_html"><div class="ttname"><a href="classSLabel.html">SLabel</a></div><div class="ttdef"><b>Definition:</b> element.h:26</div></div>
+<div class="ttc" id="aclassSLabel_html_a25ffcf7f16a842c02af4d3f7e9d9aae6"><div class="ttname"><a href="classSLabel.html#a25ffcf7f16a842c02af4d3f7e9d9aae6">SLabel::setText</a></div><div class="ttdeci">void setText(const char *text)</div><div class="ttdef"><b>Definition:</b> element.cpp:33</div></div>
+<div class="ttc" id="aclassSLabel_html_a2f8ae90e4b6827abb70760a792741d1f"><div class="ttname"><a href="classSLabel.html#a2f8ae90e4b6827abb70760a792741d1f">SLabel::mColorStr</a></div><div class="ttdeci">const char * mColorStr</div><div class="ttdef"><b>Definition:</b> element.h:45</div></div>
+<div class="ttc" id="aclassSLabel_html_a7bc9136aef3f2af6c89c19f82b4182d3"><div class="ttname"><a href="classSLabel.html#a7bc9136aef3f2af6c89c19f82b4182d3">SLabel::mText</a></div><div class="ttdeci">const char * mText</div><div class="ttdef"><b>Definition:</b> element.h:34</div></div>
+<div class="ttc" id="aclassSLabel_html_aaa57decf342caa2af1944509a16fe68c"><div class="ttname"><a href="classSLabel.html#aaa57decf342caa2af1944509a16fe68c">SLabel::setColor</a></div><div class="ttdeci">void setColor(const char *col)</div><div class="ttdef"><b>Definition:</b> element.cpp:37</div></div>
+<div class="ttc" id="aclassSLabel_html_ae13d2fcc394494515569dd23187d0dd0"><div class="ttname"><a href="classSLabel.html#ae13d2fcc394494515569dd23187d0dd0">SLabel::setFont</a></div><div class="ttdeci">void setFont(const char *font)</div><div class="ttdef"><b>Definition:</b> element.cpp:28</div></div>
+<div class="ttc" id="aclassSLabel_html_af4f795b1c3907e50e6c9bd012f66e8eb"><div class="ttname"><a href="classSLabel.html#af4f795b1c3907e50e6c9bd012f66e8eb">SLabel::mFontStr</a></div><div class="ttdeci">string mFontStr</div><div class="ttdef"><b>Definition:</b> element.h:39</div></div>
+<div class="ttc" id="aclassSWindow_html"><div class="ttname"><a href="classSWindow.html">SWindow</a></div><div class="ttdef"><b>Definition:</b> window.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

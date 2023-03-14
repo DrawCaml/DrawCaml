@@ -71,6 +71,8 @@ $(function() {
 <div class="title">SWindow Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="window_8h_source.html">window.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for SWindow:</div>
 <div class="dyncontent">
@@ -84,7 +86,8 @@ Collaboration diagram for SWindow:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a786e0a6e6ed7546a3417c6a2c16e021f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSWindow.html#a786e0a6e6ed7546a3417c6a2c16e021f">SWindow</a> (string name, int posX, int posY, int width, int height, int borderSize)</td></tr>
+<tr class="memitem:a786e0a6e6ed7546a3417c6a2c16e021f"><td class="memItemLeft" align="right" valign="top"><a id="a786e0a6e6ed7546a3417c6a2c16e021f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SWindow</b> (string name, int posX, int posY, int width, int height, int borderSize)</td></tr>
 <tr class="separator:a786e0a6e6ed7546a3417c6a2c16e021f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a738423d61bdb9d7d5875a5613a3edfd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSWindow.html#a738423d61bdb9d7d5875a5613a3edfd2">close</a> ()</td></tr>
 <tr class="separator:a738423d61bdb9d7d5875a5613a3edfd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,8 +124,7 @@ thread *&#160;</td><td class="memItemRight" valign="bottom"><b>mThread</b></td><
 <tr class="memitem:ab6ae19322eca6f0d6f4bdb5f77b4cd5d"><td class="memItemLeft" align="right" valign="top"><a id="ab6ae19322eca6f0d6f4bdb5f77b4cd5d"></a>
 mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mActionMutex</b></td></tr>
 <tr class="separator:ab6ae19322eca6f0d6f4bdb5f77b4cd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e1215b541bc1060890553942f9bd2f4"><td class="memItemLeft" align="right" valign="top"><a id="a9e1215b541bc1060890553942f9bd2f4"></a>
-queue&lt; <a class="el" href="classAction.html">Action</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>mSharedQueue</b></td></tr>
+<tr class="memitem:a9e1215b541bc1060890553942f9bd2f4"><td class="memItemLeft" align="right" valign="top">queue&lt; <a class="el" href="classAction.html">Action</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSWindow.html#a9e1215b541bc1060890553942f9bd2f4">mSharedQueue</a></td></tr>
 <tr class="separator:a9e1215b541bc1060890553942f9bd2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fa59077ebc201df30ca73064ce24f2a"><td class="memItemLeft" align="right" valign="top"><a id="a2fa59077ebc201df30ca73064ce24f2a"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>mClosed</b> = false</td></tr>
@@ -157,8 +159,7 @@ GC&#160;</td><td class="memItemRight" valign="bottom"><b>mGC</b></td></tr>
 <tr class="memitem:a26b013d4b2d470539e08e20052734a20"><td class="memItemLeft" align="right" valign="top"><a id="a26b013d4b2d470539e08e20052734a20"></a>
 Colormap&#160;</td><td class="memItemRight" valign="bottom"><b>mColormap</b></td></tr>
 <tr class="separator:a26b013d4b2d470539e08e20052734a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36a5a096252f8a3e88d4bd122c86c3e4"><td class="memItemLeft" align="right" valign="top"><a id="a36a5a096252f8a3e88d4bd122c86c3e4"></a>
-XdbeBackBuffer&#160;</td><td class="memItemRight" valign="bottom"><b>mBackBuffer</b></td></tr>
+<tr class="memitem:a36a5a096252f8a3e88d4bd122c86c3e4"><td class="memItemLeft" align="right" valign="top">XdbeBackBuffer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSWindow.html#a36a5a096252f8a3e88d4bd122c86c3e4">mBackBuffer</a></td></tr>
 <tr class="separator:a36a5a096252f8a3e88d4bd122c86c3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4657eac660e78352ace7204e8ca474e"><td class="memItemLeft" align="right" valign="top"><a id="ac4657eac660e78352ace7204e8ca474e"></a>
 value&#160;</td><td class="memItemRight" valign="bottom"><b>mEventHandler</b></td></tr>
@@ -167,61 +168,9 @@ value&#160;</td><td class="memItemRight" valign="bottom"><b>mEventHandler</b></t
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_Xlib</b> = false</td></tr>
 <tr class="separator:a74da802bd0c064de0184707c66c9d458"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a786e0a6e6ed7546a3417c6a2c16e021f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a786e0a6e6ed7546a3417c6a2c16e021f">&#9670;&nbsp;</a></span>SWindow()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">SWindow::SWindow </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>posX</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>posY</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>borderSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>window constructor</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class for printing the window and its graphical elements by calling X11 library. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a738423d61bdb9d7d5875a5613a3edfd2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a738423d61bdb9d7d5875a5613a3edfd2">&#9670;&nbsp;</a></span>close()</h2>
 
@@ -236,7 +185,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_Xlib</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>window closing</p>
+<p>Clean closure of X window. </p>
 
 </div>
 </div>
@@ -254,7 +203,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_Xlib</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>create the "Xlib" thread that will listen to events and draw the window</p>
+<p>Create the "Xlib" thread that will listen to events and draw the window. </p>
 
 </div>
 </div>
@@ -283,7 +232,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_Xlib</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>method that construct the right Ocaml type for an event by making an ocaml callback</p>
+<p>Method that construct the right Ocaml type for an event by making an ocaml callback</p>
 
 </div>
 </div>
@@ -301,7 +250,38 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_Xlib</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>infinite loop for event listening, window drawing and handling user actions</p>
+<p>Loop for listening X11 events. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a36a5a096252f8a3e88d4bd122c86c3e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36a5a096252f8a3e88d4bd122c86c3e4">&#9670;&nbsp;</a></span>mBackBuffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">XdbeBackBuffer SWindow::mBackBuffer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Back buffer used for clean redraw operations using XDoubleBufferExtension. </p>
+
+</div>
+</div>
+<a id="a9e1215b541bc1060890553942f9bd2f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e1215b541bc1060890553942f9bd2f4">&#9670;&nbsp;</a></span>mSharedQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">queue&lt;<a class="el" href="classAction.html">Action</a>&gt; SWindow::mSharedQueue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Queue of actions to perform on the window. </p>
 
 </div>
 </div>

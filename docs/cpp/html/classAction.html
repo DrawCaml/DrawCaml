@@ -71,6 +71,8 @@ $(function() {
 <div class="title">Action Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="action_8h_source.html">action.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -81,14 +83,14 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a3fb3b05e883deaef41c2e1a36e7dd7d6"><td class="memItemLeft" align="right" valign="top"><a id="a3fb3b05e883deaef41c2e1a36e7dd7d6"></a>
-Function&#160;</td><td class="memItemRight" valign="bottom"><b>mFun</b></td></tr>
+<tr class="memitem:a3fb3b05e883deaef41c2e1a36e7dd7d6"><td class="memItemLeft" align="right" valign="top">Function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAction.html#a3fb3b05e883deaef41c2e1a36e7dd7d6">mFun</a></td></tr>
 <tr class="separator:a3fb3b05e883deaef41c2e1a36e7dd7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a708e267fe5579b372f78e65045a8d0ae"><td class="memItemLeft" align="right" valign="top"><a id="a708e267fe5579b372f78e65045a8d0ae"></a>
-mutex *&#160;</td><td class="memItemRight" valign="bottom"><b>mResultLock</b></td></tr>
+<tr class="memitem:a708e267fe5579b372f78e65045a8d0ae"><td class="memItemLeft" align="right" valign="top">mutex *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAction.html#a708e267fe5579b372f78e65045a8d0ae">mResultLock</a></td></tr>
 <tr class="separator:a708e267fe5579b372f78e65045a8d0ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Object consisting of actions to be performed on the window, stored in window's queue. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7cf2b6c42204f6703e17479d32ba8c76"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7cf2b6c42204f6703e17479d32ba8c76">&#9670;&nbsp;</a></span>Action()</h2>
 
@@ -114,7 +116,7 @@ mutex *&#160;</td><td class="memItemRight" valign="bottom"><b>mResultLock</b></t
         </tr>
       </table>
 </div><div class="memdoc">
-<p>constructor that directly pushes the action into the queue</p>
+<p>The constructor of <a class="el" href="classAction.html">Action</a> adds it directly to the queue of the given window. (if not null) </p>
 
 </div>
 </div>
@@ -133,7 +135,38 @@ mutex *&#160;</td><td class="memItemRight" valign="bottom"><b>mResultLock</b></t
         </tr>
       </table>
 </div><div class="memdoc">
-<p>just call the void(void) function of the action</p>
+<p>Performs the action (calls the function f given in the constructor). Called by window's queue. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a3fb3b05e883deaef41c2e1a36e7dd7d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fb3b05e883deaef41c2e1a36e7dd7d6">&#9670;&nbsp;</a></span>mFun</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Function Action::mFun</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>void(void) function with all parameters already binded </p>
+
+</div>
+</div>
+<a id="a708e267fe5579b372f78e65045a8d0ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a708e267fe5579b372f78e65045a8d0ae">&#9670;&nbsp;</a></span>mResultLock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mutex* Action::mResultLock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>lock to wait for the result of the action </p>
 
 </div>
 </div>
