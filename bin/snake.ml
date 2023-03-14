@@ -138,7 +138,6 @@ let actualTime = ref 0.;;
 while window#notClosed () do
     actualTime := Unix.gettimeofday ();
     
-    (* use this condition instead of Unix.sleep *)
     if !actualTime -. !lastTime > 0.10 then begin
         
         if game.lost then begin
@@ -150,5 +149,4 @@ while window#notClosed () do
         lastTime := !actualTime;
     
     end
-    (* LAGGY: Unix.sleepf 0.07; *)
 done;;

@@ -44,7 +44,7 @@ external waitForCloseEx : nativeint -> unit = "waitForClose_cpp"
 external winNotClosedEx : nativeint -> bool = "winNotClosed_cpp"
 external setWindowContainerEx : nativeint -> nativeint -> unit = "setWindowContainer_cpp"
 external setWindowEventHandlerEx : nativeint -> (event -> unit) -> unit = "setWindowEventHandler_cpp"
-
+(**/**)
 (** Constructors for event types *)
 let makeKey i = 
 	match i with
@@ -55,7 +55,7 @@ let makeKey i =
 	| 0xff54 -> Down
 	| k when (k>=0x61)&&(k<=0x7a) -> Letter(Char.chr(k))
 	| k -> Other(k);;
-
+(**/**)
 let makeMousePress x y b = MousePressed(x,y,b);;
 let makeMouseRelease x y b = MouseReleased(x,y,b);;
 

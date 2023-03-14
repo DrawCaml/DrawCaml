@@ -33,8 +33,6 @@ testLabel#setColor "blue";;
 (* testLabel#setFont "fixed";; *)
 grid_container#add testLabel ~pos:(0,4) ();;
 
-(* marche pas sans le Unix.sleep *)
-Unix.sleepf 0.1;;
 print_int (fst (container4#getPos ()));;
 print_newline ();;
 print_int (snd (container4#getPos ()));;
